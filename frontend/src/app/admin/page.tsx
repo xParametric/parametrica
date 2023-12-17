@@ -138,7 +138,8 @@ const Admin = () => {
                 name="timestamp"
                 value={timestamp}
                 onChange={(e) => {
-                  setTimestamp(e.target.valueAsDate?.getTime());
+                  const target = e.target as HTMLInputElement;
+                  setTimestamp(target.valueAsDate?.getTime());
                 }}
                 variant="outlined"
                 fullWidth

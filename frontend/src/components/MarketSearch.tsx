@@ -5,7 +5,7 @@ import { Box, TextField } from "@mui/material";
 const MarketSearch = () => {
   const [searchValue, setSearchValue] = useState("");
 
-  const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleSearchChange = (event: any) => {
     setSearchValue(event.target.value);
     console.log("Search value:", event.target.value);
     // Here you can add the logic for on-type search
