@@ -1,8 +1,6 @@
 "use client";
 import * as React from "react";
-import { useSelector } from "react-redux";
-// import { RootState } from "@/redux/store";
-
+//
 import {
   Container,
   Box,
@@ -14,10 +12,10 @@ import {
 } from "@mui/material";
 import CardThumbnailChartYes from "./CardThumbnailChartYes";
 import CardThumbnailChartNo from "./CardThumbnailChartNo";
-import Liquidity from "./Liquidity";
-import MarketValue from "./MarketValue";
-import MarketTradingFee from "./MarketTradingFee";
-import MarketQuestionDate from "./MarketQuestionDate";
+// import Liquidity from "./Liquidity";
+// import MarketValue from "./MarketValue";
+// import MarketTradingFee from "./MarketTradingFee";
+// import MarketQuestionDate from "./MarketQuestionDate";
 
 import ShareMarket from "./ShareMarket";
 import BookmarkMarket from "./BookmarkMarket";
@@ -71,7 +69,7 @@ const MarketCard: React.FC<MarketCardListProps> = ({ questionId }) => {
             <Grid item xs={12} xl={7}>
               <CardContent>
                 <Box>
-                  <MarketQuestionBreadCrumbs questionId={questionId} />
+                  {/* <MarketQuestionBreadCrumbs questionId={questionId} /> */}
                 </Box>
                 <Typography
                   component="div"
@@ -159,10 +157,10 @@ const MarketCard: React.FC<MarketCardListProps> = ({ questionId }) => {
                 borderRadius: 3,
               }}
             >
-              <MarketValue questionId={questionId} />
-              <Liquidity questionId={questionId} />
-              <MarketTradingFee questionId={questionId} />
-              <MarketQuestionDate questionId={questionId} />
+              {/* <MarketValue questionId={questionId} /> */}
+              {/* <Liquidity questionId={questionId} /> */}
+              {/* <MarketTradingFee questionId={questionId} /> */}
+              {/* <MarketQuestionDate questionId={questionId} /> */}
             </Box>
           </Grid>
           <Grid item xs={12} xl={4}></Grid>

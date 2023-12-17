@@ -1,34 +1,9 @@
-import {
-  Card,
-  CardContent,
-  Typography,
-  CardActions,
-  Button,
-  CardMedia,
-} from "@mui/material";
-import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
+import { Card } from "@mui/material";
 
-interface CarousalCardProps {
-  questionId: number;
-}
-
-const CarousalCard: React.FC<CarousalCardProps> = ({ questionId }) => {
-  const question = useSelector((state: RootState) => {
-    const selectedQuestion = state.questions.questionsData.find(
-      (q) => q.id === questionId
-    );
-    return selectedQuestion;
-  });
-
-  if (!question) {
-    // Handle the case when the question is not found
-    return null;
-  }
-
+const CarousalCard = () => {
   return (
     <Card sx={{ height: 330, width: 450, my: 2 }}>
-      <CardMedia
+      {/* <CardMedia
         sx={{ height: 170 }}
         image={question.imageUrl}
         title="green iguana"
@@ -53,7 +28,8 @@ const CarousalCard: React.FC<CarousalCardProps> = ({ questionId }) => {
             No ${question.betValueNo}
           </Button>
         </CardActions>
-      </CardContent>
+      </CardContent> */}
+      hi
     </Card>
   );
 };

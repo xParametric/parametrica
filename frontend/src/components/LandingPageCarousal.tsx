@@ -1,8 +1,7 @@
 "use client";
-import { useEffect, useMemo } from "react";
+// import { useEffect, useMemo } from "react";
 // import { useDispatch, useSelector } from "react-redux";
-// import { RootState } from "@/redux/store";
-// import { loadQuestions, initialQuestionsState } from "@/redux/questionSlice";
+// // import { loadQuestions, initialQuestionsState } from "@/redux/questionSlice";
 
 // import Swiper core and required modules
 import { Autoplay } from "swiper/modules";
@@ -15,7 +14,7 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 
 import { Container } from "@mui/material";
-import CarousalCard from "./CarousalCard";
+// import CarousalCard from "./CarousalCard";
 
 const LandingPageCarousal: React.FC = () => {
   // const dispatch = useDispatch();

@@ -2,26 +2,24 @@ import { Box, Tooltip, Typography } from "@mui/material";
 import React from "react";
 
 import dynamic from "next/dynamic";
-import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
 
-interface MarketTradingFeeProps {
-  questionId: number;
-}
+// interface MarketTradingFeeProps {
+//   questionId: number;
+// }
 const PercentIcon = dynamic(() => import("@mui/icons-material/Percent"));
 
-const MarketTradingFee: React.FC<MarketTradingFeeProps> = ({ questionId }) => {
-  const question = useSelector((state: RootState) => {
-    const selectedQuestion = state.questions.questionsData.find(
-      (q) => q.id === questionId
-    );
-    return selectedQuestion;
-  });
+const MarketTradingFee = () => {
+  // const question = useSelector((state: RootState) => {
+  //   const selectedQuestion = state.questions.questionsData.find(
+  //     (q) => q.id === questionId
+  //   );
+  //   return selectedQuestion;
+  // });
 
-  if (!question) {
-    // Handle the case when the question is not found
-    return null;
-  }
+  // if (!question) {
+  //   // Handle the case when the question is not found
+  //   return null;
+  // }
 
   // // Format the trading fee as a percentage with 2 decimal places
   // const formattedTradingFee = `${(question.tradingFee * 100).toFixed(2)}%`;
@@ -49,7 +47,7 @@ const MarketTradingFee: React.FC<MarketTradingFeeProps> = ({ questionId }) => {
         fontWeight={500}
         // style={{ color: textColor }}
       >
-        {question.tradingFee}
+        {/* {question.tradingFee} */}
       </Typography>
     </Box>
   );

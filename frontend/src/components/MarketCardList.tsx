@@ -1,8 +1,6 @@
 "use client";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-// import { RootState } from "@/redux/store";
-// import { loadQuestions, initialQuestionsState } from "@/redux/questionSlice"; // Import the initialQuestionsState
+// import { useEffect } from "react";
+// // import { loadQuestions, initialQuestionsState } from "@/redux/questionSlice"; // Import the initialQuestionsState
 
 import { Container } from "@mui/material";
 // import MarketCard from "./MarketCard";
