@@ -7,16 +7,29 @@
 import { Autoplay } from "swiper/modules";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 
 import { Container } from "@mui/material";
+import CarousalCard from "./CarousalCard";
+import { MarketProps } from "@/types";
 // import CarousalCard from "./CarousalCard";
 
-const LandingPageCarousal: React.FC = () => {
+const LandingPageCarousal: React.FC<MarketProps> = ({
+  title,
+  userYes,
+  userNo,
+  id,
+  imageHash,
+  totalYes,
+  totalNo,
+  totalAmount,
+  hasResolved,
+  timestamp,
+  endTimestamp,
+}) => {
   // const dispatch = useDispatch();
 
   // Fetch questions data from the Redux store when the component mounts
@@ -74,14 +87,24 @@ const LandingPageCarousal: React.FC = () => {
           },
         }}
       >
-        {/* {memoizedQuestionsData.map((questionItem) => (
-          <SwiperSlide
-            key={questionItem.id}
-            style={{ justifyContent: "center", display: "flex" }}
-          >
-            <CarousalCard questionId={questionItem.id} />
-          </SwiperSlide>
-        ))} */}
+        <SwiperSlide
+          key={id}
+          style={{ justifyContent: "center", display: "flex" }}
+        >
+          <CarousalCard
+            id={id}
+            title={title}
+            userYes={userYes}
+            userNo={userNo}
+            imageHash={imageHash}
+            totalYes={totalYes}
+            totalNo={totalNo}
+            totalAmount={totalAmount}
+            hasResolved={hasResolved}
+            timestamp={timestamp}
+            endTimestamp={endTimestamp}
+          />
+        </SwiperSlide>
       </Swiper>
     </Container>
   );

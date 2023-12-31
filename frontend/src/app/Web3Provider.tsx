@@ -16,7 +16,7 @@ import {
   getDefaultConfig,
 } from "connectkit";
 
-const chains = [mainnet, polygon, optimism, arbitrum, sepolia];
+const chains = [sepolia];
 const config = createConfig(
   getDefaultConfig({
     appName: APP_NAME,

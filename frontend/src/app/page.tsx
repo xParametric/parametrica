@@ -9,15 +9,8 @@ import { Filter } from "../components/Filter";
 import { MarketCard } from "../components/MarketCard";
 // import Navbar from "../components/Navbar";
 import { useData } from "../context/DataContext";
+import { MarketProps } from "@/types";
 // import styles from "../styles/Home.module.css";
-export interface MarketProps {
-  id: string;
-  title: string;
-  imageHash: string;
-  totalAmount: string;
-  totalYes: string;
-  totalNo: string;
-}
 
 const Home = () => {
   const { polymarket, account, loadWeb3, loading } = useData();
@@ -57,7 +50,18 @@ const Home = () => {
       >
         Featured Markets
       </Typography>
-      <CarousalDynamicLoading />
+      {/* <CarousalDynamicLoading 
+      // title={market.title}
+      totalAmount={market.totalAmount}
+      totalYes={market.totalYes}
+      totalNo={market.totalNo}
+      imageHash={market.imageHash}
+      userNo="0"
+      userYes="0"
+      timestamp="0"
+      endTimestamp="0"
+      
+      /> */}
       <MarketCardList />
       <div>
         <Box sx={{ padding: 2 }}>
@@ -72,7 +76,7 @@ const Home = () => {
             />
           </Box>
           <Box sx={{ marginY: 2 }}></Box>
-          <div>
+          {/* <div>
             <Filter
               list={["All", "Crypto", "Football", "Covid 19", "Politics"]}
               activeItem="All"
@@ -85,18 +89,18 @@ const Home = () => {
               category="Sort By"
               onChange={() => {}}
             />
-          </div>
+          </div> */}
           <Typography variant="h6">Market</Typography>
           <Box>
             {markets.map((market) => (
               <MarketCard
                 id={market.id}
                 key={market.id}
-                title={market.title}
-                totalAmount={market.totalAmount}
-                totalYes={market.totalYes}
-                totalNo={market.totalNo}
-                imageHash={market.imageHash}
+                title={market?.title}
+                totalAmount={market?.totalAmount}
+                totalYes={market?.totalYes}
+                totalNo={market?.totalNo}
+                imageHash={market?.imageHash}
                 userNo="0"
                 userYes="0"
                 timestamp="0"

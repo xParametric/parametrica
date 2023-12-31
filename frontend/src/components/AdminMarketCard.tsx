@@ -12,10 +12,10 @@ import React from "react";
 import Web3 from "web3";
 
 interface Props {
-  id: string;
-  title: string;
-  imageHash: string;
-  totalAmount: string;
+  id: string | undefined;
+  title: string | undefined;
+  imageHash: string | undefined;
+  totalAmount: string | undefined;
   onYes: () => void;
   onNo: () => void;
 }
@@ -67,9 +67,10 @@ export const AdminMarketCard: React.FC<Props> = ({
                 Total Liquidity
               </Typography>
               <Typography variant="body1">
-                {parseFloat(Web3.utils.fromWei(totalAmount, "ether")).toFixed(
-                  2
-                )}{" "}
+                {totalAmount &&
+                  parseFloat(Web3.utils.fromWei(totalAmount, "ether")).toFixed(
+                    2
+                  )}{" "}
                 POLY
               </Typography>
             </Box>

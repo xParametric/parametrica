@@ -2,11 +2,11 @@
 import Head from "next/head";
 import Link from "next/link";
 import React, { useCallback, useEffect, useState } from "react";
-import { MarketProps } from "../../page";
 import { AdminMarketCard } from "../../../components/AdminMarketCard";
 import Navbar from "../../../components/Navbar";
 import { useData } from "@/context/DataContext";
 import { Box, Button, Grid } from "@mui/material";
+import { MarketProps } from "@/types";
 
 const Markets: React.FC = () => {
   const { polymarket, account, loadWeb3, loading } = useData();
@@ -77,9 +77,9 @@ const Markets: React.FC = () => {
                 <Grid item xs={12} sm={6} key={market.id}>
                   <AdminMarketCard
                     id={market.id}
-                    imageHash={market.imageHash}
-                    title={market.title}
-                    totalAmount={market.totalAmount}
+                    imageHash={market?.imageHash}
+                    title={market?.title}
+                    totalAmount={market?.totalAmount}
                     onYes={async () => {
                       await polymarket.methods
                         .distributeWinningAmount(market.id, true)

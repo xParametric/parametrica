@@ -1,38 +1,21 @@
+import { MarketProps } from "@/types";
 import moment from "moment";
 import Image from "next/image";
 import React from "react";
 import Web3 from "web3";
 
-export interface MarketProps {
-  id: string;
-  title: string;
-  imageHash: string;
-  totalAmount: string;
-  totalYes: string;
-  totalNo: string;
-  userYes: string;
-  userNo: string;
-  hasResolved?: boolean;
-  timestamp: string;
-  endTimestamp: string;
-}
-
 export const PortfolioMarketCard: React.FC<MarketProps> = ({
   title,
   userYes,
   userNo,
-  id,
   imageHash,
-  totalYes,
-  totalNo,
-  totalAmount,
-  hasResolved,
   timestamp,
   endTimestamp,
 }) => {
-  var endingOn = moment(parseInt(endTimestamp));
+  var endingOn = endTimestamp && moment(parseInt(endTimestamp));
   var now = moment(new Date()); //todays date
-  var daysLeft = moment.duration(endingOn.diff(now)).asDays().toFixed(0);
+  var daysLeft =
+    endingOn && moment.duration(endingOn.diff(now)).asDays().toFixed(0);
   return (
     <div className="w-full overflow-hidden my-2">
       <div className="flex flex-col border border-gray-300 rounded-lg p-5 hover:border-blue-700 cursor-pointer">
@@ -58,7 +41,7 @@ export const PortfolioMarketCard: React.FC<MarketProps> = ({
               Amount Added
             </span>
             <span className="text-base">
-              {Web3.utils.fromWei(userYes ?? userNo)} POLY
+              {userYes && Web3.utils.fromWei(userYes ?? userNo)} POLY
             </span>
           </div>
           <div className="flex flex-col space-y-1">
@@ -74,7 +57,9 @@ export const PortfolioMarketCard: React.FC<MarketProps> = ({
           <div className="flex flex-col space-y-1">
             <span className="text-xs text-gray-500 font-light">Ending In</span>
             <span className="text-base">
-              {parseInt(daysLeft) > 0 ? `${daysLeft} days` : "Ended"}
+              {daysLeft && parseInt(daysLeft) > 0
+                ? `${daysLeft} days`
+                : "Ended"}
             </span>
           </div>
           <div className="flex flex-col space-y-1 items-end">

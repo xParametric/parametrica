@@ -6,31 +6,7 @@ import { PortfolioMarketCard } from "../components/PortfolioMarketCard";
 import { useData } from "../context/DataContext";
 import { Box, Grid, Typography } from "@mui/material";
 import { Container } from "postcss";
-
-export interface MarketProps {
-  id: string;
-  title?: string;
-  imageHash?: string;
-  totalAmount?: string;
-  totalYes?: string;
-  totalNo?: string;
-  userYes?: string;
-  hasResolved?: boolean;
-  userNo?: string;
-  timestamp?: string;
-  endTimestamp?: string;
-}
-
-export interface QuestionsProps {
-  id: string;
-  title?: string;
-  imageHash?: string;
-  totalAmount?: string;
-  totalYes?: string;
-  totalNo?: string;
-  hasResolved?: boolean;
-  endTimestamp?: string;
-}
+import { MarketProps, QuestionsProps } from "@/types";
 
 const Portfolio = () => {
   const { polymarket, account, loadWeb3, loading } = useData();

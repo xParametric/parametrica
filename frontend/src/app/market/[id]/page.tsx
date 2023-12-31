@@ -22,6 +22,7 @@ import {
   Grid,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { MarketProps } from "@/types";
 
 const StyledPaper = styled(Paper)({
   padding: "16px",
@@ -60,18 +61,6 @@ const ResolutionSourceTypography = styled(Typography)({
   paddingLeft: "12px",
 });
 
-export interface MarketProps {
-  id: string;
-  title: string;
-  imageHash: string;
-  totalAmount: number;
-  totalYes: number;
-  totalNo: number;
-  description: string;
-  endTimestamp: number;
-  resolverUrl: any;
-}
-
 const Details = () => {
   const { id } = useParams();
 
@@ -89,12 +78,12 @@ const Details = () => {
       id: data.id,
       title: data.question,
       imageHash: data.creatorImageHash,
-      totalAmount: parseInt(data.totalAmount),
-      totalYes: parseInt(data.totalYesAmount),
-      totalNo: parseInt(data.totalNoAmount),
-      description: data.description,
-      endTimestamp: parseInt(data.endTimestamp),
-      resolverUrl: data.resolverUrl,
+      totalAmount: data?.totalAmount && parseInt(data?.totalAmount),
+      totalYes: data?.totalYesAmount && parseInt(data?.totalYesAmount),
+      totalNo: data?.totalNoAmount && parseInt(data?.totalNoAmount),
+      description: data?.description && data?.description,
+      endTimestamp: data?.endTimestamp && parseInt(data?.endTimestamp),
+      resolverUrl: data?.resolverUrl && data?.resolverUrl,
     });
     setDataLoading(false);
   }, [account, id, polymarket]);
@@ -200,7 +189,7 @@ const Details = () => {
                   <Typography variant="body1">
                     {market?.endTimestamp
                       ? moment(
-                          parseInt(market?.endTimestamp.toFixed(0))
+                          parseInt(market?.endTimestamp).toFixed(0)
                         ).format("MMMM D, YYYY")
                       : "N/A"}
                   </Typography>
@@ -219,10 +208,12 @@ const Details = () => {
                     Total Volume
                   </Typography>
                   <Typography variant="body1">
-                    {Web3.utils.fromWei(
-                      market?.totalAmount.toString() ?? "0",
-                      "ether"
-                    ) ?? 0}{" "}
+                    {(market?.totalAmount &&
+                      Web3.utils.fromWei(
+                        market?.totalAmount.toString() ?? "0",
+                        "ether"
+                      )) ??
+                      0}{" "}
                     POLY
                   </Typography>
                 </Paper>
@@ -258,10 +249,10 @@ const Details = () => {
                       >
                         <Typography variant="subtitle2">
                           YES{" "}
-                          {market?.totalAmount
+                          {market?.totalAmount && market?.totalYes
                             ? (
-                                (market?.totalYes * 100) /
-                                market?.totalAmount
+                                (parseInt(market?.totalYes) * 100) /
+                                parseInt(market?.totalAmount)
                               ).toFixed(2)
                             : "0"}
                           %
@@ -279,10 +270,10 @@ const Details = () => {
                       >
                         <Typography variant="subtitle2">
                           NO{" "}
-                          {market?.totalAmount
+                          {market?.totalAmount && market?.totalNo
                             ? (
-                                (market?.totalNo * 100) /
-                                market?.totalAmount
+                                (parseInt(market?.totalNo) * 100) /
+                                parseInt(market?.totalAmount)
                               ).toFixed(2)
                             : "0"}
                           %

@@ -1,10 +1,9 @@
-import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import Web3 from "web3";
-import { MarketProps } from "./PortfolioMarketCard";
+
 import { Box, Card, CardContent, Typography, Avatar } from "@mui/material";
-// import { Avatar } from "connectkit";
+import { MarketProps } from "@/types";
 
 export const MarketCard: React.FC<MarketProps> = ({
   id,
@@ -54,9 +53,10 @@ export const MarketCard: React.FC<MarketProps> = ({
                   Volume
                 </Typography>
                 <Typography variant="body2">
-                  {parseFloat(Web3.utils.fromWei(totalAmount, "ether")).toFixed(
-                    2
-                  )}{" "}
+                  {totalAmount &&
+                    parseFloat(
+                      Web3.utils.fromWei(totalAmount, "ether")
+                    ).toFixed(2)}{" "}
                   POLY
                 </Typography>
               </Box>
@@ -72,9 +72,10 @@ export const MarketCard: React.FC<MarketProps> = ({
                   }}
                 >
                   <Typography variant="caption" color="primary.main">
-                    {parseFloat(Web3.utils.fromWei(totalYes, "ether")).toFixed(
-                      2
-                    )}{" "}
+                    {totalYes &&
+                      parseFloat(Web3.utils.fromWei(totalYes, "ether")).toFixed(
+                        2
+                      )}{" "}
                     POLY
                   </Typography>
                 </Box>
@@ -91,9 +92,10 @@ export const MarketCard: React.FC<MarketProps> = ({
                   }}
                 >
                   <Typography variant="caption" color="primary.main">
-                    {parseFloat(Web3.utils.fromWei(totalNo, "ether")).toFixed(
-                      2
-                    )}{" "}
+                    {totalNo &&
+                      parseFloat(Web3.utils.fromWei(totalNo, "ether")).toFixed(
+                        2
+                      )}{" "}
                     POLY
                   </Typography>
                 </Box>
