@@ -1,7 +1,7 @@
-import { dbConnect } from "@/config/dbConfig";
+// import { dbConnect } from "@/config/dbConfig";
 import userModel from "@/models/userModel";
 import { NextResponse, NextRequest } from "next/server";
-dbConnect();
+// dbConnect();
 
 export async function POST(req: NextRequest, res: NextResponse) {
   try {
