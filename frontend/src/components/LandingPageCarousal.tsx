@@ -13,51 +13,12 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 
 import { Container } from "@mui/material";
-import CarousalCard from "./CarousalCard";
 import { MarketProps } from "@/types";
-// import CarousalCard from "./CarousalCard";
+import CarousalCard from "./CarousalCard";
 
-const LandingPageCarousal: React.FC<MarketProps> = ({
-  title,
-  userYes,
-  userNo,
-  id,
-  imageHash,
-  totalYes,
-  totalNo,
-  totalAmount,
-  hasResolved,
-  timestamp,
-  endTimestamp,
+const LandingPageCarousal: React.FC<{ markets: MarketProps[] }> = ({
+  markets,
 }) => {
-  // const dispatch = useDispatch();
-
-  // Fetch questions data from the Redux store when the component mounts
-  // useEffect(() => {
-  //   // Simulate fetching data from an API or backend
-  //   const fetchData = async () => {
-  //     try {
-  //       // Simulate API call delay
-  //       await new Promise((resolve) => setTimeout(resolve, 1000));
-
-  //       // Dispatch the action to load the questions data into the store
-  //       dispatch(loadQuestions(initialQuestionsState.questionsData));
-  //     } catch (error) {
-  //       // Handle error if necessary
-  //       console.error("Error fetching data:", error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, [dispatch]);
-
-  // const questionsData = useSelector(
-  //   (state: RootState) => state.questions.questionsData
-  // );
-
-  // Memoize questionsData to prevent unnecessary recalculations
-  // const memoizedQuestionsData = useMemo(() => questionsData, [questionsData]);
-
   return (
     <Container maxWidth="xl" sx={{ mt: 4 }}>
       <Swiper
@@ -87,24 +48,28 @@ const LandingPageCarousal: React.FC<MarketProps> = ({
           },
         }}
       >
-        <SwiperSlide
-          key={id}
-          style={{ justifyContent: "center", display: "flex" }}
-        >
-          <CarousalCard
-            id={id}
-            title={title}
-            userYes={userYes}
-            userNo={userNo}
-            imageHash={imageHash}
-            totalYes={totalYes}
-            totalNo={totalNo}
-            totalAmount={totalAmount}
-            hasResolved={hasResolved}
-            timestamp={timestamp}
-            endTimestamp={endTimestamp}
-          />
-        </SwiperSlide>
+        {markets &&
+          markets.length > 0 &&
+          markets.map((market: MarketProps, id: number) => (
+            <SwiperSlide
+              key={id}
+              style={{ justifyContent: "center", display: "flex" }}
+            >
+              <CarousalCard
+                id={market?.id}
+                title={market?.title}
+                userYes={market?.userYes}
+                userNo={market?.userNo}
+                imageHash={market?.imageHash}
+                totalYes={market?.totalYes}
+                totalNo={market?.totalNo}
+                totalAmount={market?.totalAmount}
+                hasResolved={market?.hasResolved}
+                timestamp={market?.timestamp}
+                endTimestamp={market?.endTimestamp}
+              />
+            </SwiperSlide>
+          ))}
       </Swiper>
     </Container>
   );

@@ -1,6 +1,5 @@
 "use client";
 
-import CarousalDynamicLoading from "@/components/CarousalDynamicLoading";
 import MarketCardList from "@/components/MarketCardList";
 import { Box, Card, TextField, Typography } from "@mui/material";
 // import Head from "next/head";
@@ -9,8 +8,9 @@ import { Filter } from "../components/Filter";
 import { MarketCard } from "../components/MarketCard";
 // import Navbar from "../components/Navbar";
 import { useData } from "../context/DataContext";
-import { MarketProps } from "@/types";
 // import styles from "../styles/Home.module.css";
+import { MarketProps } from "@/types";
+import LandingPageCarousal from "@/components/LandingPageCarousal";
 
 const Home = () => {
   const { polymarket, account, loadWeb3, loading } = useData();
@@ -50,18 +50,10 @@ const Home = () => {
       >
         Featured Markets
       </Typography>
-      {/* <CarousalDynamicLoading 
-      // title={market.title}
-      totalAmount={market.totalAmount}
-      totalYes={market.totalYes}
-      totalNo={market.totalNo}
-      imageHash={market.imageHash}
-      userNo="0"
-      userYes="0"
-      timestamp="0"
-      endTimestamp="0"
-      
-      /> */}
+      {/* {markets.map((market) => ( */}
+      <LandingPageCarousal markets={markets} />
+      {/* ))} */}
+
       <MarketCardList />
       <div>
         <Box sx={{ padding: 2 }}>
