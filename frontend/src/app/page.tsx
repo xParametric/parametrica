@@ -1,6 +1,5 @@
 "use client";
 
-import MarketCardList from "@/components/MarketCardList";
 import { Box, Card, TextField, Typography } from "@mui/material";
 // import Head from "next/head";
 import { useCallback, useEffect, useState } from "react";
@@ -55,7 +54,6 @@ const Home = () => {
       <LandingPageCarousal markets={markets} />
       {/* ))} */}
 
-      <MarketCardList />
       <Markets />
     </main>
   );
