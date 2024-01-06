@@ -1,6 +1,5 @@
-import { Menu, Transition } from "@headlessui/react";
-import { ChevronDownIcon } from "@heroicons/react/solid";
-import { Fragment } from "react";
+import React from "react";
+import { Button, Menu, MenuItem, Fade } from "@mui/material";
 
 interface Props {
   list: string[];
@@ -15,50 +14,55 @@ export const Filter: React.FC<Props> = ({
   category,
   onChange,
 }) => {
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = (item: string) => {
+    onChange(item);
+    setAnchorEl(null);
+  };
+
   return (
-    <>
-      <Menu as="div" className="relative inline-block text-left">
-        <div>
-          <Menu.Button className="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-gray-700 bg-black rounded-md bg-opacity-10 hover:bg-opacity-20 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-            {category}: {activeItem}
-            <ChevronDownIcon
-              className="w-5 h-5 ml-2 -mr-1 text-violet-200 hover:text-violet-100"
-              aria-hidden="true"
-            />
-          </Menu.Button>
-        </div>
-        <Transition
-          as={Fragment}
-          enter="transition ease-out duration-100"
-          enterFrom="transform opacity-0 scale-95"
-          enterTo="transform opacity-100 scale-100"
-          leave="transition ease-in duration-75"
-          leaveFrom="transform opacity-100 scale-100"
-          leaveTo="transform opacity-0 scale-95"
+    <div>
+      <Button
+        aria-controls="fade-menu"
+        aria-haspopup="true"
+        onClick={handleClick}
+      >
+        {category}: {activeItem}
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          fill="currentColor"
+          className="bi bi-caret-down-fill"
+          viewBox="0 0 16 16"
         >
-          {/* <Menu.Items className="z-50 absolute left-0 w-56 mt-2 origin-top-left bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-            <div className="px-2 py-1">
-              {list.map((item) => (
-                <Menu.Item key={item}>
-                  <div onClick={() => onChange(item)}>
-                    {({ active }: { active: any }) => {
-                      return (
-                        <button
-                          className={`${
-                            activeItem === item && "bg-gray-200"
-                          } font-medium group flex rounded-md items-center w-full px-3 py-2 text-sm text-gray-900 hover:bg-gray-200 my-1`}
-                        >
-                          {item}
-                        </button>
-                      );
-                    }}
-                  </div>
-                </Menu.Item>
-              ))}
-            </div>
-          </Menu.Items> */}
-        </Transition>
+          <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+        </svg>
+      </Button>
+      <Menu
+        id="fade-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={open}
+        onClose={() => setAnchorEl(null)}
+        TransitionComponent={Fade}
+      >
+        {list.map((item) => (
+          <MenuItem
+            key={item}
+            selected={item === activeItem}
+            onClick={() => handleClose(item)}
+          >
+            {item}
+          </MenuItem>
+        ))}
       </Menu>
-    </>
+    </div>
   );
 };

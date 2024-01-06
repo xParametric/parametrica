@@ -11,6 +11,7 @@ import { useData } from "../context/DataContext";
 // import styles from "../styles/Home.module.css";
 import { MarketProps } from "@/types";
 import LandingPageCarousal from "@/components/LandingPageCarousal";
+import Markets from "@/components/Markets";
 
 const Home = () => {
   const { polymarket, account, loadWeb3, loading } = useData();
@@ -55,53 +56,7 @@ const Home = () => {
       {/* ))} */}
 
       <MarketCardList />
-      <div>
-        <Box sx={{ padding: 2 }}>
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-            {/* <SearchIcon /> */}
-            <TextField
-              type="search"
-              name="q"
-              placeholder="Search markets..."
-              variant="outlined"
-              fullWidth
-            />
-          </Box>
-          <Box sx={{ marginY: 2 }}></Box>
-          {/* <div>
-            <Filter
-              list={["All", "Crypto", "Football", "Covid 19", "Politics"]}
-              activeItem="All"
-              category="Category"
-              onChange={() => {}}
-            />
-            <Filter
-              list={["Volume", "Newest", "Expiring"]}
-              activeItem="Volume"
-              category="Sort By"
-              onChange={() => {}}
-            />
-          </div> */}
-          <Typography variant="h6">Market</Typography>
-          <Box>
-            {markets.map((market) => (
-              <MarketCard
-                id={market.id}
-                key={market.id}
-                title={market?.title}
-                totalAmount={market?.totalAmount}
-                totalYes={market?.totalYes}
-                totalNo={market?.totalNo}
-                imageHash={market?.imageHash}
-                userNo="0"
-                userYes="0"
-                timestamp="0"
-                endTimestamp="0"
-              />
-            ))}
-          </Box>
-        </Box>
-      </div>
+      <Markets />
     </main>
   );
 };
