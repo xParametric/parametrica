@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Box, Container, TextField, Typography } from "@mui/material";
+import { Box, Container, Grid, TextField, Typography } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
 import { MarketCard } from "../components/MarketCard";
 
@@ -39,52 +39,56 @@ function Markets() {
   }, [loading]);
   return (
     <Container maxWidth="xl">
-      <div>
-        <Box sx={{ padding: 2 }}>
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-            {/* <SearchIcon /> */}
-            <TextField
-              type="search"
-              name="q"
-              placeholder="Search markets..."
-              variant="outlined"
-              fullWidth
-            />
-          </Box>
-          <Box sx={{ marginY: 2 }}></Box>
-          <div>
-            <Filter
-              list={["All", "Crypto", "Football", "Covid 19", "Politics"]}
-              activeItem="All"
-              category="Category"
-              onChange={() => {}}
-            />
-            <Filter
-              list={["Volume", "Newest", "Expiring"]}
-              activeItem="Volume"
-              category="Sort By"
-              onChange={() => {}}
-            />
-          </div>
-        </Box>
-      </div>
-      {/* <Typography variant="h6">Markets</Typography> */}
-      <Box>
-        {markets.map((market) => (
-          <MarketCard
-            id={market.id}
-            key={market.id}
-            title={market?.title}
-            totalAmount={market?.totalAmount}
-            totalYes={market?.totalYes}
-            totalNo={market?.totalNo}
-            imageHash={market?.imageHash}
-            userNo="0"
-            userYes="0"
-            timestamp="0"
-            endTimestamp="0"
+      <Box sx={{ padding: 2 }}>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 2 }}>
+          {/* <SearchIcon /> */}
+          <TextField
+            type="search"
+            name="q"
+            placeholder="Search markets..."
+            variant="outlined"
+            fullWidth
           />
-        ))}
+        </Box>
+
+        <Box sx={{ display: "flex", justifyContent: "space-between", mb: 3 }}>
+          <Filter
+            list={["All", "Crypto", "Football", "Covid 19", "Politics"]}
+            activeItem="All"
+            category="Category"
+            onChange={() => {}}
+          />
+          <Filter
+            list={["Volume", "Newest", "Expiring"]}
+            activeItem="Volume"
+            category="Sort By"
+            onChange={() => {}}
+          />
+        </Box>
+
+        {/* <Typography variant="h6" gutterBottom>
+        Markets
+      </Typography> */}
+
+        <Grid container spacing={2}>
+          {markets.map((market) => (
+            <Grid item xs={12} sm={6} md={6} key={market.id}>
+              <MarketCard
+                id={market.id}
+                key={market.id}
+                title={market?.title}
+                totalAmount={market?.totalAmount}
+                totalYes={market?.totalYes}
+                totalNo={market?.totalNo}
+                imageHash={market?.imageHash}
+                userNo="0"
+                userYes="0"
+                timestamp="0"
+                endTimestamp="0"
+              />
+            </Grid>
+          ))}
+        </Grid>
       </Box>
     </Container>
   );
