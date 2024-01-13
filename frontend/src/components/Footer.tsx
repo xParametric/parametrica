@@ -1,6 +1,6 @@
 "use client";
-import GitHubIcon from "@mui/icons-material/GitHub";
-import TwitterIcon from "@mui/icons-material/Twitter";
+// import GitHubIcon from "@mui/icons-material/GitHub";
+// import TwitterIcon from "@mui/icons-material/Twitter";
 import Link from "next/link";
 import { Grid, Box, Typography } from "@mui/material";
 
@@ -18,8 +18,7 @@ function Copyright() {
 }
 const Footer = () => {
   return (
-    <div>
-      {/* Footer */}
+    <footer>
       <Box
         sx={{ bgcolor: "primary.main", p: 6, color: "#ffffff", mt: 6 }}
         component="footer"
@@ -192,9 +191,7 @@ const Footer = () => {
           </Box>
         </Grid>
       </Box>
-
-      {/* End footer */}
-    </div>
+    </footer>
   );
 };
 

@@ -12,7 +12,7 @@ const theme = createTheme({
     },
     secondary: {
       main: "#dbdaf1",
-      contrastText: "#F8FDCF",
+      // contrastText: "#F8FDCF",
     },
     error: {
       main: red.A400,
