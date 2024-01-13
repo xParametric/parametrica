@@ -78,14 +78,7 @@ export default function TotalBalanceChart() {
           cursor={{ strokeDasharray: "3 3" }}
           formatter={(value, name) => [`${value} $`, "P&L"]}
         />
-        {/* <Area
-          type="monotone"
-          dataKey="uv"
-          stroke="#5779C7"
-          fill="#5779C7"
-          fillOpacity={0.6}
-          dot={{ r: 4, stroke: "#5779C7", fill: getCircleColor }} // Use getCircleColor function to set custom dot color
-        /> */}
+
         <Area
           type="natural"
           dataKey="uv"

@@ -6,7 +6,7 @@ const theme = createTheme({
   palette: {
     primary: {
       main: "#27374D",
-      contrastText: "#303596",
+      // contrastText: "#303596",
       // light: "#303596",
       // dark: "#303596",
     },
@@ -24,6 +24,45 @@ const theme = createTheme({
   },
   typography: {
     fontFamily: "Montserrat, sans-serif",
+    h1: {
+      fontFamily: "Montserrat, sans-serif",
+    },
+    h2: {
+      fontFamily: "Montserrat, sans-serif",
+    },
+    h3: {
+      fontFamily: "Montserrat, sans-serif",
+    },
+    h4: {
+      fontFamily: "Montserrat, sans-serif",
+    },
+    h5: {
+      fontFamily: "Montserrat, sans-serif",
+    },
+    h6: {
+      fontFamily: "Montserrat, sans-serif",
+    },
+    subtitle1: {
+      fontFamily: "poppins, sans-serif",
+    },
+    subtitle2: {
+      fontFamily: "poppins, sans-serif",
+    },
+    body1: {
+      fontFamily: "poppins, sans-serif",
+    },
+    body2: {
+      fontFamily: "poppins, sans-serif",
+    },
+    button: {
+      fontFamily: "poppins, sans-serif",
+    },
+    caption: {
+      fontFamily: "poppins, sans-serif",
+    },
+    overline: {
+      fontFamily: "poppins, sans-serif",
+    },
   },
   components: {
     MuiCssBaseline: {

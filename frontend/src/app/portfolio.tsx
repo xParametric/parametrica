@@ -113,7 +113,7 @@ const Portfolio = () => {
                   color="white"
                   sx={{ fontWeight: "bold" }}
                 >
-                  {Web3.utils.fromWei(portfolioValue.toString())} POLY
+                  {Web3.utils.fromWei(portfolioValue.toString())} Para
                 </Typography>
               </Box>
             </Box>

@@ -344,7 +344,7 @@ const Details = () => {
                           autoComplete="off"
                         />
                         <Typography variant="body2" sx={{ mx: 2 }}>
-                          POLY |
+                          PARA |
                         </Typography>
                         <Link
                           component="button"

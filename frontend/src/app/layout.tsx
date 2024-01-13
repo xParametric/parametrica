@@ -1,3 +1,4 @@
+"use client";
 import "./globals.css";
 import type { Metadata } from "next";
 import React from "react";
@@ -9,6 +10,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Provider } from "react-redux";
 import { DataProvider } from "@/context/DataContext";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 // import store from "@/redux/store";
 // import { ReduxProvider } from "@/redux/provider";
 // const raleway = Raleway({
@@ -28,13 +31,15 @@ const RootLayout: FC<PropsWithChildren<{}>> = ({ children }) => {
         {/* <ReduxProvider> */}{" "}
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <DataProvider>
-            <ClientLayout>
-              <Header />
-              {children}
-              <Footer />
-            </ClientLayout>
-          </DataProvider>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DataProvider>
+              <ClientLayout>
+                <Header />
+                {children}
+                <Footer />
+              </ClientLayout>
+            </DataProvider>
+          </LocalizationProvider>
         </ThemeProvider>
         {/* </ReduxProvider> */}
       </body>

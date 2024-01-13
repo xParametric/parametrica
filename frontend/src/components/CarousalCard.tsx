@@ -15,7 +15,11 @@ const CarousalCard: React.FC<MarketProps> = ({
 }) => {
   return (
     <Card sx={{ height: 330, width: 450, my: 2 }}>
-      <CardMedia sx={{ height: 170 }} image={imageHash} title="green iguana" />
+      <CardMedia
+        sx={{ height: 170 }}
+        image={imageHash || "https://source.unsplash.com/random"}
+        title="green iguana"
+      />
       <CardContent>
         <Typography variant="body1" color="text.secondary">
           {title}

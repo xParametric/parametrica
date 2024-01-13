@@ -14,7 +14,7 @@ function Navbar() {
         <div className="flex flex-row justify-between items-center h-full">
           <Link href="/" passHref>
             <span className="font-semibold text-xl cursor-pointer">
-              Polymarket
+              xParamarket
             </span>
           </Link>
           {!(pathName === "/market") && !(pathName === "/admin") && (

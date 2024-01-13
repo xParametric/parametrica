@@ -1,6 +1,14 @@
 "use client";
 import React from "react";
-import { Box, Container, Grid, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Container,
+  Grid,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
 import { MarketCard } from "../components/MarketCard";
 
@@ -8,8 +16,15 @@ import { useData } from "../context/DataContext";
 
 import { MarketProps } from "@/types";
 import { Filter } from "./Filter";
+import { useRouter } from "next/navigation";
+
+import Link from "next/link";
 
 function Markets() {
+  // const router = useRouter();
+  // const path = router.prefetch("markets");
+  // console.log(path);
+
   const { polymarket, account, loadWeb3, loading } = useData();
   const [markets, setMarkets] = useState<MarketProps[]>([]);
 
@@ -71,23 +86,46 @@ function Markets() {
       </Typography> */}
 
         <Grid container spacing={2}>
-          {markets.map((market) => (
-            <Grid item xs={12} sm={6} md={6} key={market.id}>
-              <MarketCard
-                id={market.id}
-                key={market.id}
-                title={market?.title}
-                totalAmount={market?.totalAmount}
-                totalYes={market?.totalYes}
-                totalNo={market?.totalNo}
-                imageHash={market?.imageHash}
-                userNo="0"
-                userYes="0"
-                timestamp="0"
-                endTimestamp="0"
-              />
-            </Grid>
-          ))}
+          {markets.length === 0 ? (
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                width: "100%",
+                height: "50vh",
+              }}
+            >
+              <CircularProgress />
+            </Box>
+          ) : (
+            markets.map((market) => (
+              <Grid item xs={12} sm={6} md={6} key={market.id}>
+                <MarketCard
+                  id={market.id}
+                  key={market.id}
+                  title={market?.title}
+                  totalAmount={market?.totalAmount}
+                  totalYes={market?.totalYes}
+                  totalNo={market?.totalNo}
+                  imageHash={market?.imageHash}
+                  userNo="0"
+                  userYes="0"
+                  timestamp="0"
+                  endTimestamp="0"
+                />
+              </Grid>
+            ))
+          )}
+          <Box
+            sx={{ display: "flex", justifyContent: "center", width: "100%" }}
+          >
+            <Link href="/markets">
+              <Button sx={{}} type="button" variant="contained">
+                View All
+              </Button>
+            </Link>
+          </Box>
         </Grid>
       </Box>
     </Container>

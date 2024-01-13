@@ -1,5 +1,5 @@
 "use client";
-import { create } from "ipfs-http-client";
+import { create as ipfsHttpClient } from "ipfs-http-client";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -13,17 +13,29 @@ import {
   FormControl,
   InputLabel,
   Container,
+  Card,
 } from "@mui/material";
 
 import { useData } from "@/context/DataContext";
+import { DatePicker } from "@mui/x-date-pickers";
 
 const Admin = () => {
+  const projectId = process.env.NEXT_PUBLIC_INFURA_ID;
+  const projectSecretKey = process.env.NEXT_PUBLIC_INFURA_SECRET;
+
+  const authorization = "Basic " + btoa(projectId + ":" + projectSecretKey);
+  // console.log(authorization);
+
   const router = useRouter();
   const { polymarket, loadWeb3, account } = useData!();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const client = create({ url: "https://ipfs.infura.io:5001/api/v0" });
-
+  const client = ipfsHttpClient({
+    url: "https://ipfs.infura.io:5001/api/v0",
+    headers: {
+      authorization,
+    },
+  });
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [imageHash, setImageHash] = useState("");
@@ -35,6 +47,7 @@ const Admin = () => {
       const file = e.target.files[0];
       const added = await client.add(file);
       setImageHash(added.path);
+      console.log(added.path);
     } catch (uploadError) {
       setError("Failed to upload image.");
       console.log(uploadError);
@@ -111,81 +124,94 @@ const Admin = () => {
           >
             See All Markets
           </Button>
-          <Box
-            sx={{
-              border: 1,
-              borderColor: "grey.300",
-              borderRadius: 2,
-              padding: 5,
-              width: "100%",
-            }}
-          >
-            <Typography variant="h6" sx={{ marginTop: 4, fontWeight: "bold" }}>
-              Add New Market
-            </Typography>
-            <TextField
-              label="Market Title"
-              name="title"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              variant="outlined"
-              fullWidth
-              sx={{ marginTop: 3 }}
-            />
-            <TextField
-              label="Market Description"
-              name="description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              variant="outlined"
-              multiline
-              rows={4}
-              fullWidth
-              sx={{ marginTop: 3 }}
-            />
-            <FormControl fullWidth sx={{ marginTop: 3 }}>
-              <InputLabel>Market Title Image</InputLabel>
-              <input type="file" onChange={uploadImage} />
-            </FormControl>
-            <TextField
-              label="Resolve URL"
-              name="resolverUrl"
-              value={resolverUrl}
-              onChange={(e) => setResolverUrl(e.target.value)}
-              variant="outlined"
-              fullWidth
-              sx={{ marginTop: 3 }}
-            />
-            <TextField
-              type="date"
-              label="Timestamp"
-              name="timestamp"
-              value={timestamp}
-              onChange={handleDateChange}
-              variant="outlined"
-              fullWidth
-              sx={{ marginTop: 3 }}
-            />
-            {loading ? (
+          <Card>
+            <Box
+              sx={{
+                border: 1,
+                borderColor: "grey.300",
+                borderRadius: 2,
+                padding: 5,
+                width: "100%",
+              }}
+            >
               <Typography
-                textAlign="center"
                 variant="h6"
-                sx={{ paddingTop: 3, paddingBottom: 3, fontWeight: "bold" }}
+                sx={{ marginTop: 4, fontWeight: "bold" }}
               >
-                Loading...
+                Add New Market
               </Typography>
-            ) : (
-              <Button
-                variant="contained"
-                color="success"
-                sx={{ marginTop: 5, width: "100%" }}
-                onClick={handleSubmit}
-              >
-                Create Market
-              </Button>
-            )}
-            {error && <Typography color="error">{error}</Typography>}
-          </Box>
+              <TextField
+                label="Market Title"
+                name="title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                variant="outlined"
+                fullWidth
+                sx={{ marginTop: 3 }}
+              />
+              <TextField
+                label="Market Description"
+                name="description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                variant="outlined"
+                multiline
+                rows={4}
+                fullWidth
+                sx={{ marginTop: 3 }}
+              />
+              <FormControl fullWidth sx={{ marginTop: 3 }}>
+                <InputLabel>Market Title Image</InputLabel>
+                <input type="file" onChange={uploadImage} />
+              </FormControl>
+              <TextField
+                label="Resolve URL"
+                name="resolverUrl"
+                value={resolverUrl}
+                onChange={(e) => setResolverUrl(e.target.value)}
+                variant="outlined"
+                fullWidth
+                sx={{ marginTop: 3 }}
+              />
+              <DatePicker
+                sx={{ marginTop: 3, width: "100%" }}
+                value={timestamp}
+                name="timestamp"
+                onChange={handleDateChange}
+              />
+              {/* <TextField
+                type="date"
+                name="timestamp"
+                value={timestamp}
+                onChange={handleDateChange}
+                variant="outlined"
+                fullWidth
+                sx={{
+                  marginTop: 3,
+                 
+                }}
+              /> */}
+              {loading ? (
+                <Typography
+                  textAlign="center"
+                  variant="h6"
+                  sx={{ paddingTop: 3, paddingBottom: 3, fontWeight: "bold" }}
+                >
+                  Loading...
+                </Typography>
+              ) : (
+                <Button
+                  variant="contained"
+                  color="success"
+                  sx={{ marginTop: 5, width: "100%" }}
+                  onClick={handleSubmit}
+                >
+                  Create Market
+                </Button>
+              )}
+              {error && <Typography color="error">{error}</Typography>}
+            </Box>
+          </Card>
         </Container>
       </Box>
     </>

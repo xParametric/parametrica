@@ -2,6 +2,7 @@
 import React, { useEffect } from "react";
 import Web3 from "web3";
 import { useData } from "@/context/DataContext";
+import Plotly from "plotly.js";
 
 interface Props {
   questionId: string;
@@ -59,7 +60,7 @@ const ChartContainer: React.FC<Props> = ({ questionId }) => {
       title: "YES / NO Graph",
     };
 
-    // Plotly.newPlot("myDiv", chartData, layout, { displayModeBar: false });
+    Plotly.newPlot("myDiv", chartData, layout, { displayModeBar: false });
   };
 
   useEffect(() => {

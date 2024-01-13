@@ -57,7 +57,7 @@ export const MarketCard: React.FC<MarketProps> = ({
                     parseFloat(
                       Web3.utils.fromWei(totalAmount, "ether")
                     ).toFixed(2)}{" "}
-                  POLY
+                  PARA
                 </Typography>
               </Box>
               <Box sx={{ display: "flex", flexDirection: "column", gap: 0.5 }}>
@@ -76,7 +76,7 @@ export const MarketCard: React.FC<MarketProps> = ({
                       parseFloat(Web3.utils.fromWei(totalYes, "ether")).toFixed(
                         2
                       )}{" "}
-                    POLY
+                    PARA
                   </Typography>
                 </Box>
               </Box>
@@ -96,7 +96,7 @@ export const MarketCard: React.FC<MarketProps> = ({
                       parseFloat(Web3.utils.fromWei(totalNo, "ether")).toFixed(
                         2
                       )}{" "}
-                    POLY
+                    PARA
                   </Typography>
                 </Box>
               </Box>
