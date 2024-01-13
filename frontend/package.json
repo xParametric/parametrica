@@ -42,6 +42,7 @@
     "web3": "^1.6.0"
   },
   "devDependencies": {
+    "@types/plotly.js": "^2.12.32",
     "encoding": "^0.1.13",
     "lokijs": "^1.5.12",
     "pino-pretty": "^10.0.0"
