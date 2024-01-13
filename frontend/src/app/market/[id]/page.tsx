@@ -8,7 +8,7 @@ import { useParams } from "next/navigation";
 import React, { useCallback, useEffect, useState } from "react";
 import Web3 from "web3";
 import ChartContainer from "../../../components/Chart/ChartContainer";
-// import Navbar from "../../../components/Navbar";
+
 import { useData } from "@/context/DataContext";
 // import Link from "next/link";
 import {

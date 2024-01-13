@@ -5,9 +5,9 @@ import { Box, Card, TextField, Typography } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
 import { Filter } from "../components/Filter";
 import { MarketCard } from "../components/MarketCard";
-// import Navbar from "../components/Navbar";
+
 import { useData } from "../context/DataContext";
-// import styles from "../styles/Home.module.css";
+
 import { MarketProps } from "@/types";
 import LandingPageCarousal from "@/components/LandingPageCarousal";
 import Markets from "@/components/Markets";
