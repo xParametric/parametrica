@@ -1,7 +1,7 @@
 "use client";
-import { create as ipfsHttpClient } from "ipfs-http-client";
+// import { create as ipfsHttpClient } from "ipfs-http-client";
 import Head from "next/head";
-import Link from "next/link";
+// import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState, useEffect } from "react";
 
@@ -19,7 +19,7 @@ import {
 import { useData } from "@/context/DataContext";
 import { DatePicker } from "@mui/x-date-pickers";
 
-const Admin = () => {
+export function Admin() {
   const projectId = process.env.NEXT_PUBLIC_INFURA_ID;
   const projectSecretKey = process.env.NEXT_PUBLIC_INFURA_SECRET;
 
@@ -30,29 +30,29 @@ const Admin = () => {
   const { polymarket, loadWeb3, account } = useData!();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const client = ipfsHttpClient({
-    url: "https://ipfs.infura.io:5001/api/v0",
-    headers: {
-      authorization,
-    },
-  });
+  // const client = ipfsHttpClient({
+  //   url: "https://ipfs.infura.io:5001/api/v0",
+  //   headers: {
+  //     authorization,
+  //   },
+  // });
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [imageHash, setImageHash] = useState("");
   const [resolverUrl, setResolverUrl] = useState("");
   const [timestamp, setTimestamp] = useState("");
 
-  const uploadImage = async (e: any) => {
-    try {
-      const file = e.target.files[0];
-      const added = await client.add(file);
-      setImageHash(added.path);
-      console.log(added.path);
-    } catch (uploadError) {
-      setError("Failed to upload image.");
-      console.log(uploadError);
-    }
-  };
+  // const uploadImage = async (e: any) => {
+  //   try {
+  //     const file = e.target.files[0];
+  //     const added = await client.add(file);
+  //     setImageHash(added.path);
+  //     console.log(added.path);
+  //   } catch (uploadError) {
+  //     setError("Failed to upload image.");
+  //     console.log(uploadError);
+  //   }
+  // };
 
   useEffect(() => {
     const initWeb3 = async () => {
@@ -162,7 +162,7 @@ const Admin = () => {
               />
               <FormControl fullWidth sx={{ marginTop: 3 }}>
                 <InputLabel>Market Title Image</InputLabel>
-                <input type="file" onChange={uploadImage} />
+                {/* <input type="file" onChange={uploadImage} /> */}
               </FormControl>
               <TextField
                 label="Resolve URL"
@@ -216,6 +216,4 @@ const Admin = () => {
       </Box>
     </>
   );
-};
-
-export default Admin;
+}
