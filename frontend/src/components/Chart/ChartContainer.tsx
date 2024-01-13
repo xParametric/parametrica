@@ -68,9 +68,9 @@ const ChartContainer: React.FC<Props> = ({ questionId }) => {
   });
 
   return (
-    <>
+    <div className="">
       <div id="myDiv"></div>
-    </>
+    </div>
   );
 };
 
