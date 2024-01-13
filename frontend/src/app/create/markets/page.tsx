@@ -55,7 +55,7 @@ const Markets: React.FC = () => {
         </Head>
         {/* <Navbar /> */}
         <Box sx={{ width: "100%", maxWidth: "5xl", margin: "auto" }}>
-          <Link href="/admin" passHref>
+          <Link href="/create" passHref>
             <Button
               variant="contained"
               color="primary"

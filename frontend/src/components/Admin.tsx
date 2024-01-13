@@ -1,10 +1,8 @@
 "use client";
-// import { create as ipfsHttpClient } from "ipfs-http-client";
-import Head from "next/head";
-// import Link from "next/link";
+import { useData } from "@/context/DataContext";
 import { useRouter } from "next/navigation";
-import React, { useState, useEffect } from "react";
-
+import React, { useEffect, useState } from "react";
+import Head from "next/head";
 import {
   Box,
   Button,
@@ -16,10 +14,9 @@ import {
   Card,
 } from "@mui/material";
 
-import { useData } from "@/context/DataContext";
 import { DatePicker } from "@mui/x-date-pickers";
 
-export function Admin() {
+function Admin() {
   const projectId = process.env.NEXT_PUBLIC_INFURA_ID;
   const projectSecretKey = process.env.NEXT_PUBLIC_INFURA_SECRET;
 
@@ -120,7 +117,7 @@ export function Admin() {
             variant="outlined"
             color="primary"
             sx={{ marginTop: 5, marginBottom: 5, width: "100%" }}
-            onClick={() => router.push("/admin/markets")}
+            onClick={() => router.push("/create/markets")}
           >
             See All Markets
           </Button>
@@ -180,17 +177,17 @@ export function Admin() {
                 onChange={handleDateChange}
               />
               {/* <TextField
-                type="date"
-                name="timestamp"
-                value={timestamp}
-                onChange={handleDateChange}
-                variant="outlined"
-                fullWidth
-                sx={{
-                  marginTop: 3,
-                 
-                }}
-              /> */}
+                  type="date"
+                  name="timestamp"
+                  value={timestamp}
+                  onChange={handleDateChange}
+                  variant="outlined"
+                  fullWidth
+                  sx={{
+                    marginTop: 3,
+                   
+                  }}
+                /> */}
               {loading ? (
                 <Typography
                   textAlign="center"
@@ -217,3 +214,5 @@ export function Admin() {
     </>
   );
 }
+
+export default Admin;

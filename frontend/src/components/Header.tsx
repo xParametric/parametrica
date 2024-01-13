@@ -145,7 +145,7 @@ function Header() {
               </Link>
             ))}
           </Box>
-          <Link href="/admin">
+          <Link href="/create">
             <Button sx={{ mx: 1 }}>
               <AddBoxIcon /> Create
             </Button>
