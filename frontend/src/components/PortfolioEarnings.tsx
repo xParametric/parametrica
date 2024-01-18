@@ -2,8 +2,6 @@
 import React from "react";
 import dynamic from "next/dynamic";
 
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
-
 const PortfolioEarnings = () => {
   function generateDayWiseTimeSeries(baseval: any, count: any, yrange: any) {
     var i = 0;
@@ -120,7 +118,7 @@ const PortfolioEarnings = () => {
 
   return (
     <>
-      <Chart
+      {/* <Chart
         options={options1.options}
         series={options1.series}
         type="area"
@@ -131,7 +129,7 @@ const PortfolioEarnings = () => {
         series={options2.series}
         type="bar"
         height={200}
-      />
+      /> */}
     </>
   );
 };

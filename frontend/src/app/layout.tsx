@@ -7,13 +7,8 @@ import theme from "@/styles/theme";
 import { ThemeProvider, CssBaseline } from "@mui/material";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Provider } from "react-redux";
 import { DataProvider } from "@/context/DataContext";
-// import store from "@/redux/store";
-// import { ReduxProvider } from "@/redux/provider";
-// const raleway = Raleway({
-//   subsets: ["latin"],
-// });
+import { LocalizationProviderWrapper } from "@/lib/LocalizationProviderWrapper";
 
 export const metadata: Metadata = {
   title: "Parametrica",
@@ -25,18 +20,18 @@ const RootLayout: FC<PropsWithChildren<{}>> = ({ children }) => {
   return (
     <html lang="en">
       <body>
-        {/* <ReduxProvider> */}{" "}
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <DataProvider>
-            <ClientLayout>
-              <Header />
-              {children}
-              <Footer />
-            </ClientLayout>
-          </DataProvider>
+          <LocalizationProviderWrapper>
+            <DataProvider>
+              <ClientLayout>
+                <Header />
+                {children}
+                <Footer />
+              </ClientLayout>
+            </DataProvider>
+          </LocalizationProviderWrapper>
         </ThemeProvider>
-        {/* </ReduxProvider> */}
       </body>
     </html>
   );

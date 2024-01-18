@@ -2,7 +2,6 @@
 import React from "react";
 import { Box, Button } from "@mui/material";
 import FilterListIcon from "@mui/icons-material/FilterList";
-import StateFilter from "./StateFilter";
 
 const FilterMarkets = () => {
   return (
@@ -14,7 +13,6 @@ const FilterMarkets = () => {
       >
         filter
       </Button>
-      {/* <StateFilter /> */}
     </Box>
   );
 };

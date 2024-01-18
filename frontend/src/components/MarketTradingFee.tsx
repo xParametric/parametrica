@@ -3,35 +3,9 @@ import React from "react";
 
 import dynamic from "next/dynamic";
 
-// interface MarketTradingFeeProps {
-//   questionId: number;
-// }
 const PercentIcon = dynamic(() => import("@mui/icons-material/Percent"));
 
 const MarketTradingFee = () => {
-  // const question = useSelector((state: RootState) => {
-  //   const selectedQuestion = state.questions.questionsData.find(
-  //     (q) => q.id === questionId
-  //   );
-  //   return selectedQuestion;
-  // });
-
-  // if (!question) {
-  //   // Handle the case when the question is not found
-  //   return null;
-  // }
-
-  // // Format the trading fee as a percentage with 2 decimal places
-  // const formattedTradingFee = `${(question.tradingFee * 100).toFixed(2)}%`;
-
-  // // Determine the color based on the trading fee value
-  // const textColor =
-  //   question.tradingFee > 0
-  //     ? "green"
-  //     : question.tradingFee < 0
-  //     ? "red"
-  //     : "black";
-
   return (
     <Box display="flex" alignItems="center">
       <Tooltip title="Trading Fee" aria-label="Trading Fee">

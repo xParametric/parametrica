@@ -71,7 +71,7 @@ export const AdminMarketCard: React.FC<Props> = ({
                   parseFloat(Web3.utils.fromWei(totalAmount, "ether")).toFixed(
                     2
                   )}{" "}
-                POLY
+                PARA
               </Typography>
             </Box>
             <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>

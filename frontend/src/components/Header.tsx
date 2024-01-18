@@ -3,6 +3,10 @@ import React, { useState, MouseEvent } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import Link from "next/link";
 import { ConnectKitButton } from "connectkit";
+import LeaderboardIcon from "@mui/icons-material/Leaderboard";
+import LocalGroceryStoreIcon from "@mui/icons-material/LocalGroceryStore";
+import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
+import AddBoxIcon from "@mui/icons-material/AddBox";
 import {
   AppBar,
   Avatar,
@@ -15,9 +19,15 @@ import {
   MenuItem,
   Button,
   Tooltip,
+  Icon,
 } from "@mui/material";
 
-const pages = ["markets", "portfolio", "leaderboard"];
+const pages = [
+  { name: "markets", icon: <LocalGroceryStoreIcon /> },
+  { name: "portfolio", icon: <AccountBalanceWalletIcon /> },
+  { name: "leaderboard", icon: <LeaderboardIcon /> },
+];
+
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function Header() {
@@ -79,12 +89,16 @@ function Header() {
             >
               {pages.map((page) => (
                 <MenuItem
-                  key={page}
+                  key={page.name}
                   onClick={handleCloseNavMenu}
                   sx={{ textTransform: "capitalize" }}
                 >
-                  <Link href={`/${page}`} key={page}>
-                    <Typography textAlign="center">{page}</Typography>
+                  <Link href={`/${page.name}`} key={page.name}>
+                    <Box sx={{ display: "flex", alignItems: "center" }}>
+                      <Icon fontSize={"small"}> {page.icon}</Icon>
+
+                      <Typography textAlign="center">{page.name}</Typography>
+                    </Box>
                   </Link>
                 </MenuItem>
               ))}
@@ -116,18 +130,26 @@ function Header() {
           </Link>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
-              <Link href={`/${page}`} key={page}>
+              <Link href={`/${page.name}`} key={page.name}>
                 <Button
-                  key={page}
+                  key={page.name}
                   onClick={handleCloseNavMenu}
                   sx={{ my: 2, display: "block" }}
                 >
-                  {page}
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                    {/* <Typography fontSize={"small"}> {page.icon}</Typography> */}
+
+                    <Typography textAlign="center">{page.name}</Typography>
+                  </Box>
                 </Button>
               </Link>
             ))}
           </Box>
-
+          <Link href="/create">
+            <Button sx={{ mx: 1 }}>
+              <AddBoxIcon /> Create
+            </Button>
+          </Link>
           <ConnectKitButton />
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">

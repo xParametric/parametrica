@@ -31,9 +31,6 @@ const PorfolioTotalBalance: React.FC = () => {
             <Typography variant="h4" component="div" fontWeight={600} my={1}>
               $4498650
             </Typography>
-            {/* <Typography variant="subtitle1" color={"primary.main"}>
-        Total Balance
-      </Typography> */}
           </Grid>
           <Grid item>
             <Box

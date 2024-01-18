@@ -8,7 +8,7 @@ import { useParams } from "next/navigation";
 import React, { useCallback, useEffect, useState } from "react";
 import Web3 from "web3";
 import ChartContainer from "../../../components/Chart/ChartContainer";
-// import Navbar from "../../../components/Navbar";
+
 import { useData } from "@/context/DataContext";
 // import Link from "next/link";
 import {
@@ -245,8 +245,11 @@ const Details = () => {
             >
               <Grid container spacing={2}>
                 <Grid item xs={12} md={8}>
-                  <StyledPaper sx={{ width: "100%", height: 400 }}>
-                    <ChartContainer questionId={market?.id ?? "0"} />
+                  <StyledPaper sx={{ width: "100%", height: "100%" }}>
+                    <Box sx={{ width: "100%", height: "100%" }}>
+                      {" "}
+                      <ChartContainer questionId={market?.id ?? "0"} />
+                    </Box>
                   </StyledPaper>
                 </Grid>
 
@@ -344,7 +347,7 @@ const Details = () => {
                           autoComplete="off"
                         />
                         <Typography variant="body2" sx={{ mx: 2 }}>
-                          POLY |
+                          PARA |
                         </Typography>
                         <Link
                           component="button"
@@ -391,7 +394,7 @@ const Details = () => {
                 >
                   Description
                 </Typography>
-                <Typography sx={{ mb: 2 }} color={"primary.contrastText"}>
+                <Typography sx={{ mb: 2 }} color={"primary"}>
                   {market?.description}
                 </Typography>
 
@@ -399,7 +402,7 @@ const Details = () => {
                   <Typography
                     variant="body1"
                     sx={{ fontWeight: "bold" }}
-                    color={"primary.contrastText"}
+                    color={"primary"}
                   >
                     Resolution Source:
                   </Typography>

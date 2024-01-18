@@ -3,7 +3,7 @@ import Head from "next/head";
 import Link from "next/link";
 import React, { useCallback, useEffect, useState } from "react";
 import { AdminMarketCard } from "../../../components/AdminMarketCard";
-import Navbar from "../../../components/Navbar";
+
 import { useData } from "@/context/DataContext";
 import { Box, Button, Grid } from "@mui/material";
 import { MarketProps } from "@/types";
@@ -55,7 +55,7 @@ const Markets: React.FC = () => {
         </Head>
         {/* <Navbar /> */}
         <Box sx={{ width: "100%", maxWidth: "5xl", margin: "auto" }}>
-          <Link href="/admin" passHref>
+          <Link href="/create" passHref>
             <Button
               variant="contained"
               color="primary"
