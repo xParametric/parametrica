@@ -12,7 +12,7 @@ export interface MarketProps {
   userNo?: string;
   timestamp?: string;
   description?: string;
-  endTimestamp?: number; // Change this to number if endTimestamp is a number
+  endTimestamp?: string;
   resolverUrl?: string;
 }
 export interface QuestionsProps {
