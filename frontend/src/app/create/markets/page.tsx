@@ -79,7 +79,7 @@ const Markets: React.FC = () => {
                     id={market.id}
                     imageHash={market?.imageHash}
                     title={market?.title}
-                    totalAmount={market?.totalAmount}
+                    totalAmount={market?.totalAmount?.toString()}
                     onYes={async () => {
                       await polymarket.methods
                         .distributeWinningAmount(market.id, true)

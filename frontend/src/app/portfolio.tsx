@@ -1,3 +1,4 @@
+import { BigNumber } from "bignumber.js";
 import React, { useCallback, useEffect, useState } from "react";
 import Web3 from "web3";
 import { PortfolioMarketCard } from "../components/PortfolioMarketCard";
@@ -64,9 +65,19 @@ const Portfolio = () => {
       var question = allQuestions.find((item) => item.id == dataArray[i].id);
       dataArray[i].title = question!.title;
       dataArray[i].imageHash = question!.imageHash;
-      dataArray[i].totalAmount = question!.totalAmount;
-      dataArray[i].totalYes = question!.totalYes;
-      dataArray[i].totalNo = question!.totalNo!;
+
+      for (var i = 0; i < dataArray.length; i++) {
+        var question = allQuestions.find((item) => item.id == dataArray[i].id);
+        dataArray[i].title = question!.title;
+        dataArray[i].imageHash = question!.imageHash;
+        dataArray[i].hasResolved = question!.hasResolved;
+        dataArray[i].endTimestamp = question!.endTimestamp;
+        if (question) {
+          dataArray[i].totalAmount = new BigNumber(question.totalAmount);
+          dataArray[i].totalYes = new BigNumber(question.totalYes);
+          dataArray[i].totalNo = new BigNumber(question.totalNo);
+        }
+      }
       dataArray[i].hasResolved = question!.hasResolved;
       dataArray[i].endTimestamp = question!.endTimestamp;
     }
@@ -104,7 +115,7 @@ const Portfolio = () => {
                   color="white"
                   sx={{ fontWeight: "bold" }}
                 >
-                  {Web3.utils.fromWei(portfolioValue.toString())} Para
+                  {Web3.utils.fromWei(portfolioValue.toString(), "ether")} Para
                 </Typography>
               </Box>
             </Box>

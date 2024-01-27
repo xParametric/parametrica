@@ -1,36 +1,36 @@
 import BigNumber from "bignumber.js";
 
 export interface MarketProps {
-  id: string;
-  title?: string;
-  imageHash?: string;
+  id: any;
+  title?: any;
+  imageHash?: any;
   totalAmount?: BigNumber;
   totalYes?: BigNumber;
   totalNo?: BigNumber;
-  userYes?: string;
+  userYes?: any;
   hasResolved?: boolean;
-  userNo?: string;
-  timestamp?: string;
-  description?: string;
-  endTimestamp?: string;
-  resolverUrl?: string;
+  userNo?: any;
+  timestamp?: any;
+  description?: any;
+  endTimestamp?: any;
+  resolverUrl?: any;
 }
 export interface QuestionsProps {
-  id: string;
-  title?: string;
-  imageHash?: string;
-  totalAmount?: string;
-  totalYes?: string;
-  totalNo?: string;
+  id: any;
+  title?: any;
+  imageHash?: any;
+  totalAmount?: any;
+  totalYes?: any;
+  totalNo?: any;
   hasResolved?: boolean;
-  endTimestamp?: string;
+  endTimestamp?: any;
 }
 
 // export interface MarketProps {
-//     id: string;
-//     title: string;
-//     imageHash: string;
-//     totalAmount: string;
-//     totalYes: string;
-//     totalNo: string;
+//     id: any;
+//     title: any;
+//     imageHash: any;
+//     totalAmount: any;
+//     totalYes: any;
+//     totalNo: any;
 //   }

@@ -41,7 +41,7 @@ export const PortfolioMarketCard: React.FC<MarketProps> = ({
               Amount Added
             </span>
             <span className="text-base">
-              {userYes && Web3.utils.fromWei(userYes ?? userNo)} POLY
+              {userYes && Web3.utils.fromWei(userYes ?? userNo, "ether")} POLY
             </span>
           </div>
           <div className="flex flex-col space-y-1">
