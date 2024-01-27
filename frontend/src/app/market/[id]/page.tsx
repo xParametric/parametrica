@@ -1,4 +1,6 @@
 "use client";
+
+import BigNumber from "bignumber.js";
 import moment from "moment";
 import Head from "next/head";
 
@@ -84,21 +86,30 @@ const Details = () => {
   const [input, setInput] = useState("");
 
   const getMarketData = useCallback(async () => {
-    var data = await polymarket.methods.questions(id).call({ from: account });
-    setMarket({
-      id: data.id,
-      title: data.question,
-      imageHash: data.creatorImageHash,
-      totalAmount: data?.totalAmount && parseInt(data?.totalAmount),
-      totalYes: data?.totalYesAmount && parseInt(data?.totalYesAmount),
-      totalNo: data?.totalNoAmount && parseInt(data?.totalNoAmount),
-      description: data?.description && data?.description,
-      endTimestamp: data?.endTimestamp && parseInt(data?.endTimestamp),
-      resolverUrl: data?.resolverUrl && data?.resolverUrl,
-    });
-    setDataLoading(false);
-  }, [account, id, polymarket]);
+    try {
+      const data = await polymarket.methods
+        .questions(id)
+        .call({ from: account });
 
+      const marketData = {
+        id: data.id,
+        title: data.question,
+        imageHash: data.creatorImageHash,
+        totalAmount: new BigNumber(data?.totalAmount || 0),
+        totalYes: new BigNumber(data?.totalYesAmount || 0),
+        totalNo: new BigNumber(data?.totalNoAmount || 0),
+        description: data?.description || "",
+        endTimestamp: data?.endTimestamp ? data.endTimestamp.toString() : "0",
+        resolverUrl: data?.resolverUrl || "",
+      };
+
+      setMarket(marketData);
+      setDataLoading(false);
+    } catch (error) {
+      console.error("Error fetching market data:", error);
+      setDataLoading(false);
+    }
+  }, [account, id, polymarket]);
   const handleTrade = async () => {
     var bal = await polyToken.methods.balanceOf(account).call();
     setButton("Please wait");
@@ -209,9 +220,9 @@ const Details = () => {
                   </Typography>
                   <Typography variant="body1">
                     {market?.endTimestamp
-                      ? moment(
-                          parseInt(market?.endTimestamp).toFixed(0)
-                        ).format("MMMM D, YYYY")
+                      ? moment(market.endTimestamp.toString()).format(
+                          "MMMM D, YYYY"
+                        )
                       : "N/A"}
                   </Typography>
                 </Paper>
@@ -229,13 +240,11 @@ const Details = () => {
                     Total Volume
                   </Typography>
                   <Typography variant="body1">
-                    {(market?.totalAmount &&
-                      Web3.utils.fromWei(
-                        market?.totalAmount.toString() ?? "0",
-                        "ether"
-                      )) ??
-                      0}{" "}
-                    POLY
+                    {market?.totalAmount
+                      ? market.totalAmount
+                          .dividedBy(new BigNumber(10).pow(18)) // Assuming the totalAmount is in Wei
+                          .toFixed() + " POLY"
+                      : "0 POLY"}
                   </Typography>
                 </Paper>
               </Box>
@@ -284,10 +293,10 @@ const Details = () => {
                         <Typography variant="subtitle2">
                           YES{" "}
                           {market?.totalAmount && market?.totalYes
-                            ? (
-                                (parseInt(market?.totalYes) * 100) /
-                                parseInt(market?.totalAmount)
-                              ).toFixed(2)
+                            ? market.totalYes
+                                .times(100)
+                                .dividedBy(market.totalAmount)
+                                .toFixed(2)
                             : "0"}
                           %
                         </Typography>
@@ -310,10 +319,10 @@ const Details = () => {
                         <Typography variant="subtitle2">
                           NO{" "}
                           {market?.totalAmount && market?.totalNo
-                            ? (
-                                (parseInt(market?.totalNo) * 100) /
-                                parseInt(market?.totalAmount)
-                              ).toFixed(2)
+                            ? market.totalNo
+                                .times(100)
+                                .dividedBy(market.totalAmount)
+                                .toFixed(2)
                             : "0"}
                           %
                         </Typography>
