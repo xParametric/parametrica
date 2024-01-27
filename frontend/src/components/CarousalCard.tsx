@@ -30,14 +30,14 @@ const CarousalCard: React.FC<MarketProps> = ({
             variant="outlined"
             sx={{ border: 1, borderColor: "#0ECB81" }}
           >
-            Yes ${totalYes}
+            {"Yes " + totalYes}
           </Button>
           <Button
             size="small"
             variant="outlined"
             sx={{ border: 1, borderColor: "#DC4155" }}
           >
-            No ${totalNo}
+            {"No" + totalNo}
           </Button>
         </CardActions>
       </CardContent>

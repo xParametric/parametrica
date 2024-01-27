@@ -55,8 +55,8 @@ export const MarketCard: React.FC<MarketProps> = ({
                 <Typography variant="body2">
                   {totalAmount &&
                     parseFloat(
-                      Web3.utils.fromWei(totalAmount, "ether")
-                    ).toFixed(2)}{" "}
+                      Web3.utils.fromWei(totalAmount.toString(), "ether")
+                    ).toFixed(2)}
                   PARA
                 </Typography>
               </Box>
@@ -73,9 +73,9 @@ export const MarketCard: React.FC<MarketProps> = ({
                 >
                   <Typography variant="caption" color="primary.main">
                     {totalYes &&
-                      parseFloat(Web3.utils.fromWei(totalYes, "ether")).toFixed(
-                        2
-                      )}{" "}
+                      parseFloat(
+                        Web3.utils.fromWei(totalYes.toString(), "ether")
+                      ).toFixed(2)}{" "}
                     PARA
                   </Typography>
                 </Box>
@@ -93,9 +93,9 @@ export const MarketCard: React.FC<MarketProps> = ({
                 >
                   <Typography variant="caption" color="primary.main">
                     {totalNo &&
-                      parseFloat(Web3.utils.fromWei(totalNo, "ether")).toFixed(
-                        2
-                      )}{" "}
+                      parseFloat(
+                        Web3.utils.fromWei(totalNo.toString(), "ether")
+                      ).toFixed(2)}{" "}
                     PARA
                   </Typography>
                 </Box>
