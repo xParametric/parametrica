@@ -1,18 +1,13 @@
 "use client";
 
 import BigNumber from "bignumber.js";
-import moment from "moment";
 import Head from "next/head";
-
-import Image from "next/image";
 import { useParams } from "next/navigation";
-
 import React, { useCallback, useEffect, useState } from "react";
 import Web3 from "web3";
 import ChartContainer from "../../../components/Chart/ChartContainer";
 
 import { useData } from "@/context/DataContext";
-// import Link from "next/link";
 import {
   Paper,
   Box,
@@ -29,6 +24,7 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { MarketProps } from "@/types";
+import { convertToLocalTime } from "@/lib/DateTimeFormatter";
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(2),
@@ -100,9 +96,10 @@ const Details = () => {
         totalNo: new BigNumber(data?.totalNoAmount || 0),
         description: data?.description || "",
         endTimestamp: data?.endTimestamp ? data.endTimestamp.toString() : "0",
+
         resolverUrl: data?.resolverUrl || "",
       };
-
+      console.log("marketData", marketData);
       setMarket(marketData);
       setDataLoading(false);
     } catch (error) {
@@ -142,7 +139,7 @@ const Details = () => {
       if (!loading) getMarketData();
     });
   }, [loading]);
-
+  console.log(polyToken, "polyToken");
   return (
     <div>
       <Head>
@@ -220,9 +217,7 @@ const Details = () => {
                   </Typography>
                   <Typography variant="body1">
                     {market?.endTimestamp
-                      ? moment(market.endTimestamp.toString()).format(
-                          "MMMM D, YYYY"
-                        )
+                      ? convertToLocalTime(market.endTimestamp)
                       : "N/A"}
                   </Typography>
                 </Paper>

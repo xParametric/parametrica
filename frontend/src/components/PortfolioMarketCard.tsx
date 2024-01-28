@@ -1,3 +1,4 @@
+import { currentDateTime } from "@/lib/DateTimeFormatter";
 import { MarketProps } from "@/types";
 import moment from "moment";
 import Image from "next/image";
@@ -13,7 +14,9 @@ export const PortfolioMarketCard: React.FC<MarketProps> = ({
   endTimestamp,
 }) => {
   var endingOn = endTimestamp && moment(parseInt(endTimestamp));
-  var now = moment(new Date()); //todays date
+  var now = currentDateTime;
+  console.log("endingOn", now);
+
   var daysLeft =
     endingOn && moment.duration(endingOn.diff(now)).asDays().toFixed(0);
   return (
