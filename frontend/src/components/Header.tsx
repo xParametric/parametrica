@@ -2,7 +2,7 @@
 import React, { useState, MouseEvent } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import Link from "next/link";
-import { ConnectKitButton } from "connectkit";
+// import { ConnectKitButton } from "connectkit";
 import LeaderboardIcon from "@mui/icons-material/Leaderboard";
 import LocalGroceryStoreIcon from "@mui/icons-material/LocalGroceryStore";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
