@@ -43,7 +43,8 @@ export const AdminMarketCard: React.FC<Props> = ({
             }}
           >
             <Avatar
-              src={`https://ipfs.infura.io/ipfs/${imageHash}`}
+              // src={`https://ipfs.infura.io/ipfs/${market?.imageHash}`}
+              src={"/"}
               sx={{ width: 55, height: 55 }}
               alt="Image Hash"
             />

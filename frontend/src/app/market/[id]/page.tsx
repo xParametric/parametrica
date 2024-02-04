@@ -177,7 +177,8 @@ const Details = () => {
             >
               <Box style={{ display: "flex", flexDirection: "row" }}>
                 <Avatar
-                  src={`https://ipfs.infura.io/ipfs/${market?.imageHash}`}
+                  // src={`https://ipfs.infura.io/ipfs/${market?.imageHash}`}
+                  src={"/"}
                   style={{ width: "55px", height: "55px", marginRight: "16px" }}
                   alt="Market"
                 />

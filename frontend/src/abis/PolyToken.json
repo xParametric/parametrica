@@ -13826,12 +13826,12 @@
     "11155111": {
       "events": {},
       "links": {},
-      "address": "0x012D7B0d874b18dcc15B732F07310F64CE9F2bAc",
-      "transactionHash": "0xdc285b76923028f12ef3ee85cad2f96ed2c67876eb41413a739f0ffca3dad857"
+      "address": "0x71728cD356A0C7a52eF4b0Fc1bcDC540546D84CD",
+      "transactionHash": "0x12fd015567846122ff6214282cfe057d0e6674a00e0fc3da9639f286dc56353e"
     }
   },
   "schemaVersion": "3.4.16",
-  "updatedAt": "2024-01-28T17:38:28.125Z",
+  "updatedAt": "2024-02-03T00:32:48.309Z",
   "devdoc": {
     "events": {
       "Approval(address,address,uint256)": {
