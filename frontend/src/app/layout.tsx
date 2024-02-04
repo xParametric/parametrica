@@ -1,7 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import React from "react";
-import ClientLayout from "./Web3Provider";
+// import ClientLayout from "./Web3Provider";
 import { FC, PropsWithChildren } from "react";
 import theme from "@/styles/theme";
 import { ThemeProvider, CssBaseline } from "@mui/material";
@@ -9,6 +9,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { DataProvider } from "@/context/DataContext";
 import { LocalizationProviderWrapper } from "@/lib/LocalizationProviderWrapper";
+// import { ThirdwebSDKProvider } from "@thirdweb-dev/react";
+import ThirdwebProviderWrapper from "@/components/ThirdwebProvider";
 
 export const metadata: Metadata = {
   title: "Parametrica",
@@ -20,18 +22,23 @@ const RootLayout: FC<PropsWithChildren<{}>> = ({ children }) => {
   return (
     <html lang="en">
       <body>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <LocalizationProviderWrapper>
-            <DataProvider>
-              <ClientLayout>
+        <ThirdwebProviderWrapper
+
+        // signer={new ethers.providers.Web3Provider(window.ethereum).getSigner()}
+        >
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <LocalizationProviderWrapper>
+              <DataProvider>
+                {/* <ClientLayout> */}
                 <Header />
                 {children}
                 <Footer />
-              </ClientLayout>
-            </DataProvider>
-          </LocalizationProviderWrapper>
-        </ThemeProvider>
+                {/* </ClientLayout> */}
+              </DataProvider>
+            </LocalizationProviderWrapper>
+          </ThemeProvider>
+        </ThirdwebProviderWrapper>
       </body>
     </html>
   );
