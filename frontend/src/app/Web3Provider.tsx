@@ -1,71 +1,44 @@
 "use client";
-
-import { SiweMessage } from "siwe";
-import { APP_NAME } from "@/lib/consts";
-import { FC, PropsWithChildren } from "react";
-import { WagmiConfig, createConfig, sepolia } from "wagmi";
+import { useMemo } from "react";
 
 import {
-  ConnectKitProvider,
-  SIWEConfig,
-  SIWEProvider,
-  getDefaultConfig,
-} from "connectkit";
+  ConnectWallet,
+  darkTheme,
+  useBalance,
+  useChain,
+  useAddress,
+} from "@thirdweb-dev/react";
+import { useEffect } from "react";
 
-const chains = [sepolia];
-const config = createConfig(
-  getDefaultConfig({
-    appName: APP_NAME,
-    infuraId: process.env.NEXT_PUBLIC_INFURA_ID,
-    walletConnectProjectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!,
-    chains,
-  })
-);
+function ConnectWalletButton() {
+  const { data, isLoading } = useBalance();
+  const address = useAddress();
+  const chain = useChain();
 
-const siweConfig = {
-  getNonce: async () => {
-    const res = await fetch(`/api/siwe`, { method: "PUT" });
-    if (!res.ok) throw new Error("Failed to fetch SIWE nonce");
+  const account = useMemo(() => {
+    return {
+      balance: data,
+      address: address,
+      chain: chain,
+    };
+  }, [data, address, chain]);
 
-    return res.text();
-  },
-  createMessage: ({ nonce, address, chainId }) => {
-    return new SiweMessage({
-      nonce,
-      chainId,
-      address,
-      version: "1",
-      uri: window.location.origin,
-      domain: window.location.host,
-      statement: "Sign In With Ethereum to prove you control this wallet.",
-    }).prepareMessage();
-  },
-  verifyMessage: ({ message, signature }) => {
-    return fetch(`/api/siwe`, {
-      method: "POST",
-      body: JSON.stringify({ message, signature }),
-      headers: { "Content-Type": "application/json" },
-    }).then((res) => res.ok);
-  },
+  return (
+    <div>
+      <ConnectWallet
+        theme={darkTheme({
+          colors: {
+            accentText: "#bdff00",
+            accentButtonBg: "#bdff00",
+          },
+        })}
+        switchToActiveChain={true}
+        modalSize={"wide"}
+        welcomeScreen={{}}
+        modalTitleIconUrl={""}
+      />
+    </div>
+  );
+}
 
-  getSession: async () => {
-    const res = await fetch(`/api/siwe`);
-    if (!res.ok) throw new Error("Failed to fetch SIWE session");
-
-    const { address, chainId } = await res.json();
-
-    return address && chainId ? { address, chainId } : null;
-  },
-
-  signOut: () => fetch(`/api/siwe`, { method: "DELETE" }).then((res) => res.ok),
-} satisfies SIWEConfig;
-
-const Web3Provider: FC<PropsWithChildren<{}>> = ({ children }) => (
-  <WagmiConfig config={config}>
-    <SIWEProvider {...siweConfig}>
-      <ConnectKitProvider theme="nouns">{children}</ConnectKitProvider>
-    </SIWEProvider>
-  </WagmiConfig>
-);
-
-export default Web3Provider;
+export default ConnectWalletButton;

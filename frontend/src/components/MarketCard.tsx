@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import React from "react";
 import Web3 from "web3";
@@ -35,7 +36,8 @@ export const MarketCard: React.FC<MarketProps> = ({
               }}
             >
               <Avatar
-                src={`https://ipfs.infura.io/ipfs/${imageHash}`}
+                // src={`https://ipfs.infura.io/ipfs/${market?.imageHash}`}
+                src={"/"}
                 sx={{ width: 48, height: 48 }}
                 alt="Image Hash"
               />

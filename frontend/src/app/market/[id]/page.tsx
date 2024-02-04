@@ -25,6 +25,7 @@ import {
 import { styled } from "@mui/material/styles";
 import { MarketProps } from "@/types";
 import { convertToLocalTime } from "@/lib/DateTimeFormatter";
+import { useTokenBalance } from "../../hooks/getBalance";
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(2),
@@ -72,6 +73,22 @@ const ResolutionSourceTypography = styled(Typography)(({ theme }) => ({
 
 const Details = () => {
   const { id } = useParams();
+  const tokenAddress = "0x71728cD356A0C7a52eF4b0Fc1bcDC540546D84CD";
+  const { data: ParaToken, isLoading, error } = useTokenBalance(tokenAddress);
+
+  // console.log("balance", balance);
+
+  // // if (isLoading) {
+  // //   return <div>Loading...</div>;
+  // // }
+
+  // if (error) {
+  //   console.log("error", error);
+
+  //   return <>{`Error: ${error}`}</>;
+  // }
+
+  console.log("ParaTokenObject", ParaToken);
 
   const { polymarket, account, loadWeb3, loading, polyToken } = useData();
   const [market, setMarket] = useState<MarketProps>();
@@ -133,13 +150,26 @@ const Details = () => {
     await getMarketData();
     setButton("Trade");
   };
-
   useEffect(() => {
     loadWeb3().then(() => {
       if (!loading) getMarketData();
     });
   }, [loading]);
   console.log(polyToken, "polyToken");
+
+  const SetMaxValue = () => {
+    if (ParaToken && ParaToken.displayValue) {
+      // Assuming the displayValue is the total balance
+      const totalBalance = Number(ParaToken.displayValue);
+      // Define a small buffer for transaction fees - this value might need to be adjusted
+      const bufferForFees = 0.0001;
+
+      // Calculate the max usable amount by subtracting the buffer
+      const maxUsableAmount = totalBalance - bufferForFees;
+      setInput(maxUsableAmount.toFixed(4)); // Set the input to the max usable amount
+    }
+  };
+
   return (
     <div>
       <Head>
@@ -177,7 +207,8 @@ const Details = () => {
             >
               <Box style={{ display: "flex", flexDirection: "row" }}>
                 <Avatar
-                  src={`https://ipfs.infura.io/ipfs/${market?.imageHash}`}
+                  // src={`https://ipfs.infura.io/ipfs/${market?.imageHash}`}
+                  src={"/"}
                   style={{ width: "55px", height: "55px", marginRight: "16px" }}
                   alt="Market"
                 />
@@ -190,7 +221,7 @@ const Details = () => {
                   }}
                 >
                   <Typography variant="caption" style={{ color: "gray" }}>
-                    {"Type"}{" "}
+                    {"Type"}
                   </Typography>
                   <Typography variant="h6">{market?.title}</Typography>
                 </Box>
@@ -251,7 +282,6 @@ const Details = () => {
                 <Grid item xs={12} md={8}>
                   <StyledPaper sx={{ width: "100%", height: "100%" }}>
                     <Box sx={{ width: "100%", height: "100%" }}>
-                      {" "}
                       <ChartContainer questionId={market?.id ?? "0"} />
                     </Box>
                   </StyledPaper>
@@ -286,7 +316,7 @@ const Details = () => {
                         onClick={() => setSelected("YES")}
                       >
                         <Typography variant="subtitle2">
-                          YES{" "}
+                          YES
                           {market?.totalAmount && market?.totalYes
                             ? market.totalYes
                                 .times(100)
@@ -312,7 +342,7 @@ const Details = () => {
                         onClick={() => setSelected("NO")}
                       >
                         <Typography variant="subtitle2">
-                          NO{" "}
+                          NO
                           {market?.totalAmount && market?.totalNo
                             ? market.totalNo
                                 .times(100)
@@ -350,21 +380,23 @@ const Details = () => {
                           placeholder="0"
                           autoComplete="off"
                         />
-                        <Typography variant="body2" sx={{ mx: 2 }}>
-                          PARA |
-                        </Typography>
-                        <Link
-                          component="button"
-                          sx={{
-                            fontSize: "0.875rem",
-                            color: "#1976d2",
-                            textDecoration: "underline",
-                            cursor: "pointer",
-                            ml: 1,
-                          }}
-                        >
-                          Max
-                        </Link>
+                        <Box sx={{ mx: 2 }}>
+                          <Typography variant="body2">
+                            <div>{ParaToken && ParaToken.symbol}</div>
+                            <Box sx={{ mx: 1 }}>
+                              {" "}
+                              {ParaToken && ParaToken.displayValue}
+                            </Box>
+                          </Typography>
+                          <Button
+                            variant="contained"
+                            sx={{ padding: 0 }}
+                            onClick={SetMaxValue}
+                            component="button"
+                          >
+                            Max
+                          </Button>
+                        </Box>
                       </Box>
                     </CardContent>
                     <CardActions>
