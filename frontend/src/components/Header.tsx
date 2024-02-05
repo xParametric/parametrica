@@ -54,9 +54,9 @@ function Header() {
 
   let router = useRouter();
 
-  const handleCreateNavigation = () => {
-    router.push("/create");
-  };
+  // const handleCreateNavigation = () => {
+  //   router.push("/create");
+  // };
   return (
     <AppBar
       position="static"
@@ -147,9 +147,12 @@ function Header() {
               </Link>
             ))}
           </Box>
-          <Button sx={{ mx: 1 }} onClick={handleCreateNavigation}>
-            <AddBoxIcon /> Create
-          </Button>
+          <Link href={"/create"}>
+            {" "}
+            <Button sx={{ mx: 1 }}>
+              <AddBoxIcon /> Create
+            </Button>
+          </Link>
           {/* <ConnectKitButton /> */}
           <ConnectWalletButton />
           <Box sx={{ flexGrow: 0 }}>
