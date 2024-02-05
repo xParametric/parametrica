@@ -7,6 +7,7 @@ import {
   CardMedia,
   Typography,
 } from "@mui/material";
+import BigNumber from "bignumber.js";
 const CarousalCard: React.FC<MarketProps> = ({
   title,
   imageHash,
@@ -30,14 +31,14 @@ const CarousalCard: React.FC<MarketProps> = ({
             variant="outlined"
             sx={{ border: 1, borderColor: "#0ECB81" }}
           >
-            {"Yes " + totalYes}
+            {"Yes " + BigNumber(totalYes ?? 0)?.dividedBy(10 ** 18)}
           </Button>
           <Button
             size="small"
             variant="outlined"
             sx={{ border: 1, borderColor: "#DC4155" }}
           >
-            {"No" + totalNo}
+            {"No " + BigNumber(totalNo ?? 0)?.dividedBy(10 ** 18)}
           </Button>
         </CardActions>
       </CardContent>
