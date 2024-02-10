@@ -3,6 +3,8 @@ import { useData } from "@/context/DataContext";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import Head from "next/head";
+import toast, { Toaster } from "react-hot-toast";
+
 import {
   Box,
   Button,
@@ -77,6 +79,7 @@ function Admin() {
           new Date(timestamp).getTime()
         )
         .send({ from: account });
+      toast.success("Market created successfully");
       // setTitle("");
       // setDescription("");
       // setImageHash("");
@@ -84,7 +87,8 @@ function Admin() {
       // setTimestamp(undefined);
 
       router.push("/");
-    } catch (submitError) {
+    } catch (submitError: any) {
+      toast.error("Failed to create market.", submitError);
       setError("Failed to create market.");
     } finally {
       setLoading(false);

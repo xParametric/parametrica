@@ -2,11 +2,12 @@
 import React, { useState, MouseEvent } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import Link from "next/link";
-import { ConnectKitButton } from "connectkit";
+// import { ConnectKitButton } from "connectkit";
 import LeaderboardIcon from "@mui/icons-material/Leaderboard";
 import LocalGroceryStoreIcon from "@mui/icons-material/LocalGroceryStore";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import AddBoxIcon from "@mui/icons-material/AddBox";
+import { useRouter } from "next/navigation";
 import {
   AppBar,
   Avatar,
@@ -21,6 +22,7 @@ import {
   Tooltip,
   Icon,
 } from "@mui/material";
+import ConnectWalletButton from "@/app/Web3Provider";
 
 const pages = [
   { name: "markets", icon: <LocalGroceryStoreIcon /> },
@@ -50,6 +52,11 @@ function Header() {
     setAnchorElUser(null);
   };
 
+  let router = useRouter();
+
+  // const handleCreateNavigation = () => {
+  //   router.push("/create");
+  // };
   return (
     <AppBar
       position="static"
@@ -130,27 +137,24 @@ function Header() {
           </Link>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
-              <Link href={`/${page.name}`} key={page.name}>
+              <Link href={`/${page.name}`} key={page.name} passHref>
                 <Button
-                  key={page.name}
                   onClick={handleCloseNavMenu}
                   sx={{ my: 2, display: "block" }}
                 >
-                  <Box sx={{ display: "flex", alignItems: "center" }}>
-                    {/* <Typography fontSize={"small"}> {page.icon}</Typography> */}
-
-                    <Typography textAlign="center">{page.name}</Typography>
-                  </Box>
+                  <Typography textAlign="center">{page.name}</Typography>
                 </Button>
               </Link>
             ))}
           </Box>
-          <Link href="/create">
+          <Link href={"/create"}>
+            {" "}
             <Button sx={{ mx: 1 }}>
               <AddBoxIcon /> Create
             </Button>
           </Link>
-          <ConnectKitButton />
+          {/* <ConnectKitButton /> */}
+          <ConnectWalletButton />
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
