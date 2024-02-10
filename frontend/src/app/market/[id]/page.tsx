@@ -382,7 +382,7 @@ const Details = () => {
                         />
                         <Box sx={{ mx: 2 }}>
                           <Typography variant="body2">
-                            <div>{ParaToken && ParaToken.symbol}</div>
+                            <>{ParaToken && ParaToken.symbol}</>
                             <Box sx={{ mx: 1 }}>
                               {" "}
                               {ParaToken && ParaToken.displayValue}
