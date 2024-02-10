@@ -9,6 +9,7 @@ import Footer from "@/components/Footer";
 import { DataProvider } from "@/context/DataContext";
 import { LocalizationProviderWrapper } from "@/lib/LocalizationProviderWrapper";
 import ThirdwebProviderWrapper from "@/components/ThirdwebProvider";
+import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
   title: "Parametrica",
@@ -28,7 +29,7 @@ const RootLayout: FC<PropsWithChildren<{}>> = ({ children }) => {
             <CssBaseline />
             <LocalizationProviderWrapper>
               <DataProvider>
-                <Header />
+                <Header /> <Toaster />
                 {children}
                 <Footer />
               </DataProvider>
