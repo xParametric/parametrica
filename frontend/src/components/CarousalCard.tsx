@@ -14,11 +14,18 @@ const CarousalCard: React.FC<MarketProps> = ({
   totalYes,
   totalNo,
 }) => {
+  const ipfsBaseUrl = "https://ipfs.io/ipfs/";
+
+  const formattedImageHash = imageHash.replace("ipfs://", "");
+
+  const imageUrl = imageHash
+    ? `${ipfsBaseUrl}${formattedImageHash}`
+    : "/default-image-path.jpg";
   return (
     <Card sx={{ height: 330, width: 450, my: 2 }}>
       <CardMedia
         sx={{ height: 170 }}
-        image={imageHash || "https://source.unsplash.com/random"}
+        image={imageUrl || "https://source.unsplash.com/random"}
         title="green iguana"
       />
       <CardContent>

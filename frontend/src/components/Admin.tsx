@@ -1,4 +1,5 @@
 "use client";
+import { useStorageUpload } from "@thirdweb-dev/react";
 import { useData } from "@/context/DataContext";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -40,18 +41,22 @@ function Admin() {
   const [imageHash, setImageHash] = useState("");
   const [resolverUrl, setResolverUrl] = useState("");
   const [timestamp, setTimestamp] = useState("");
+  const { mutateAsync: upload, isLoading } = useStorageUpload();
 
-  // const uploadImage = async (e: any) => {
-  //   try {
-  //     const file = e.target.files[0];
-  //     const added = await client.add(file);
-  //     setImageHash(added.path);
-  //     console.log(added.path);
-  //   } catch (uploadError) {
-  //     setError("Failed to upload image.");
-  //     console.log(uploadError);
-  //   }
-  // };
+  async function handleFileChange(event: any) {
+    const files = event.target.files;
+    if (files && files.length > 0) {
+      const file = files[0];
+
+      try {
+        const uris = await upload({ data: [file] });
+        console.log(uris);
+        setImageHash(uris[0]);
+      } catch (error) {
+        console.error("Failed to upload file:", error);
+      }
+    }
+  }
 
   useEffect(() => {
     const initWeb3 = async () => {
@@ -162,8 +167,13 @@ function Admin() {
                 sx={{ marginTop: 3 }}
               />
               <FormControl fullWidth sx={{ marginTop: 3 }}>
-                <InputLabel>Market Title Image</InputLabel>
-                {/* <input type="file" onChange={uploadImage} /> */}
+                <input
+                  type="file"
+                  onChange={handleFileChange}
+                  disabled={isLoading}
+                  accept="image/*" // Only accept image files
+                />
+                {isLoading && <p>Uploading...</p>}
               </FormControl>
               <TextField
                 label="Resolve URL"

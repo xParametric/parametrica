@@ -26,6 +26,7 @@ import { styled } from "@mui/material/styles";
 import { MarketProps } from "@/types";
 import { convertToLocalTime } from "@/lib/DateTimeFormatter";
 import { useTokenBalance } from "../../hooks/getBalance";
+import toast, { Toaster } from "react-hot-toast";
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(2),
@@ -34,41 +35,6 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   alignItems: "start",
-}));
-
-const StyledBox = styled(Box)(({ theme }) => ({
-  width: "100%",
-  padding: theme.spacing(1),
-  marginTop: theme.spacing(1),
-  cursor: "pointer",
-  textAlign: "center",
-  borderRadius: theme.shape.borderRadius,
-  "&:hover": {
-    backgroundColor: theme.palette.action.hover,
-  },
-}));
-
-const StyledTextField = styled(TextField)(({ theme }) => ({
-  width: "100%",
-  margin: theme.spacing(1, 0),
-}));
-
-const DescriptionBox = styled(Box)(({ theme }) => ({
-  width: "66%", // equivalent to w-2/3 in Tailwind
-  flexDirection: "column",
-  [theme.breakpoints.down("sm")]: {
-    width: "100%", // full width on small devices
-  },
-}));
-
-const ResolutionSourceTypography = styled(Typography)(({ theme }) => ({
-  marginTop: theme.spacing(2),
-  marginBottom: theme.spacing(2),
-  paddingTop: theme.spacing(1),
-  paddingBottom: theme.spacing(1),
-  backgroundColor: theme.palette.grey[100], // equivalent to bg-gray-100 in Tailwind
-  borderRadius: theme.shape.borderRadius * 2,
-  paddingLeft: theme.spacing(1.5),
 }));
 
 const Details = () => {
@@ -125,30 +91,46 @@ const Details = () => {
     }
   }, [account, id, polymarket]);
   const handleTrade = async () => {
-    var bal = await polyToken.methods.balanceOf(account).call();
-    setButton("Please wait");
+    try {
+      var bal = await polyToken.methods.balanceOf(account).call();
+      setButton("Please wait");
+      toast.loading("Processing trade...");
 
-    if (input && selected === "YES") {
-      if (parseInt(input) < parseInt(Web3.utils.fromWei(bal, "ether"))) {
-        await polyToken.methods
-          .approve(polymarket._address, Web3.utils.toWei(input, "ether"))
-          .send({ from: account });
-        await polymarket.methods
-          .addYesBet(id, Web3.utils.toWei(input, "ether"))
-          .send({ from: account });
+      if (input && selected === "YES") {
+        if (parseInt(input) < parseInt(Web3.utils.fromWei(bal, "ether"))) {
+          await polyToken.methods
+            .approve(polymarket._address, Web3.utils.toWei(input, "ether"))
+            .send({ from: account });
+          await polymarket.methods
+            .addYesBet(id, Web3.utils.toWei(input, "ether"))
+            .send({ from: account });
+          toast.success("Trade successful!");
+        } else {
+          toast.error("Insufficient balance for this trade.");
+        }
+      } else if (input && selected === "NO") {
+        if (parseInt(input) < parseInt(Web3.utils.fromWei(bal, "ether"))) {
+          await polyToken.methods
+            .approve(polymarket._address, Web3.utils.toWei(input, "ether"))
+            .send({ from: account });
+          await polymarket.methods
+            .addNoBet(id, Web3.utils.toWei(input, "ether"))
+            .send({ from: account });
+          toast.success("Trade successful!");
+        } else {
+          toast.error("Insufficient balance for this trade.");
+        }
+      } else {
+        toast.error("Please enter a valid amount and select an option.");
       }
-    } else if (input && selected === "NO") {
-      if (parseInt(input) < parseInt(Web3.utils.fromWei(bal, "ether"))) {
-        await polyToken.methods
-          .approve(polymarket._address, Web3.utils.toWei(input, "ether"))
-          .send({ from: account });
-        await polymarket.methods
-          .addNoBet(id, Web3.utils.toWei(input, "ether"))
-          .send({ from: account });
-      }
+    } catch (error) {
+      console.error("Trade error:", error);
+      toast.error("Trade failed. Please try again.");
+    } finally {
+      await getMarketData();
+      setButton("Trade");
+      toast.dismiss();
     }
-    await getMarketData();
-    setButton("Trade");
   };
   useEffect(() => {
     loadWeb3().then(() => {
@@ -156,6 +138,15 @@ const Details = () => {
     });
   }, [loading]);
   console.log(polyToken, "polyToken");
+
+  const imageHash = market?.imageHash;
+  const ipfsBaseUrl = "https://ipfs.io/ipfs/";
+
+  const formattedImageHash = imageHash ? imageHash.replace("ipfs://", "") : "";
+
+  const imageUrl = formattedImageHash
+    ? `${ipfsBaseUrl}${formattedImageHash}`
+    : "/default-image-path.jpg";
 
   const SetMaxValue = () => {
     if (ParaToken && ParaToken.displayValue) {
@@ -207,8 +198,7 @@ const Details = () => {
             >
               <Box style={{ display: "flex", flexDirection: "row" }}>
                 <Avatar
-                  // src={`https://ipfs.infura.io/ipfs/${market?.imageHash}`}
-                  src={"/"}
+                  src={imageUrl}
                   style={{ width: "55px", height: "55px", marginRight: "16px" }}
                   alt="Market"
                 />

@@ -45,6 +45,7 @@ function Markets() {
       });
     }
     setMarkets(dataArray);
+    console.log(dataArray, "dataArray");
   }, [account, polymarket]);
 
   useEffect(() => {
