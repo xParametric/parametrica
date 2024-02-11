@@ -6,74 +6,48 @@ const theme = createTheme({
   palette: {
     primary: {
       main: "#27374D",
-      // contrastText: "#303596",
-      // light: "#303596",
-      // dark: "#303596",
     },
     secondary: {
-      main: "#dbdaf1",
-      // contrastText: "#F8FDCF",
+      main: "#FFD700", // A brighter color for emphasis and contrast
     },
     error: {
       main: red.A400,
     },
     background: {
-      // default: "linear-gradient(90deg, #27374D 0%, #78C1F3 100%)",
-      paper: "rgb(255,255,255,0.5)",
+      paper: "#FFFFFF", // Use a solid white for paper backgrounds to enhance legibility
     },
   },
   typography: {
     fontFamily: "Montserrat, sans-serif",
-    h1: {
-      fontFamily: "Montserrat, sans-serif",
-    },
-    h2: {
-      fontFamily: "Montserrat, sans-serif",
-    },
-    h3: {
-      fontFamily: "Montserrat, sans-serif",
-    },
-    h4: {
-      fontFamily: "Montserrat, sans-serif",
-    },
-    h5: {
-      fontFamily: "Montserrat, sans-serif",
-    },
-    h6: {
-      fontFamily: "Montserrat, sans-serif",
-    },
     subtitle1: {
-      fontFamily: "poppins, sans-serif",
+      fontFamily: "Poppins, sans-serif",
     },
     subtitle2: {
-      fontFamily: "poppins, sans-serif",
+      fontFamily: "Poppins, sans-serif",
     },
     body1: {
-      fontFamily: "poppins, sans-serif",
+      fontFamily: "Poppins, sans-serif",
     },
     body2: {
-      fontFamily: "poppins, sans-serif",
+      fontFamily: "Poppins, sans-serif",
     },
     button: {
-      fontFamily: "poppins, sans-serif",
+      fontFamily: "Poppins, sans-serif",
     },
     caption: {
-      fontFamily: "poppins, sans-serif",
+      fontFamily: "Poppins, sans-serif",
     },
     overline: {
-      fontFamily: "poppins, sans-serif",
+      fontFamily: "Poppins, sans-serif",
     },
   },
   components: {
     MuiCssBaseline: {
       styleOverrides: {
         body: {
-          position: "relative",
-          background:
-            "radial-gradient(circle, #cddef1, #d3dcf2, #dbdaf1, #e3d7ee, #ead5e9, #ecd8e9, #eedaea, #f0ddea, #f0e4ef, #f1ebf3, #f3f1f6, #f7f7f7)",
+          background: "radial-gradient(circle, #cddef1 0%, #f7f7f7 100%)",
           backgroundAttachment: "fixed",
           backgroundSize: "cover",
-          // background: "#F6F4F3",
         },
       },
     },

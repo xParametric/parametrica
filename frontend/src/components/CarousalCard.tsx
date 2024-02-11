@@ -20,7 +20,7 @@ const CarousalCard: React.FC<MarketProps> = ({
 
   const imageUrl = imageHash
     ? `${ipfsBaseUrl}${formattedImageHash}`
-    : "/default-image-path.jpg";
+    : "https://source.unsplash.com/random";
   return (
     <Card sx={{ height: 330, width: 450, my: 2 }}>
       <CardMedia

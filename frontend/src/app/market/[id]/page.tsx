@@ -16,6 +16,7 @@ import {
   TextField,
   Button,
   Link,
+  CardMedia,
   Grid,
   Card,
   CardContent,
@@ -26,7 +27,7 @@ import { styled } from "@mui/material/styles";
 import { MarketProps } from "@/types";
 import { convertToLocalTime } from "@/lib/DateTimeFormatter";
 import { useTokenBalance } from "../../hooks/getBalance";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(2),
@@ -41,18 +42,6 @@ const Details = () => {
   const { id } = useParams();
   const tokenAddress = "0x71728cD356A0C7a52eF4b0Fc1bcDC540546D84CD";
   const { data: ParaToken, isLoading, error } = useTokenBalance(tokenAddress);
-
-  // console.log("balance", balance);
-
-  // // if (isLoading) {
-  // //   return <div>Loading...</div>;
-  // // }
-
-  // if (error) {
-  //   console.log("error", error);
-
-  //   return <>{`Error: ${error}`}</>;
-  // }
 
   console.log("ParaTokenObject", ParaToken);
 
@@ -146,19 +135,38 @@ const Details = () => {
 
   const imageUrl = formattedImageHash
     ? `${ipfsBaseUrl}${formattedImageHash}`
-    : "/default-image-path.jpg";
+    : "https://source.unsplash.com/random";
 
   const SetMaxValue = () => {
     if (ParaToken && ParaToken.displayValue) {
-      // Assuming the displayValue is the total balance
       const totalBalance = Number(ParaToken.displayValue);
-      // Define a small buffer for transaction fees - this value might need to be adjusted
       const bufferForFees = 0.0001;
 
-      // Calculate the max usable amount by subtracting the buffer
       const maxUsableAmount = totalBalance - bufferForFees;
-      setInput(maxUsableAmount.toFixed(4)); // Set the input to the max usable amount
+      setInput(maxUsableAmount.toFixed(4));
     }
+  };
+  const InfoPaper = styled(Paper)(({ theme }) => ({
+    padding: theme.spacing(2),
+    backgroundColor: theme.palette.background.paper,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "start",
+    border: `1px solid ${theme.palette.divider}`,
+    borderRadius: theme.shape.borderRadius,
+    margin: theme.spacing(1),
+  }));
+  const calculatePercentage = (option: "YES" | "NO") => {
+    if (!market) return "0%";
+
+    const totalAmount = new BigNumber(market.totalAmount || 0);
+    const optionAmount = new BigNumber(
+      option === "YES" ? market.totalYes || 0 : market.totalNo || 0
+    );
+
+    return totalAmount.isZero()
+      ? "0%"
+      : `${optionAmount.dividedBy(totalAmount).times(100).toFixed(2)}%`;
   };
 
   return (
@@ -191,157 +199,131 @@ const Details = () => {
               sx={{
                 p: 3,
                 display: "flex",
-                alignItems: "flex-start",
+                flexDirection: { xs: "column", sm: "row" },
+                alignItems: "center",
                 border: 1,
                 borderColor: "grey.300",
+                gap: 2, // Adds space between the elements
               }}
             >
-              <Box style={{ display: "flex", flexDirection: "row" }}>
-                <Avatar
-                  src={imageUrl}
-                  style={{ width: "55px", height: "55px", marginRight: "16px" }}
-                  alt="Market"
-                />
-                <Box
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "start",
-                    flex: "1 1 50%",
-                  }}
-                >
-                  <Typography variant="caption" style={{ color: "gray" }}>
-                    {"Type"}
-                  </Typography>
-                  <Typography variant="h6">{market?.title}</Typography>
-                </Box>
-              </Box>
-              <Box
+              <CardMedia
+                component="img"
                 sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  ml: 1.5,
+                  width: 55,
+                  height: 55,
+                  borderRadius: "50%",
                 }}
-              >
-                <Paper
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "start",
-                    padding: "12px",
-                    backgroundColor: "#f5f5f5",
-                  }}
+                image={imageUrl}
+                alt="Market"
+              />
+              <Box sx={{ flex: 1 }}>
+                <Typography
+                  variant="caption"
+                  color="text.secondary"
+                  sx={{ mt: { xs: 2, sm: 0 } }}
                 >
-                  <Typography variant="caption" style={{ color: "gray" }}>
-                    Market End on
-                  </Typography>
-                  <Typography variant="body1">
-                    {market?.endTimestamp
-                      ? convertToLocalTime(market.endTimestamp)
-                      : "N/A"}
-                  </Typography>
-                </Paper>
-                <Paper
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "start",
-                    padding: "12px",
-                    backgroundColor: "#f5f5f5",
-                    marginLeft: "16px",
-                  }}
-                >
-                  <Typography variant="caption" style={{ color: "gray" }}>
-                    Total Volume
-                  </Typography>
-                  <Typography variant="body1">
-                    {market?.totalAmount
-                      ? market.totalAmount
-                          .dividedBy(new BigNumber(10).pow(18)) // Assuming the totalAmount is in Wei
-                          .toFixed() + " POLY"
-                      : "0 POLY"}
-                  </Typography>
-                </Paper>
+                  Type
+                </Typography>
+                <Typography variant="h6" sx={{ my: 1 }}>
+                  {market?.title}
+                </Typography>
               </Box>
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6}>
+                  <Paper elevation={0} sx={{ p: 2 }}>
+                    <Typography variant="caption" color="text.secondary">
+                      Market End on
+                    </Typography>
+                    <Typography variant="body1">
+                      {market?.endTimestamp
+                        ? convertToLocalTime(market.endTimestamp)
+                        : "N/A"}
+                    </Typography>
+                  </Paper>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Paper elevation={0} sx={{ p: 2 }}>
+                    <Typography variant="caption" color="text.secondary">
+                      Total Volume
+                    </Typography>
+                    <Typography variant="body1">
+                      {market?.totalAmount
+                        ? `${new BigNumber(market.totalAmount)
+                            .dividedBy(new BigNumber(10).pow(18))
+                            .toFixed()} POLY`
+                        : "0 POLY"}
+                    </Typography>
+                  </Paper>
+                </Grid>
+              </Grid>
             </Paper>
             <Box
               sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 5 }}
             >
               <Grid container spacing={2}>
                 <Grid item xs={12} md={8}>
-                  <StyledPaper sx={{ width: "100%", height: "100%" }}>
-                    <Box sx={{ width: "100%", height: "100%" }}>
-                      <ChartContainer questionId={market?.id ?? "0"} />
-                    </Box>
-                  </StyledPaper>
+                  <Card
+                    elevation={3}
+                    sx={{
+                      p: 2,
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      height: "100%",
+                    }}
+                  >
+                    <ChartContainer questionId={market?.id ?? "0"} />
+                  </Card>
                 </Grid>
 
                 <Grid item xs={12} md={4}>
-                  <Card variant="outlined" sx={{ maxWidth: 345, mx: "auto" }}>
+                  <Card
+                    variant="outlined"
+                    sx={{ maxWidth: 345, m: "auto", boxShadow: 3 }}
+                  >
                     <CardContent>
-                      <Typography variant="h6" sx={{ textAlign: "center" }}>
+                      <Typography
+                        variant="h6"
+                        component="div"
+                        sx={{ textAlign: "center", mb: 2 }}
+                      >
                         Buy
                       </Typography>
-                      <hr style={{ width: "100%", margin: "16px 0" }} />
-                      <Typography
-                        variant="subtitle1"
-                        sx={{ textAlign: "center" }}
-                      >
-                        Pick Outcome
-                      </Typography>
 
-                      {/* YES Option */}
-                      <Box
-                        sx={{
-                          backgroundColor:
-                            selected === "YES" ? "#4caf50" : "#f5f5f5",
-                          color: selected === "YES" ? "#fff" : "inherit",
-                          textAlign: "center",
-                          py: 1,
-                          my: 1,
-                          borderRadius: 1,
-                          cursor: "pointer",
-                        }}
-                        onClick={() => setSelected("YES")}
-                      >
-                        <Typography variant="subtitle2">
-                          YES
-                          {market?.totalAmount && market?.totalYes
-                            ? market.totalYes
-                                .times(100)
-                                .dividedBy(market.totalAmount)
-                                .toFixed(2)
-                            : "0"}
-                          %
-                        </Typography>
-                      </Box>
-
-                      {/* NO Option */}
-                      <Box
-                        sx={{
-                          backgroundColor:
-                            selected === "NO" ? "#4caf50" : "#f5f5f5",
-                          color: selected === "NO" ? "#fff" : "inherit",
-                          textAlign: "center",
-                          py: 1,
-                          my: 1,
-                          borderRadius: 1,
-                          cursor: "pointer",
-                        }}
-                        onClick={() => setSelected("NO")}
-                      >
-                        <Typography variant="subtitle2">
-                          NO
-                          {market?.totalAmount && market?.totalNo
-                            ? market.totalNo
-                                .times(100)
-                                .dividedBy(market.totalAmount)
-                                .toFixed(2)
-                            : "0"}
-                          %
-                        </Typography>
-                      </Box>
+                      {["YES", "NO"].map((option) => (
+                        <Box
+                          key={option}
+                          sx={{
+                            backgroundColor:
+                              selected === option
+                                ? "primary.main"
+                                : "background.paper",
+                            color:
+                              selected === option
+                                ? "common.white"
+                                : "text.primary",
+                            textAlign: "center",
+                            py: 1,
+                            my: 1,
+                            borderRadius: 1,
+                            cursor: "pointer",
+                            "&:hover": {
+                              backgroundColor:
+                                selected === option
+                                  ? "primary.dark"
+                                  : "grey.300",
+                            },
+                            transition: "all 0.3s ease-in-out",
+                          }}
+                          onClick={() => setSelected(option)}
+                        >
+                          <Typography variant="subtitle2">
+                            {option}{" "}
+                            {calculatePercentage(option as "YES" | "NO")}
+                          </Typography>
+                        </Box>
+                      ))}
 
                       <Typography
                         variant="body2"
@@ -349,13 +331,12 @@ const Details = () => {
                       >
                         How much?
                       </Typography>
-
-                      {/* Input Field */}
                       <Box
                         sx={{
                           display: "flex",
                           alignItems: "center",
-                          border: "1px solid #e0e0e0",
+                          border: "1px solid",
+                          borderColor: "divider",
                           p: 1,
                           borderRadius: 1,
                           my: 2,
@@ -363,41 +344,29 @@ const Details = () => {
                       >
                         <TextField
                           fullWidth
-                          type="search"
-                          name="q"
+                          type="number"
                           value={input}
                           onChange={(e) => setInput(e.target.value)}
                           placeholder="0"
-                          autoComplete="off"
                         />
-                        <Box sx={{ mx: 2 }}>
-                          <Typography variant="body2">
-                            <>{ParaToken && ParaToken.symbol}</>
-                            <Box sx={{ mx: 1 }}>
-                              {" "}
-                              {ParaToken && ParaToken.displayValue}
-                            </Box>
-                          </Typography>
-                          <Button
-                            variant="contained"
-                            sx={{ padding: 0 }}
-                            onClick={SetMaxValue}
-                            component="button"
-                          >
-                            Max
-                          </Button>
-                        </Box>
+                        <Button
+                          variant="contained"
+                          sx={{ ml: 2 }}
+                          onClick={SetMaxValue}
+                        >
+                          Max
+                        </Button>
                       </Box>
                     </CardContent>
                     <CardActions>
                       <Button
                         fullWidth
                         variant="contained"
-                        color="secondary"
+                        color="primary"
                         onClick={handleTrade}
-                        disabled={button !== "Trade"}
+                        disabled={!input}
                       >
-                        {button}
+                        {selected === "YES" ? "Buy YES" : "Buy NO"}
                       </Button>
                     </CardActions>
                   </Card>
@@ -406,40 +375,27 @@ const Details = () => {
 
               <Box
                 sx={{
-                  py: 3,
-                  px: 2,
-                  border: "1px solid #e0e0e0",
+                  mt: 3,
+                  p: 2,
+                  border: "1px solid",
+                  borderColor: "divider",
                   borderRadius: 2,
-                  backgroundColor: "#f5f5f5",
+                  backgroundColor: "background.paper",
                 }}
               >
                 <Typography
                   variant="subtitle1"
                   sx={{ fontWeight: "bold", mb: 1 }}
-                  color={"primary"}
                 >
                   Description
                 </Typography>
-                <Typography sx={{ mb: 2 }} color={"primary"}>
-                  {market?.description}
+                <Typography sx={{ mb: 2 }}>{market?.description}</Typography>
+                <Typography variant="body1" sx={{ fontWeight: "bold" }}>
+                  Resolution Source:
                 </Typography>
-
-                <Box sx={{ borderTop: "1px solid #e0e0e0", pt: 1, mt: 1 }}>
-                  <Typography
-                    variant="body1"
-                    sx={{ fontWeight: "bold" }}
-                    color={"primary"}
-                  >
-                    Resolution Source:
-                  </Typography>
-                  <Link
-                    href={market?.resolverUrl}
-                    underline="hover"
-                    sx={{ color: "brown" }}
-                  >
-                    {market?.resolverUrl}
-                  </Link>
-                </Box>
+                <Link href={market?.resolverUrl} underline="hover">
+                  {market?.resolverUrl}
+                </Link>
               </Box>
             </Box>
           </Box>
