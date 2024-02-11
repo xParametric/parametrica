@@ -2,7 +2,6 @@
 import Link from "next/link";
 import React from "react";
 import Web3 from "web3";
-
 import { Box, Card, CardContent, Typography, Avatar } from "@mui/material";
 import { MarketProps } from "@/types";
 
@@ -14,6 +13,14 @@ export const MarketCard: React.FC<MarketProps> = ({
   totalNo,
   imageHash,
 }) => {
+  const ipfsBaseUrl = "https://ipfs.io/ipfs/";
+
+  const formattedImageHash = imageHash.replace("ipfs://", "");
+
+  const imageUrl = imageHash
+    ? `${ipfsBaseUrl}${formattedImageHash}`
+    : "/default-image-path.jpg";
+
   return (
     <Box sx={{ marginBottom: 2, width: "100%" }}>
       <Link href={`/market/${id}`} passHref>
@@ -36,10 +43,9 @@ export const MarketCard: React.FC<MarketProps> = ({
               }}
             >
               <Avatar
-                // src={`https://ipfs.infura.io/ipfs/${market?.imageHash}`}
-                src={"/"}
+                src={imageUrl}
                 sx={{ width: 48, height: 48 }}
-                alt="Image Hash"
+                alt="Market Image"
               />
               <Typography variant="subtitle2">{title}</Typography>
             </Box>
@@ -56,10 +62,9 @@ export const MarketCard: React.FC<MarketProps> = ({
                 </Typography>
                 <Typography variant="body2">
                   {totalAmount &&
-                    parseFloat(
+                    `${parseFloat(
                       Web3.utils.fromWei(totalAmount.toString(), "ether")
-                    ).toFixed(2)}
-                  PARA
+                    ).toFixed(2)} PARA`}
                 </Typography>
               </Box>
               <Box sx={{ display: "flex", flexDirection: "column", gap: 0.5 }}>
@@ -75,10 +80,9 @@ export const MarketCard: React.FC<MarketProps> = ({
                 >
                   <Typography variant="caption" color="primary.main">
                     {totalYes &&
-                      parseFloat(
+                      `${parseFloat(
                         Web3.utils.fromWei(totalYes.toString(), "ether")
-                      ).toFixed(2)}{" "}
-                    PARA
+                      ).toFixed(2)} PARA`}
                   </Typography>
                 </Box>
               </Box>
@@ -95,10 +99,9 @@ export const MarketCard: React.FC<MarketProps> = ({
                 >
                   <Typography variant="caption" color="primary.main">
                     {totalNo &&
-                      parseFloat(
+                      `${parseFloat(
                         Web3.utils.fromWei(totalNo.toString(), "ether")
-                      ).toFixed(2)}{" "}
-                    PARA
+                      ).toFixed(2)} PARA`}
                   </Typography>
                 </Box>
               </Box>
