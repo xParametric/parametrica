@@ -1,6 +1,7 @@
 "use client";
 import { currentDateTime } from "@/lib/DateTimeFormatter";
-import { MarketProps } from "@/types";
+import { MarketProps } from "../../../types/index";
+
 import moment from "moment";
 import Image from "next/image";
 import React from "react";

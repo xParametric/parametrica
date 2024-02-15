@@ -1,7 +1,4 @@
 import React, { useState } from "react";
-import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
-import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
-import { Box, IconButton, Tooltip } from "@mui/material";
 
 const BookmarkMarket = () => {
   const [isBookmarked, setIsBookmarked] = useState(false);
@@ -11,25 +8,25 @@ const BookmarkMarket = () => {
   };
 
   return (
-    <Box display="flex">
-      <Tooltip title={isBookmarked ? "Remove Bookmark" : "Add Bookmark"}>
-        <IconButton
-          disableRipple
+    <div className="flex">
+      <div
+        className="tooltip"
+        data-tip={isBookmarked ? "Remove Bookmark" : "Add Bookmark"}
+      >
+        <button
           onClick={handleBookmarkToggle}
-          sx={{
-            color: "primary.light",
-
-            "&:hover": { backgroundColor: "transparent" },
-          }}
+          className="text-blue-400 hover:bg-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           {isBookmarked ? (
-            <BookmarkAddedIcon fontSize="small" />
+            /* Replace with BookmarkAddedIcon equivalent SVG */
+            <></>
           ) : (
-            <BookmarkAddIcon fontSize="small" />
+            /* Replace with BookmarkAddIcon equivalent SVG */
+            <></>
           )}
-        </IconButton>
-      </Tooltip>
-    </Box>
+        </button>
+      </div>
+    </div>
   );
 };
 

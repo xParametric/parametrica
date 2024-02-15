@@ -1,24 +1,10 @@
 "use client";
 import { useStorageUpload } from "@thirdweb-dev/react";
-import { useData } from "@/context/DataContext";
+import { useData } from "../context/DataContext";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import toast, { Toaster } from "react-hot-toast";
-
-import {
-  Box,
-  Button,
-  Typography,
-  TextField,
-  FormControl,
-  InputLabel,
-  Container,
-  Card,
-  CircularProgress,
-} from "@mui/material";
-
-import { DatePicker } from "@mui/x-date-pickers";
 
 function Admin() {
   const projectId = process.env.NEXT_PUBLIC_INFURA_ID;
@@ -106,70 +92,59 @@ function Admin() {
         <title>xParametric - Admin</title>
         <meta name="description" content="Create a new market as an admin." />
       </Head>
-      <Container maxWidth="md" sx={{ py: 4 }}>
-        <Box textAlign="center" mb={4}>
-          <Button
-            variant="contained"
+      <div className="container mx-auto max-w-md py-16">
+        <div className="text-center mb-4">
+          <button
+            className="bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mb-2"
             onClick={() => router.push("/create/markets")}
-            sx={{ mb: 2 }}
+            type="button"
           >
             See All Markets
-          </Button>
-        </Box>
-        <Card raised sx={{ p: { xs: 2, md: 4 } }}>
-          <Typography variant="h5" component="h2" mb={3} fontWeight="bold">
-            Add New Market
-          </Typography>
-          <Box
-            component="form"
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              gap: 2,
-            }}
-            noValidate
-            autoComplete="off"
-          >
-            <TextField
-              label="Market Title"
+          </button>
+        </div>
+        <div className="card raised p-4 md:p-8">
+          <h2 className="text-xl font-bold mb-3">Add New Market</h2>
+          <form className="flex flex-col gap-2" noValidate autoComplete="off">
+            <input
+              className="input textfield"
+              placeholder="Market Title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              fullWidth
             />
-            <TextField
-              label="Market Description"
+            <textarea
+              className="textarea textfield"
+              placeholder="Market Description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              fullWidth
-              multiline
               rows={4}
-            />
-            <FormControl variant="filled" fullWidth>
-              <Button variant="outlined" component="label" disabled={isLoading}>
-                Upload Image
+            ></textarea>
+            <div className="form-control">
+              <label className="label cursor-pointer">
+                <span className="label-text">Upload Image</span>
                 <input
                   type="file"
                   hidden
                   onChange={handleFileChange}
                   accept="image/*"
                 />
-              </Button>
-              {isLoading && <CircularProgress size={24} sx={{ mt: 2 }} />}
-            </FormControl>
-            <TextField
-              label="Resolve URL"
+              </label>
+              {isLoading && (
+                <progress className="progress w-24 mt-2"></progress>
+              )}
+            </div>
+            <input
+              className="input textfield"
+              placeholder="Resolve URL"
               value={resolverUrl}
               onChange={(e) => setResolverUrl(e.target.value)}
-              fullWidth
             />
-            <DatePicker
+            {/* <DatePicker
               label="End Date"
               value={timestamp}
               onChange={(newDate: any) => setTimestamp(newDate)}
-            />
-            <Button
-              variant="contained"
-              color="primary"
+            /> */}
+            <button
+              className="btn btn-primary mt-2"
               onClick={handleSubmit}
               disabled={
                 isLoading ||
@@ -179,22 +154,17 @@ function Admin() {
                 !timestamp ||
                 !resolverUrl
               }
-              sx={{ mt: 2 }}
             >
               {isLoading ? (
-                <CircularProgress size={24} color="inherit" />
+                <progress className="progress"></progress>
               ) : (
                 "Create Market"
               )}
-            </Button>
-            {error && (
-              <Typography color="error" mt={2}>
-                {error}
-              </Typography>
-            )}
-          </Box>
-        </Card>
-      </Container>
+            </button>
+            {error && <p className="text-red-500 mt-2">{error}</p>}
+          </form>
+        </div>
+      </div>
     </>
   );
 }

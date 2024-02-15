@@ -1,4 +1,4 @@
-import Markets from "@/components/Markets";
+import Markets from "../../components/Markets";
 
 function page() {
   return <Markets />;

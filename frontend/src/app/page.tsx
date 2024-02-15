@@ -1,14 +1,10 @@
 "use client";
 
-import { Box, Card, TextField, Typography } from "@mui/material";
-// import Head from "next/head";
 import { useCallback, useEffect, useState } from "react";
-import { Filter } from "../components/Filter";
-import { MarketCard } from "../components/MarketCard";
-
 import { useData } from "../context/DataContext";
 
-import { MarketProps } from "@/types";
+import { MarketProps } from "../../../types/index";
+
 import LandingPageCarousal from "@/components/LandingPageCarousal";
 import Markets from "@/components/Markets";
 
@@ -43,13 +39,7 @@ const Home = () => {
 
   return (
     <main className="background">
-      <Typography
-        variant="h3"
-        sx={{ textAlign: "center", my: 2, color: "primary.main" }}
-        component={"h1"}
-      >
-        Featured Markets
-      </Typography>
+      <div>Featured Markets</div>
       {/* {markets.map((market) => ( */}
       <LandingPageCarousal markets={markets} />
       {/* ))} */}

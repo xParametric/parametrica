@@ -1,20 +1,13 @@
 "use client";
 import React from "react";
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Container,
-  Grid,
-  TextField,
-  Typography,
-} from "@mui/material";
+
 import { useCallback, useEffect, useState } from "react";
 import { MarketCard } from "../components/MarketCard";
 
 import { useData } from "../context/DataContext";
 
-import { MarketProps } from "@/types";
+import { MarketProps } from "../types/index";
+
 import { Filter } from "./Filter";
 import { useRouter } from "next/navigation";
 
@@ -54,82 +47,78 @@ function Markets() {
     });
   }, [loading]);
   return (
-    <Container maxWidth="xl">
-      <Box sx={{ padding: 2 }}>
-        <Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 2 }}>
-          {/* <SearchIcon /> */}
-          <TextField
-            type="search"
-            name="q"
-            placeholder="Search markets..."
-            variant="outlined"
-            fullWidth
-          />
-        </Box>
+    <div className="max-w-screen-xl mx-auto p-8">
+      <div className="mb-8 flex items-center gap-8">
+        {/* <SearchIcon className="text-gray-400" /> */}
+        <input
+          className="w-full p-4 border rounded-lg focus:ring-2 focus:ring-blue-500"
+          type="search"
+          name="q"
+          placeholder="Search markets..."
+        />
+      </div>
 
-        <Box sx={{ display: "flex", justifyContent: "space-between", mb: 3 }}>
-          <Filter
-            list={["All", "Crypto", "Football", "Covid 19", "Politics"]}
-            activeItem="All"
-            category="Category"
-            onChange={() => {}}
-          />
-          <Filter
-            list={["Volume", "Newest", "Expiring"]}
-            activeItem="Volume"
-            category="Sort By"
-            onChange={() => {}}
-          />
-        </Box>
+      <div className="flex justify-between mb-12">
+        {/* Replace <Filter /> with your component or implementation */}
+        <Filter
+          list={["All", "Crypto", "Football", "Covid 19", "Politics"]}
+          activeItem="All"
+          category="Category"
+          onChange={() => {}}
+        />
+        <Filter
+          list={["Volume", "Newest", "Expiring"]}
+          activeItem="Volume"
+          category="Sort By"
+          onChange={() => {}}
+        />
+      </div>
 
-        {/* <Typography variant="h6" gutterBottom>
-        Markets
-      </Typography> */}
+      {/* Uncomment for heading
+    <h2 className="mb-4 text-2xl font-semibold">
+      Markets
+    </h2>
+    */}
 
-        <Grid container spacing={2}>
-          {markets.length === 0 ? (
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                width: "100%",
-                height: "50vh",
-              }}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-8">
+        {markets.length === 0 ? (
+          <div className="flex justify-center items-center w-full h-[50vh]">
+            <svg
+              className="animate-spin -ml-1 mr-3 h-5 w-5 text-blue-500"
+              viewBox="0 0 24 24"
             >
-              <CircularProgress />
-            </Box>
-          ) : (
-            markets.map((market) => (
-              <Grid item xs={12} sm={6} md={6} key={market.id}>
-                <MarketCard
-                  id={market.id}
-                  key={market.id}
-                  title={market?.title}
-                  totalAmount={market?.totalAmount}
-                  totalYes={market?.totalYes}
-                  totalNo={market?.totalNo}
-                  imageHash={market?.imageHash}
-                  userNo="0"
-                  userYes="0"
-                  timestamp="0"
-                  endTimestamp="0"
-                />
-              </Grid>
-            ))
-          )}
-          <Box
-            sx={{ display: "flex", justifyContent: "center", width: "100%" }}
-          >
-            <Link href="/markets">
-              <Button sx={{}} type="button" variant="contained">
-                View All
-              </Button>
-            </Link>
-          </Box>
-        </Grid>
-      </Box>
-    </Container>
+              {/* Spinner Icon */}
+            </svg>
+          </div>
+        ) : (
+          markets.map((market) => (
+            <div key={market.id} className="col-span-1">
+              {/* Replace <MarketCard /> with your component */}
+              <MarketCard
+                id={market.id}
+                key={market.id}
+                title={market?.title}
+                totalAmount={market?.totalAmount}
+                totalYes={market?.totalYes}
+                totalNo={market?.totalNo}
+                imageHash={market?.imageHash}
+                userNo="0"
+                userYes="0"
+                timestamp="0"
+                endTimestamp="0"
+              />
+            </div>
+          ))
+        )}
+        <div className="flex justify-center w-full">
+          <Link href="/markets">
+            <button className="mt-4 inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700">
+              View All
+            </button>
+          </Link>
+        </div>
+      </div>
+    </div>
   );
 }
 

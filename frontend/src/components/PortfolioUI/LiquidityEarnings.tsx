@@ -1,48 +1,23 @@
 "use client";
-import { Box, Typography } from "@mui/material";
 import React from "react";
-
-import StackedLineChartIcon from "@mui/icons-material/StackedLineChart";
 
 const LiquidityEarnings: React.FC = () => {
   return (
-    <Box
-      borderRadius={2}
-      my={1}
-      width={300}
-      px={3}
-      py={2}
-      border={1}
-      borderColor={"gray"}
-      sx={{
-        backgroundColor: "#ffffff",
-        backgroundBlendMode: "difference",
-      }}
-      display={"flex"}
-      flexDirection={"column"}
-    >
-      <Box
-        sx={{
-          borderRadius: "100%",
-          backgroundColor: "#FEF5ED",
-          p: 1,
-          width: 40,
-          height: 40,
-          justifyContent: "center",
-          alignItems: "center",
-          display: "flex",
-          mr: 10,
-        }}
-      >
-        <StackedLineChartIcon fontSize={"medium"} sx={{ color: "black" }} />
-      </Box>
-      <Typography variant="caption" color={"grey"} mt={1}>
-        Liquidity Earnings
-      </Typography>
-      <Typography variant="h6" color={"primary.main"}>
-        $ 1650{" "}
-      </Typography>
-    </Box>
+    <div className="flex flex-col bg-white border border-gray-300 rounded-lg my-1 w-72 px-3 py-2">
+      <div className="flex justify-center items-center w-10 h-10 bg-[#FEF5ED] rounded-full p-1 mr-10">
+        {/* Replace this <svg> with your chosen StackedLineChartIcon equivalent */}
+        <svg
+          className="w-6 h-6 text-black"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          {/* SVG content goes here */}
+        </svg>
+      </div>
+      <span className="text-gray-500 mt-1 text-xs">Liquidity Earnings</span>
+      <span className="text-blue-500 text-xl">$ 1650</span>
+    </div>
   );
 };
 

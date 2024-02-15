@@ -1,5 +1,4 @@
 import React from "react";
-import { Button, Menu, MenuItem, Fade } from "@mui/material";
 
 interface Props {
   list: string[];
@@ -28,10 +27,11 @@ export const Filter: React.FC<Props> = ({
 
   return (
     <div>
-      <Button
+      <button
         aria-controls="fade-menu"
         aria-haspopup="true"
         onClick={handleClick}
+        className="flex items-center"
       >
         {category}: {activeItem}
         <svg
@@ -39,30 +39,27 @@ export const Filter: React.FC<Props> = ({
           width="16"
           height="16"
           fill="currentColor"
-          className="bi bi-caret-down-fill"
+          className="bi bi-caret-down-fill ml-2"
           viewBox="0 0 16 16"
         >
           <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
         </svg>
-      </Button>
-      <Menu
+      </button>
+      <div
         id="fade-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={open}
-        onClose={() => setAnchorEl(null)}
-        TransitionComponent={Fade}
+        className={`menu ${open ? "open" : ""}`}
+        aria-hidden={!open}
       >
         {list.map((item) => (
-          <MenuItem
+          <button
             key={item}
-            selected={item === activeItem}
+            className={`menu-item ${item === activeItem ? "active" : ""}`}
             onClick={() => handleClose(item)}
           >
             {item}
-          </MenuItem>
+          </button>
         ))}
-      </Menu>
+      </div>
     </div>
   );
 };

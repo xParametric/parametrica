@@ -1,6 +1,4 @@
 import React from "react";
-import ShareIcon from "@mui/icons-material/Share";
-import { Box, IconButton, Tooltip } from "@mui/material";
 
 const ShareMarket = () => {
   const handleShareClick = () => {
@@ -14,21 +12,15 @@ const ShareMarket = () => {
   };
 
   return (
-    <Box display="flex" alignItems="center">
-      <Tooltip title="Share this Market on Twitter">
-        <IconButton
-          disableRipple
-          onClick={handleShareClick}
-          aria-label="Share on Twitter"
-          sx={{
-            p: 1,
-            "&:hover": { backgroundColor: "transparent" },
-          }}
-        >
-          <ShareIcon fontSize="small" />
-        </IconButton>
-      </Tooltip>
-    </Box>
+    <div className="flex items-center">
+      <button
+        className="p-2 hover:bg-transparent"
+        onClick={handleShareClick}
+        aria-label="Share on Twitter"
+      >
+        {/* <ShareIcon className="h-5 w-5" /> */}
+      </button>
+    </div>
   );
 };
 

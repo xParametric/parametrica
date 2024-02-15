@@ -5,15 +5,15 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
-import { Container } from "@mui/material";
-import { MarketProps } from "@/types";
+import { MarketProps } from "../../../types/index";
+
 import CarousalCard from "./CarousalCard";
 
 const LandingPageCarousal: React.FC<{ markets: MarketProps[] }> = ({
   markets,
 }) => {
   return (
-    <Container maxWidth="xl" sx={{ mt: 4 }}>
+    <div>
       <Swiper
         spaceBetween={50}
         slidesPerView={1}
@@ -64,7 +64,7 @@ const LandingPageCarousal: React.FC<{ markets: MarketProps[] }> = ({
             </SwiperSlide>
           ))}
       </Swiper>
-    </Container>
+    </div>
   );
 };
 

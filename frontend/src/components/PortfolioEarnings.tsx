@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import dynamic from "next/dynamic";
 
 const PortfolioEarnings = () => {
   function generateDayWiseTimeSeries(baseval: any, count: any, yrange: any) {

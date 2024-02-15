@@ -1,5 +1,4 @@
 import React from "react";
-import { Container, Grid } from "@mui/material";
 import TotalEarnings from "./TotalEarnings";
 import OpenPositions from "./OpenPostions";
 import LiquidityEarnings from "./LiquidityEarnings";
@@ -8,25 +7,25 @@ import PorfolioTotalBalance from "./PorfolioTotalBalance";
 
 const PortfolioContainer = () => {
   return (
-    <Container maxWidth="xl">
-      <Grid container justifyContent={"space-around"}>
-        <Grid item>
+    <div className="container mx-auto max-w-screen-xl">
+      <div className="flex justify-around">
+        <div>
           <TotalEarnings />
-        </Grid>
-        <Grid item>
+        </div>
+        <div>
           <OpenPositions />
-        </Grid>
-        <Grid item>
+        </div>
+        <div>
           <LiquidityProvided />
-        </Grid>
-        <Grid item>
+        </div>
+        <div>
           <LiquidityEarnings />
-        </Grid>
-      </Grid>
-      <Grid container px={1}>
+        </div>
+      </div>
+      <div className="flex px-1">
         <PorfolioTotalBalance />
-      </Grid>
-    </Container>
+      </div>
+    </div>
   );
 };
 

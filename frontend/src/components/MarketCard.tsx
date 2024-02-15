@@ -2,8 +2,8 @@
 import Link from "next/link";
 import React from "react";
 import Web3 from "web3";
-import { Box, Card, CardContent, Typography } from "@mui/material";
-import { MarketProps } from "@/types";
+import { MarketProps } from "../../../types/index";
+
 import BigNumber from "bignumber.js";
 
 export const MarketCard: React.FC<MarketProps> = ({
@@ -32,91 +32,39 @@ export const MarketCard: React.FC<MarketProps> = ({
       : `${num.dividedBy(new BigNumber(10).pow(18)).toFixed(2)} PARA`;
   };
   return (
-    <Box sx={{ marginBottom: 2, width: "100%" }}>
-      <Link href={`/market/${id}`} passHref style={{ textDecoration: "none" }}>
-        <Card
-          sx={{
-            cursor: "pointer",
-            "&:hover": {
-              boxShadow: `0px 4px 20px rgba(0, 0, 0, 0.2)`,
-              borderColor: "primary.main",
-            },
-            borderWidth: 1,
-            borderColor: "grey.300",
-            borderRadius: 2,
-            transition: "box-shadow 0.3s ease-in-out",
-          }}
-        >
-          <Box
-            component="img"
+    <div className="mb-8 w-full">
+      <Link href={`/market/${id}`} passHref>
+        <div className="cursor-pointer border border-gray-300 rounded-md transition-shadow duration-300 ease-in-out hover:shadow-[0px_4px_20px_rgba(0,0,0,0.2)] hover:border-primary-500">
+          <img
+            className="w-full h-36 object-cover rounded-t-md"
             src={imageUrl}
             alt="Market Banner"
-            sx={{
-              width: "100%",
-              height: 140,
-              objectFit: "cover",
-              borderTopLeftRadius: "inherit",
-              borderTopRightRadius: "inherit",
-            }}
           />
-          <CardContent>
-            <Typography
-              variant="h6"
-              sx={{ fontWeight: "bold", paddingBottom: 2 }}
-            >
-              {title}
-            </Typography>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <Typography
-                variant="body2"
-                color="text.secondary"
-                sx={{ display: "flex", alignItems: "center", gap: 0.5 }}
-              >
-                <Box sx={{ fontWeight: "medium" }}>Volume:</Box>
+          <div className="p-4">
+            <h3 className="font-bold pb-2">{title}</h3>
+            <div className="flex justify-between items-center">
+              <div className="flex items-center space-x-2">
+                <span className="font-medium">Volume:</span>
                 {formatAmount(totalAmount)}
-              </Typography>
-              <Box sx={{ display: "flex", gap: 2 }}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    gap: 0.5,
-                  }}
-                >
-                  <Typography variant="caption" color="text.secondary">
-                    Yes
-                  </Typography>
-                  <Typography variant="body2" color="primary.main">
+              </div>
+              <div className="flex space-x-8">
+                <div className="flex flex-col items-center space-y-2">
+                  <span className="text-xs text-gray-500">Yes</span>
+                  <span className="text-sm text-primary-500">
                     {formatAmount(totalYes)}
-                  </Typography>
-                </Box>
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    gap: 0.5,
-                  }}
-                >
-                  <Typography variant="caption" color="text.secondary">
-                    No
-                  </Typography>
-                  <Typography variant="body2" color="primary.main">
+                  </span>
+                </div>
+                <div className="flex flex-col items-center space-y-2">
+                  <span className="text-xs text-gray-500">No</span>
+                  <span className="text-sm text-primary-500">
                     {formatAmount(totalNo)}
-                  </Typography>
-                </Box>
-              </Box>
-            </Box>
-          </CardContent>
-        </Card>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </Link>
-    </Box>
+    </div>
   );
 };

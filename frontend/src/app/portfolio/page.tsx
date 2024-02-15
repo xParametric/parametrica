@@ -1,4 +1,4 @@
-import PortfolioContainer from "@/components/PortfolioUI/PortfolioContainer";
+import PortfolioContainer from "../../components/PortfolioUI/PortfolioContainer";
 import React from "react";
 
 const portfolio = () => {

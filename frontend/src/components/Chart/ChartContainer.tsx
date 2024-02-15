@@ -1,7 +1,7 @@
 // import Plotly from "plotly.js-dist-min";
 import React, { useEffect } from "react";
 import Web3 from "web3";
-import { useData } from "@/context/DataContext";
+import { useData } from "../../context/DataContext";
 import Plotly from "plotly.js";
 
 interface Props {

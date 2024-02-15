@@ -2,13 +2,10 @@ import "./globals.css";
 import type { Metadata } from "next";
 import React from "react";
 import { FC, PropsWithChildren } from "react";
-import theme from "@/styles/theme";
-import { ThemeProvider, CssBaseline } from "@mui/material";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import { DataProvider } from "@/context/DataContext";
-import { LocalizationProviderWrapper } from "@/lib/LocalizationProviderWrapper";
-import ThirdwebProviderWrapper from "@/components/ThirdwebProvider";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import { DataProvider } from "../context/DataContext";
+import ThirdwebProviderWrapper from "../components/ThirdwebProvider";
 import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
@@ -17,7 +14,11 @@ export const metadata: Metadata = {
     "Parametrica is a decentralized climate prediction market. It is a transparent, secure, and user-friendly platform where participants can speculate, transfer and invest in climate-related risk.",
 };
 
-const RootLayout: FC<PropsWithChildren<{}>> = ({ children }) => {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
     <html lang="en">
       <body>
@@ -25,20 +26,13 @@ const RootLayout: FC<PropsWithChildren<{}>> = ({ children }) => {
 
         // signer={new ethers.providers.Web3Provider(window.ethereum).getSigner()}
         >
-          <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <LocalizationProviderWrapper>
-              <DataProvider>
-                <Header /> <Toaster />
-                {children}
-                <Footer />
-              </DataProvider>
-            </LocalizationProviderWrapper>
-          </ThemeProvider>
+          <DataProvider>
+            <Header /> <Toaster />
+            {children}
+            <Footer />
+          </DataProvider>
         </ThirdwebProviderWrapper>
       </body>
     </html>
   );
-};
-
-export default RootLayout;
+}

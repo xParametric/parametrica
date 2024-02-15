@@ -3,7 +3,6 @@ import React, { useCallback, useEffect, useState } from "react";
 import Web3 from "web3";
 import { PortfolioMarketCard } from "../components/PortfolioMarketCard";
 import { useData } from "../context/DataContext";
-import { Box, Grid, Typography } from "@mui/material";
 import { MarketProps, QuestionsProps } from "@/types";
 
 const Portfolio = () => {
@@ -93,35 +92,19 @@ const Portfolio = () => {
   }, [loading]);
 
   return (
-    <Box>
+    <div>
       <main>
-        <Grid>
-          <Box sx={{ paddingTop: 1, display: "flex", flexDirection: "column" }}>
-            <Box
-              sx={{
-                padding: 4,
-                backgroundColor: "blue.700",
-                borderRadius: 2,
-                display: "flex",
-                justifyContent: "space-evenly",
-              }}
-            >
-              <Box sx={{ textAlign: "center" }}>
-                <Typography color="white" sx={{ opacity: 0.5 }}>
-                  Portfolio Value
-                </Typography>
-                <Typography
-                  variant="h3"
-                  color="white"
-                  sx={{ fontWeight: "bold" }}
-                >
+        <div className="grid">
+          <div className="pt-1 flex flex-col">
+            <div className="p-4 bg-blue-700 rounded-lg flex justify-evenly">
+              <div className="text-center">
+                <div className="text-white opacity-50">Portfolio Value</div>
+                <div className="text-3xl text-white font-bold">
                   {Web3.utils.fromWei(portfolioValue.toString(), "ether")} Para
-                </Typography>
-              </Box>
-            </Box>
-            <Typography variant="h6" sx={{ my: 3, fontWeight: "bold" }}>
-              Your Market Positions
-            </Typography>
+                </div>
+              </div>
+            </div>
+            <div className="text-xl my-3 font-bold">Your Market Positions</div>
             {markets.map((market) => (
               <PortfolioMarketCard
                 id={market.id}
@@ -138,10 +121,10 @@ const Portfolio = () => {
                 endTimestamp={market.endTimestamp!}
               />
             ))}
-          </Box>
-        </Grid>
+          </div>
+        </div>
       </main>
-    </Box>
+    </div>
   );
 };
 

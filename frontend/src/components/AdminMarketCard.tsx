@@ -1,14 +1,6 @@
 "use client";
 import React from "react";
-import {
-  Box,
-  Typography,
-  Button,
-  Card,
-  CardContent,
-  CardActions,
-  CardMedia,
-} from "@mui/material";
+
 import Web3 from "web3";
 
 interface Props {
@@ -36,54 +28,42 @@ export const AdminMarketCard: React.FC<Props> = ({
     : "https://source.unsplash.com/random";
 
   return (
-    <Box sx={{ width: "100%", marginBottom: 2 }}>
-      <Card
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          cursor: "pointer",
-          "&:hover": { boxShadow: 3 },
-          borderRadius: 2,
-          overflow: "hidden",
-        }}
-      >
-        <CardMedia
-          component="img"
-          image={imageUrl}
+    <div className="w-full mb-2">
+      <div className="flex flex-col cursor-pointer hover:shadow-md rounded-lg overflow-hidden">
+        <img
+          src={imageUrl}
           alt="Market"
-          sx={{ height: 140, objectFit: "cover" }} // Adjust height as needed
+          className="h-36 object-cover w-full" // Adjust height as needed
         />
-        <CardContent>
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{ fontWeight: "bold", marginBottom: 2 }}
-          >
-            {title}
-          </Typography>
-          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-            <Typography variant="body2" color="text.secondary">
+        <div className="p-4">
+          <div className="text-xl font-bold mb-2">{title}</div>
+          <div className="flex justify-between">
+            <span className="text-sm text-gray-500">
               Total Liquidity:{" "}
               {totalAmount
                 ? `${parseFloat(
                     Web3.utils.fromWei(totalAmount, "ether")
                   ).toFixed(2)} PARA`
                 : "0 PARA"}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Ending In: 12 Days
-            </Typography>
-          </Box>
-        </CardContent>
-        <CardActions sx={{ justifyContent: "flex-end" }}>
-          <Button variant="outlined" onClick={onYes} sx={{ marginRight: 1 }}>
+            </span>
+            <span className="text-sm text-gray-500">Ending In: 12 Days</span>
+          </div>
+        </div>
+        <div className="flex justify-end p-4">
+          <button
+            className="border rounded px-4 py-2 hover:bg-gray-100 mr-2"
+            onClick={onYes}
+          >
             Resolve YES
-          </Button>
-          <Button variant="outlined" color="secondary" onClick={onNo}>
+          </button>
+          <button
+            className="border border-red-500 text-red-500 rounded px-4 py-2 hover:bg-red-100"
+            onClick={onNo}
+          >
             Resolve NO
-          </Button>
-        </CardActions>
-      </Card>
-    </Box>
+          </button>
+        </div>
+      </div>
+    </div>
   );
 };

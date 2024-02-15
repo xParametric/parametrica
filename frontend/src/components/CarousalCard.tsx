@@ -1,12 +1,5 @@
-import { MarketProps } from "@/types";
-import {
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  CardMedia,
-  Typography,
-} from "@mui/material";
+import { MarketProps } from "../../../types/index";
+
 import BigNumber from "bignumber.js";
 const CarousalCard: React.FC<MarketProps> = ({
   title,
@@ -22,34 +15,24 @@ const CarousalCard: React.FC<MarketProps> = ({
     ? `${ipfsBaseUrl}${formattedImageHash}`
     : "https://source.unsplash.com/random";
   return (
-    <Card sx={{ height: 330, width: 450, my: 2 }}>
-      <CardMedia
-        sx={{ height: 170 }}
-        image={imageUrl || "https://source.unsplash.com/random"}
-        title="green iguana"
+    <div className="card my-2" style={{ height: "330px", width: "450px" }}>
+      <img
+        className="h-42 object-cover w-full"
+        src={imageUrl || "https://source.unsplash.com/random"}
+        alt="green iguana"
       />
-      <CardContent>
-        <Typography variant="body1" color="text.secondary">
-          {title}
-        </Typography>{" "}
-        <CardActions sx={{ px: 0 }}>
-          <Button
-            size="small"
-            variant="outlined"
-            sx={{ border: 1, borderColor: "#0ECB81" }}
-          >
-            {"Yes " + BigNumber(totalYes ?? 0)?.dividedBy(10 ** 18)}
-          </Button>
-          <Button
-            size="small"
-            variant="outlined"
-            sx={{ border: 1, borderColor: "#DC4155" }}
-          >
+      <div className="p-4">
+        <p className="text-gray-500">{title}</p>
+        <div className="flex px-0">
+          <button className="text-sm border border-[#0ECB81] rounded px-2 py-1 mr-2">
+            Yes {"Yes " + BigNumber(totalYes ?? 0)?.dividedBy(10 ** 18)}
+          </button>
+          <button className="text-sm border border-[#DC4155] rounded px-2 py-1">
             {"No " + BigNumber(totalNo ?? 0)?.dividedBy(10 ** 18)}
-          </Button>
-        </CardActions>
-      </CardContent>
-    </Card>
+          </button>
+        </div>
+      </div>
+    </div>
   );
 };
 

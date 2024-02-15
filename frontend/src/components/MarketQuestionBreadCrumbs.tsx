@@ -1,6 +1,5 @@
 import * as React from "react";
-import Typography from "@mui/material/Typography";
-import Breadcrumbs from "@mui/material/Breadcrumbs";
+
 import Link from "@mui/material/Link";
 
 interface LiquidityProps {
@@ -13,14 +12,15 @@ interface LiquidityProps {
 
 const MarketQuestionBreadCrumbs = () => {
   return (
-    <Breadcrumbs aria-label="breadcrumb">
-      <Typography variant="subtitle2" textTransform={"uppercase"}>
+    <nav aria-label="breadcrumb" className="flex space-x-2 text-sm">
+      <span className="uppercase font-semibold">
         {/* {question.category} */}
-      </Typography>
-      <Typography variant="subtitle1" textTransform={"uppercase"}>
+      </span>
+      <span>/</span>
+      <span className="uppercase font-normal">
         {/* {question.subCategory} */}
-      </Typography>
-    </Breadcrumbs>
+      </span>
+    </nav>
   );
 };
 
