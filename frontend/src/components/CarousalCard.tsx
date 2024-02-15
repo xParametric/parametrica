@@ -1,4 +1,4 @@
-import { MarketProps } from "../../../types/index";
+import { MarketProps } from "../types/index";
 
 import BigNumber from "bignumber.js";
 const CarousalCard: React.FC<MarketProps> = ({

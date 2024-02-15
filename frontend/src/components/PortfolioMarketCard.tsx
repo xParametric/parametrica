@@ -1,6 +1,6 @@
 "use client";
-import { currentDateTime } from "@/lib/DateTimeFormatter";
-import { MarketProps } from "../../../types/index";
+import { currentDateTime } from "../lib/DateTimeFormatter";
+import { MarketProps } from "../types/index";
 
 import moment from "moment";
 import Image from "next/image";

@@ -2,7 +2,7 @@
 import Link from "next/link";
 import React from "react";
 import Web3 from "web3";
-import { MarketProps } from "../../../types/index";
+import { MarketProps } from "../types/index";
 
 import BigNumber from "bignumber.js";
 

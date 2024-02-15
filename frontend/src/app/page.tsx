@@ -3,10 +3,10 @@
 import { useCallback, useEffect, useState } from "react";
 import { useData } from "../context/DataContext";
 
-import { MarketProps } from "../../../types/index";
+import { MarketProps } from "../types/index";
 
-import LandingPageCarousal from "@/components/LandingPageCarousal";
-import Markets from "@/components/Markets";
+import LandingPageCarousal from "../components/LandingPageCarousal";
+import Markets from "../components/Markets";
 
 const Home = () => {
   const { polymarket, account, loadWeb3, loading } = useData();
