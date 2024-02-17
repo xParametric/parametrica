@@ -5,7 +5,7 @@ const nextConfig = {
     return config;
   },
   images: {
-    domains: ["ipfs.infura.io"],
+    domains: ["ipfs.infura.io", "source.unsplash.com", "ipfs.io"],
   },
 };
 module.exports = nextConfig;

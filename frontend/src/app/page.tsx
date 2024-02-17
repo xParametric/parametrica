@@ -39,7 +39,7 @@ const Home = () => {
 
   return (
     <main className="background">
-      <div>Featured Markets</div>
+      <div className="text-4xl text-center my-5">Featured Markets</div>
       {/* {markets.map((market) => ( */}
       <LandingPageCarousal markets={markets} />
       {/* ))} */}

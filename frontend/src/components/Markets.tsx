@@ -12,6 +12,7 @@ import { Filter } from "./Filter";
 import { useRouter } from "next/navigation";
 
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 function Markets() {
   // const router = useRouter();
@@ -46,12 +47,14 @@ function Markets() {
       if (!loading) getMarkets();
     });
   }, [loading]);
+
+  const router = useRouter();
   return (
     <div className="max-w-screen-xl mx-auto p-8">
       <div className="mb-8 flex items-center gap-8">
         {/* <SearchIcon className="text-gray-400" /> */}
         <input
-          className="w-full p-4 border rounded-lg focus:ring-2 focus:ring-blue-500"
+          className="w-full p-4 border rounded-lg focus:ring-2 focus:ring-[#bdff00] focus:outline-none transition duration-300 ease-in-out"
           type="search"
           name="q"
           placeholder="Search markets..."
@@ -110,13 +113,9 @@ function Markets() {
             </div>
           ))
         )}
-        <div className="flex justify-center w-full">
-          <Link href="/markets">
-            <button className="mt-4 inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700">
-              View All
-            </button>
-          </Link>
-        </div>
+      </div>
+      <div className="flex justify-center w-full">
+        <Button onClick={() => router.push("/markets")}>View All</Button>
       </div>
     </div>
   );

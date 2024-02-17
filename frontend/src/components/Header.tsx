@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 // import LocalGroceryStoreIcon from "@mui/icons-material/LocalGroceryStore";
 // import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import ConnectWalletButton from "../app/Web3Provider";
+import { Button } from "@/components/ui/button";
 
 const pages = [
   { name: "markets", icon: "" },
@@ -46,7 +47,7 @@ function Header() {
   //   route
   return (
     <div className="w-full bg-transparent shadow">
-      <div className="max-w-screen-xl mx-auto px-4">
+      <div className="container px-4">
         <div className="flex justify-between items-center py-4">
           {/* Mobile Menu Button */}
           <div className="md:hidden">
@@ -123,12 +124,24 @@ function Header() {
             ))}
           </div>
           <div className="flex items-center">
-            <Link href="/create">
-              <button className="flex items-center mx-2">
-                {/* <AddBoxIcon className="mr-2" />  */}
-                Create
-              </button>
-            </Link>
+            <Button
+              className="flex items-center mx-2 "
+              onClick={() => {
+                router.push("/create");
+              }}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="26"
+                height="26"
+                fill="currentColor"
+                className=" bi bi-plus"
+                viewBox="0 0 16 16"
+              >
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+              </svg>
+              Create
+            </Button>
             <ConnectWalletButton />
             {/* User Avatar and Dropdown Menu */}
             <button onClick={handleOpenUserMenu} className="ml-4">
