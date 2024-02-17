@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import Web3 from "web3";
 import { PortfolioMarketCard } from "../components/PortfolioMarketCard";
 import { useData } from "../context/DataContext";
-import { MarketProps, QuestionsProps } from "@/types";
+import { MarketProps, QuestionsProps } from "../types/index";
 
 const Portfolio = () => {
   const { polymarket, account, loadWeb3, loading } = useData();

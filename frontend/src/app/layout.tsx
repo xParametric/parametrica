@@ -7,6 +7,7 @@ import Footer from "../components/Footer";
 import { DataProvider } from "../context/DataContext";
 import ThirdwebProviderWrapper from "../components/ThirdwebProvider";
 import { Toaster } from "react-hot-toast";
+import { ThemeProvider } from "../components/theme-provider";
 
 export const metadata: Metadata = {
   title: "Parametrica",
@@ -20,18 +21,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body>
-        <ThirdwebProviderWrapper
+        <ThemeProvider defaultTheme="dark" attribute="class">
+          <ThirdwebProviderWrapper
 
-        // signer={new ethers.providers.Web3Provider(window.ethereum).getSigner()}
-        >
-          <DataProvider>
-            <Header /> <Toaster />
-            {children}
-            <Footer />
-          </DataProvider>
-        </ThirdwebProviderWrapper>
+          // signer={new ethers.providers.Web3Provider(window.ethereum).getSigner()}
+          >
+            <DataProvider>
+              <Header /> <Toaster />
+              {children}
+              <Footer />
+            </DataProvider>
+          </ThirdwebProviderWrapper>
+        </ThemeProvider>
       </body>
     </html>
   );
