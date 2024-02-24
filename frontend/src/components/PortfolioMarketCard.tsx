@@ -69,9 +69,7 @@ export const PortfolioMarketCard: React.FC<MarketProps> = ({
             </span>
           </div>
           <div className="flex flex-col space-y-1 items-end">
-            <div className="py-2 px-8 rounded-lg bg-blue-700 text-white">
-              Trade
-            </div>
+            <div className="py-2 px-8 rounded-lg bg-[#bdff00] ">Trade</div>
           </div>
         </div>
       </div>

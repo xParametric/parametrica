@@ -14,7 +14,7 @@ const PorfolioTotalBalance: React.FC = () => {
             <div className="bg-blue-500 inline-block rounded-md p-1">
               <div className="flex items-center">
                 {/* Insert ArrowDropUpIcon equivalent SVG here */}
-                <span className="text-white">+10200%</span>
+                <span className="">+10200%</span>
               </div>
             </div>
           </div>

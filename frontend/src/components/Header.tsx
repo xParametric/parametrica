@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 // import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import ConnectWalletButton from "../app/Web3Provider";
 import { Button } from "@/components/ui/button";
+import { ModeToggle } from "./theme-toggler";
 
 const pages = [
   { name: "markets", icon: "" },
@@ -116,7 +117,7 @@ function Header() {
               <Link href={`/${page.name}`} key={page.name} passHref>
                 <button
                   onClick={handleCloseNavMenu}
-                  className="text-base uppercase py-2 px-4 hover:bg-gray-200 rounded"
+                  className="text-base uppercase py-2 px-4 dark:hover:text-[#bdff00] rounded"
                 >
                   {page.name}
                 </button>
@@ -141,7 +142,11 @@ function Header() {
                 <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
               </svg>
               Create
-            </Button>
+            </Button>{" "}
+            <div className="mr-2">
+              {" "}
+              <ModeToggle />
+            </div>
             <ConnectWalletButton />
             {/* User Avatar and Dropdown Menu */}
             <button onClick={handleOpenUserMenu} className="ml-4">

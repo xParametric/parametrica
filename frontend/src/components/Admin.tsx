@@ -160,15 +160,15 @@ function Admin() {
       </Head>
       <div className="container  py-16">
         <div className="text-center mb-4">
-          <button
-            className="bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mb-2"
+          <Button
+            className=" font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mb-2"
             onClick={() => router.push("/create/markets")}
             type="button"
           >
             See All Markets
-          </button>
+          </Button>
         </div>
-        <div className=" card border-opacity-50 raised p-4 md:p-8 border border-[#bdff00] bg-white bg-opacity-5  rounded-xl">
+        <div className=" card border-opacity-50 raised p-4 md:p-8 border dark:border-[#bdff00] bg-white bg-opacity-5  rounded-xl">
           <h2 className="text-xl font-bold mb-3">Add New Market</h2>
           <form className="flex flex-col gap-2" noValidate autoComplete="off">
             <Input

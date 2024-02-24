@@ -15,6 +15,7 @@ import { useTokenBalance } from "../../hooks/getBalance";
 import toast from "react-hot-toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Separator } from "@/components/ui/separator";
 
 const Details = () => {
   const { id } = useParams();
@@ -188,19 +189,20 @@ const Details = () => {
             <div className="flex flex-col gap-2 mt-5">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
                 <div className="md:col-span-2">
-                  <div className="p-2 flex flex-col items-center justify-center h-full shadow-md">
+                  <div className="p-2 flex items-center justify-center h-full">
                     <ChartContainer questionId={market?.id ?? "0"} />
+                    <Separator orientation="vertical" className="mx-2" />
                   </div>
                 </div>
                 <div className="md:col-span-1">
                   <div className="max-w-sm mx-auto shadow-lg border bg-white bg-opacity-5 rounded-md">
                     <div className="text-center p-4">Buy</div>
-                    <div className="flex justify-center">
+                    <div className="flex justify-around px-10">
                       {" "}
                       {["YES", "NO"].map((option) => (
                         <div
                           key={option}
-                          className={`text-center  p-2 m-1 rounded cursor-pointer ${
+                          className={`text-center px-4 p-2 m-1 rounded cursor-pointer ${
                             selected === option
                               ? "bg-[#bdff00] text-gray-700"
                               : "bg-white text-gray-800"
@@ -212,22 +214,22 @@ const Details = () => {
                       ))}
                     </div>
                     <div className="mt-2 text-center">How much?</div>
-                    <div className="flex items-center border divide-x divide-gray-300 rounded mx-2 my-2">
+                    <div className="flex items-center  border divide-x divide-gray-300 mx-4  my-2">
                       <Input
                         type="number"
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
                         placeholder="0"
-                        className="flex-grow p-1"
+                        className="flex-grow border-none p-1"
                       />
                       <Button
-                        // className="px-4 py-1 text-white bg-[#bdff00] hover:bg-[#bdff00]"
+                        // className="px-4 py-1  bg-[#bdff00] hover:bg-[#bdff00]"
                         onClick={SetMaxValue}
                       >
                         Max
                       </Button>
                     </div>
-                    <div className="p-2">
+                    <div className="m-4 p-2">
                       <Button
                         className="w-full "
                         onClick={handleTrade}

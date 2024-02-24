@@ -105,7 +105,13 @@ const ChartContainer: React.FC<Props> = ({ questionId }) => {
     return () => clearInterval(intervalId);
   }, [fetchAndUpdateChart]);
 
-  return <div ref={chartRef} style={{ width: "100%", height: "400px" }} />;
+  return (
+    <div
+      ref={chartRef}
+      className="px-0 mx-4 border-b-[#bdff00] border rounded"
+      style={{ width: "100%", height: "400px" }}
+    />
+  );
 };
 
 export default ChartContainer;

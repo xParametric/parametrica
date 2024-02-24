@@ -51,7 +51,7 @@ export const AdminMarketCard: React.FC<Props> = ({
         </div>
         <div className="flex justify-end p-4">
           <button
-            className="border rounded px-4 py-2 hover:bg-gray-100 mr-2"
+            className="border border-[#bdff00] rounded px-4 py-2 hover:bg-[#bdff00] hover:bg-opacity-30 mr-2"
             onClick={onYes}
           >
             Resolve YES

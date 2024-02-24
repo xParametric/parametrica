@@ -46,7 +46,7 @@ export const MarketCard: React.FC<MarketProps> = ({
     <div onClick={() => router.push(`market/${id}`)} className="cursor-pointer">
       <Card
         className="mb-8 w-full border border-gray-600 bg-white
-     bg-opacity-5 border-opacity-50 rounded-md transition-shadow duration-300 ease-in-out hover:shadow-[0px_4px_20px_rgba(0,0,0,0.2)] hover:border-primary-500"
+     bg-opacity-5 border-opacity-50 rounded-md transition-shadow duration-300 ease-in-out hover:shadow-[0px_4px_20px_rgba(0,0,0,0.2)] dark:hover:shadow-[0px_4px_20px_rgba(255,255,255,0.2)]  hover:border-primary-500"
       >
         <CardHeader>
           <div className="">
@@ -58,7 +58,7 @@ export const MarketCard: React.FC<MarketProps> = ({
           </div>
         </CardHeader>
         <CardContent className="p-4">
-          <CardTitle className="font-bold pb-2">{title}</CardTitle>
+          <CardTitle className="font-bold pb-2 capitalize">{title}</CardTitle>
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-2">
               <span className="font-medium">Volume:</span>

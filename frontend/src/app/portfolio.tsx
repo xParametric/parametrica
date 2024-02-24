@@ -98,8 +98,8 @@ const Portfolio = () => {
           <div className="pt-1 flex flex-col">
             <div className="p-4 bg-blue-700 rounded-lg flex justify-evenly">
               <div className="text-center">
-                <div className="text-white opacity-50">Portfolio Value</div>
-                <div className="text-3xl text-white font-bold">
+                <div className=" opacity-50">Portfolio Value</div>
+                <div className="text-3xl  font-bold">
                   {Web3.utils.fromWei(portfolioValue.toString(), "ether")} Para
                 </div>
               </div>

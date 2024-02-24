@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
-        <ThemeProvider defaultTheme="dark" attribute="class">
+        <ThemeProvider defaultTheme="system" attribute="class">
           <ThirdwebProviderWrapper
 
           // signer={new ethers.providers.Web3Provider(window.ethereum).getSigner()}

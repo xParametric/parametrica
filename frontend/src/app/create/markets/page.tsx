@@ -49,7 +49,7 @@ const Markets: React.FC = () => {
       <div className="max-w-5xl mx-auto p-4">
         <div className="mb-4 text-left">
           <Link href="/create" passHref>
-            <button className="mb-2 inline-block bg-transparent border border-primary-500 text-primary-500 hover:bg-primary-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50 rounded px-4 py-2 transition-colors duration-150 ease-in-out">
+            <button className="mb-2 inline-block bg-transparent border border-primary-500 text-primary-500 hover:bg-primary-500 hover: focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50 rounded px-4 py-2 transition-colors duration-150 ease-in-out">
               ← Back to Creation
             </button>
           </Link>
