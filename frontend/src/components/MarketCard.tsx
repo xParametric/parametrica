@@ -64,14 +64,14 @@ export const MarketCard: React.FC<MarketProps> = ({
               <span className="font-medium">Volume:</span>
               {formatAmount(totalAmount)}
             </div>
-            <div className="flex space-x-8">
-              <div className="flex flex-col items-center space-y-2">
+            <div className="flex space-x-8 ">
+              <div className="flex flex-col items-center  space-y-2">
                 <span className="text-xs text-gray-500">Yes</span>
                 <span className="text-sm text-primary-500">
                   {formatAmount(totalYes)}
                 </span>
               </div>
-              <div className="flex flex-col items-center space-y-2">
+              <div className="flex flex-col items-center  space-y-2">
                 <span className="text-xs text-gray-500">No</span>
                 <span className="text-sm text-primary-500">
                   {formatAmount(totalNo)}

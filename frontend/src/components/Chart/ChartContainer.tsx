@@ -19,7 +19,6 @@ const ChartContainer: React.FC<Props> = ({ questionId }) => {
   const [chartInstance, setChartInstance] = useState<echarts.ECharts | null>(
     null
   );
-
   const fetchAndUpdateChart = useCallback(async () => {
     try {
       const data = await polymarket.methods.getGraphData(questionId).call();
@@ -28,23 +27,28 @@ const ChartContainer: React.FC<Props> = ({ questionId }) => {
       let formattedData: ChartData[] = [];
 
       if (data["0"].length > 0 || data["1"].length > 0) {
-        formattedData = [...data["0"], ...data["1"]]
+        const combinedData = [...data["0"], ...data["1"]]
           .map((item) => ({
             ...item,
             timestamp: parseInt(item.timestamp),
             amount: parseFloat(Web3.utils.fromWei(item.amount, "ether")),
             isYes: data["0"].includes(item),
           }))
-          .sort((a, b) => a.timestamp - b.timestamp)
-          .map((item) => {
-            if (item.isYes) yesSum += item.amount;
-            else noSum += item.amount;
-            return {
-              time: new Date(item.timestamp * 1000).toLocaleDateString(),
-              Yes: yesSum,
-              No: noSum,
-            };
+          .sort((a, b) => a.timestamp - b.timestamp);
+
+        combinedData.forEach((item) => {
+          if (item.isYes) yesSum += item.amount;
+          else noSum += item.amount;
+          const total = yesSum + noSum;
+          const yesPercentage = (yesSum / total) * 100;
+          const noPercentage = (noSum / total) * 100;
+
+          formattedData.push({
+            time: new Date(item.timestamp * 1000).toLocaleDateString(),
+            Yes: yesPercentage,
+            No: noPercentage,
           });
+        });
       } else {
         formattedData = [
           {
@@ -67,7 +71,12 @@ const ChartContainer: React.FC<Props> = ({ questionId }) => {
           type: "category",
           data: formattedData.map((data) => data.time),
         },
-        yAxis: { type: "value" },
+        yAxis: {
+          type: "value",
+          axisLabel: {
+            formatter: "{value} %",
+          },
+        },
         series: [
           {
             name: "Yes",

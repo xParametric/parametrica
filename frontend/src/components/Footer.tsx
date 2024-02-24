@@ -1,5 +1,7 @@
 "use client";
 
+import { Separator } from "@/components/ui/separator";
+
 function Copyright() {
   return (
     <p className="text-center">
@@ -15,7 +17,8 @@ function Copyright() {
 const Footer = () => {
   return (
     <footer>
-      <div className="footer p-6  mt-6">
+      <div className=" p-6  mt-6">
+        <Separator orientation="horizontal" className="my-4" />
         <div className="flex justify-center">
           <div>
             <Copyright />
