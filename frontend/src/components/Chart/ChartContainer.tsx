@@ -25,23 +25,35 @@ const ChartContainer: React.FC<Props> = ({ questionId }) => {
       const data = await polymarket.methods.getGraphData(questionId).call();
       let yesSum = 0;
       let noSum = 0;
-      const formattedData: ChartData[] = [...data["0"], ...data["1"]]
-        .map((item) => ({
-          ...item,
-          timestamp: parseInt(item.timestamp),
-          amount: parseFloat(Web3.utils.fromWei(item.amount, "ether")),
-          isYes: data["0"].includes(item),
-        }))
-        .sort((a, b) => a.timestamp - b.timestamp)
-        .map((item) => {
-          if (item.isYes) yesSum += item.amount;
-          else noSum += item.amount;
-          return {
-            time: new Date(item.timestamp * 1000).toLocaleDateString(),
-            Yes: yesSum,
-            No: noSum,
-          };
-        });
+      let formattedData: ChartData[] = [];
+
+      if (data["0"].length > 0 || data["1"].length > 0) {
+        formattedData = [...data["0"], ...data["1"]]
+          .map((item) => ({
+            ...item,
+            timestamp: parseInt(item.timestamp),
+            amount: parseFloat(Web3.utils.fromWei(item.amount, "ether")),
+            isYes: data["0"].includes(item),
+          }))
+          .sort((a, b) => a.timestamp - b.timestamp)
+          .map((item) => {
+            if (item.isYes) yesSum += item.amount;
+            else noSum += item.amount;
+            return {
+              time: new Date(item.timestamp * 1000).toLocaleDateString(),
+              Yes: yesSum,
+              No: noSum,
+            };
+          });
+      } else {
+        formattedData = [
+          {
+            time: new Date().toLocaleDateString(), // Current date as a placeholder
+            Yes: 0,
+            No: 0,
+          },
+        ];
+      }
 
       if (chartRef.current && !chartInstance) {
         const initChart = echarts.init(chartRef.current);
