@@ -2,14 +2,12 @@
 import { useStorageUpload } from "@thirdweb-dev/react";
 import { useData } from "../context/DataContext";
 import { useRouter } from "next/navigation";
-
+import { Progress } from "@/components/ui/progress";
 import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import toast, { Toaster } from "react-hot-toast";
-
 import { format } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
-
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -24,42 +22,87 @@ import { Textarea } from "@/components/ui/textarea";
 import Loader from "@/components/ui/loader";
 
 function Admin() {
-  const projectId = process.env.NEXT_PUBLIC_INFURA_ID;
-  const projectSecretKey = process.env.NEXT_PUBLIC_INFURA_SECRET;
-
-  const authorization = "Basic " + btoa(projectId + ":" + projectSecretKey);
-  // console.log(authorization);
-
   const router = useRouter();
   const { polymarket, loadWeb3, account } = useData!();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  // const client = ipfsHttpClient({
-  //   url: "https://ipfs.infura.io:5001/api/v0",
-  //   headers: {
-  //     authorization,
-  //   },
-  // });
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [imageHash, setImageHash] = useState<any>("");
   const [resolverUrl, setResolverUrl] = useState("");
   const [timestamp, setTimestamp] = useState<any>("");
-  const { mutateAsync: upload, isLoading } = useStorageUpload();
+  const { mutateAsync: upload } = useStorageUpload();
+  const [progress, setProgress] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   async function handleFileChange(event: any) {
     const files = event.target.files;
     if (files && files.length > 0) {
       const file = files[0];
+      setIsLoading(true);
+      setProgress(0);
 
       try {
-        const uris = await upload({ data: [file] });
+        const compressedFile = await compressImage(file);
+
+        simulateUploadProgress();
+
+        const uris = await upload({ data: [compressedFile] });
         console.log(uris);
         setImageHash(uris[0]);
       } catch (error) {
-        console.error("Failed to upload file:", error);
+        console.error("Failed to compress or upload file:", error);
+      } finally {
+        setIsLoading(false);
       }
     }
+  }
+
+  async function compressImage(file: any) {
+    return new Promise((resolve, reject) => {
+      const image = new Image();
+      image.src = URL.createObjectURL(file);
+      image.onload = () => {
+        const canvas = document.createElement("canvas");
+        const maxWidth = 1080; // Set the maximum width or height for the image
+        const scaleSize = maxWidth / image.width;
+        canvas.width = maxWidth;
+        canvas.height = image.height * scaleSize;
+        const ctx = canvas.getContext("2d");
+        ctx !== null && ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+        canvas.toBlob(
+          (blob) => {
+            if (blob) {
+              // Create a new file object from the compressed blob
+              const compressedFile = new File([blob], file.name, {
+                type: "image/jpeg",
+                lastModified: Date.now(),
+              });
+              resolve(compressedFile);
+            } else {
+              reject(new Error("Canvas toBlob failed"));
+            }
+          },
+          "image/jpeg",
+          0.8
+        ); // Adjust the quality parameter as needed
+      };
+      image.onerror = reject;
+    });
+  }
+
+  // Simulate upload progress
+  function simulateUploadProgress() {
+    const interval = setInterval(() => {
+      setProgress((prevProgress) => {
+        if (prevProgress >= 100) {
+          clearInterval(interval);
+          return 100;
+        }
+        return prevProgress + 10;
+      });
+    }, 200);
   }
 
   useEffect(() => {
@@ -152,7 +195,10 @@ function Admin() {
                 />
               </Label>
               {isLoading ? (
-                <Loader />
+                <React.Fragment>
+                  {/* <Loader /> */}
+                  <Progress value={progress} />
+                </React.Fragment>
               ) : (
                 imageHash && (
                   <img
