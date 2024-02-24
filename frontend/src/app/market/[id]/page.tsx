@@ -13,6 +13,8 @@ import { MarketProps } from "../../../types/index";
 import { convertToLocalTime } from "../../../lib/DateTimeFormatter";
 import { useTokenBalance } from "../../hooks/getBalance";
 import toast from "react-hot-toast";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 const Details = () => {
   const { id } = useParams();
@@ -191,56 +193,59 @@ const Details = () => {
                   </div>
                 </div>
                 <div className="md:col-span-1">
-                  <div className="max-w-sm mx-auto shadow-lg border rounded-md">
+                  <div className="max-w-sm mx-auto shadow-lg border bg-white bg-opacity-5 rounded-md">
                     <div className="text-center p-4">Buy</div>
-                    {["YES", "NO"].map((option) => (
-                      <div
-                        key={option}
-                        className={`text-center py-2 my-1 rounded cursor-pointer ${
-                          selected === option
-                            ? "bg-blue-500 text-white"
-                            : "bg-white text-gray-800"
-                        } hover:bg-blue-600 transition duration-300`}
-                        onClick={() => setSelected(option)}
-                      >
-                        {option} {calculatePercentage(option as "YES" | "NO")}
-                      </div>
-                    ))}
+                    <div className="flex justify-center">
+                      {" "}
+                      {["YES", "NO"].map((option) => (
+                        <div
+                          key={option}
+                          className={`text-center  p-2 m-1 rounded cursor-pointer ${
+                            selected === option
+                              ? "bg-[#bdff00] text-gray-700"
+                              : "bg-white text-gray-800"
+                          } hover:bg-opacity-70 transition duration-300`}
+                          onClick={() => setSelected(option)}
+                        >
+                          {option} {calculatePercentage(option as "YES" | "NO")}
+                        </div>
+                      ))}
+                    </div>
                     <div className="mt-2 text-center">How much?</div>
                     <div className="flex items-center border divide-x divide-gray-300 rounded mx-2 my-2">
-                      <input
+                      <Input
                         type="number"
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
                         placeholder="0"
                         className="flex-grow p-1"
                       />
-                      <button
-                        className="px-4 py-1 text-white bg-blue-500 hover:bg-blue-600"
+                      <Button
+                        // className="px-4 py-1 text-white bg-[#bdff00] hover:bg-[#bdff00]"
                         onClick={SetMaxValue}
                       >
                         Max
-                      </button>
+                      </Button>
                     </div>
                     <div className="p-2">
-                      <button
-                        className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+                      <Button
+                        className="w-full "
                         onClick={handleTrade}
                         disabled={!input}
                       >
                         {selected === "YES" ? "Buy YES" : "Buy NO"}
-                      </button>
+                      </Button>
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="mt-3 p-2 border rounded bg-white">
-                <div className="font-bold mb-1">Description</div>
-                <div className="mb-2">{market?.description}</div>
-                <div className="font-bold">Resolution Source:</div>
+              <div className="mt-3 p-4 border rounded-lg bg-white bg-opacity-5  ">
+                <div className="font-bold my-1">Description</div>
+                <div className="mb-2 capitalize">{market?.description}</div>
+                <div className="font-bold my-1">Resolution Source:</div>
                 <a
                   href={market?.resolverUrl}
-                  className="underline hover:text-blue-600"
+                  className="underline hover:text-[#bdff00] transition duration-300"
                 >
                   {market?.resolverUrl}
                 </a>
