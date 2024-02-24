@@ -1,52 +1,87 @@
 "use client";
-import React from "react";
-import {
-  AreaChart,
-  Area,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
+import React, { useEffect, useRef } from "react";
+import * as echarts from "echarts";
 
 const data = [
-  { pv: "January", uv: 722343 },
-  { pv: "February", uv: 1121200 },
-  { pv: "March", uv: 1682000 },
-  { pv: "April", uv: 1189050 },
-  { pv: "May", uv: 1165200 },
-  { pv: "June", uv: 2228200 },
-  { pv: "July", uv: 1990120 },
-  { pv: "August", uv: 2273400 },
-  { pv: "September", uv: 3043200 },
-  { pv: "October", uv: 2758000 },
-  { pv: "November", uv: 3865700 },
-  { pv: "December", uv: 4498650 },
+  { month: "January", value: 722343 },
+  { month: "February", value: 1121200 },
+  { month: "March", value: 1682000 },
+  { month: "April", value: 1189050 },
+  { month: "May", value: 1165200 },
+  { month: "June", value: 2228200 },
+  { month: "July", value: 1990120 },
+  { month: "August", value: 2273400 },
+  { month: "September", value: 3043200 },
+  { month: "October", value: 2758000 },
+  { month: "November", value: 3865700 },
+  { month: "December", value: 4498650 },
 ];
 
 export default function TotalBalanceChart() {
-  return (
-    <ResponsiveContainer width="100%" height={300}>
-      <AreaChart
-        data={data}
-        margin={{ top: 20, right: 20, bottom: 30, left: 20 }}
-      >
-        <XAxis dataKey="pv" name="date" />
-        <YAxis dataKey="uv" name="(P&L)" unit="$" type="number" fontSize={14} />
-        <Tooltip
-          cursor={{ strokeDasharray: "3 3" }}
-          formatter={(value, name) => [`${value} $`, "P&L"]}
-        />
+  const chartRef = useRef(null);
 
-        <Area
-          type="natural"
-          dataKey="uv"
-          stroke="#5779C7"
-          strokeWidth={3}
-          fill="#5779C7"
-          fillOpacity={0.6}
-        />
-      </AreaChart>
-    </ResponsiveContainer>
-  );
+  useEffect(() => {
+    if (chartRef.current) {
+      const myChart = echarts.init(chartRef.current);
+
+      const option = {
+        tooltip: {
+          trigger: "axis",
+          formatter: (params: any) => {
+            const param = params[0];
+            return `${param.axisValueLabel}: ${param.data.value} $`;
+          },
+        },
+        xAxis: {
+          type: "category",
+          data: data.map((item) => item.month),
+          boundaryGap: false,
+        },
+        yAxis: {
+          type: "value",
+          name: "P&L",
+          nameLocation: "end",
+          axisLabel: {
+            formatter: "{value} $",
+          },
+        },
+        series: [
+          {
+            data: data.map((item) => item.value),
+            type: "line",
+            areaStyle: {},
+            emphasis: {
+              focus: "series",
+            },
+            smooth: true,
+            symbol: "none",
+            lineStyle: {
+              width: 3,
+              color: "#bdff00",
+            },
+            itemStyle: {
+              color: "#bdff00",
+            },
+            // areaStyle: {
+            //   color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            //     {
+            //       offset: 0,
+            //       color: "#bdff00",
+            //     },
+            //     {
+            //       offset: 1,
+            //       color: "#fff",
+            //     },
+            //   ]),
+            //   opacity: 0.6,
+            // },
+          },
+        ],
+      };
+
+      myChart.setOption(option);
+    }
+  }, []);
+
+  return <div ref={chartRef} style={{ width: "100%", height: "300px" }} />;
 }

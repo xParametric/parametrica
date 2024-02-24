@@ -1,77 +1,99 @@
-// import Plotly from "plotly.js-dist-min";
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import * as echarts from "echarts";
 import Web3 from "web3";
 import { useData } from "../../context/DataContext";
-import Plotly from "plotly.js";
 
 interface Props {
   questionId: string;
 }
 
 interface ChartData {
-  time: Date[];
-  amount: number[];
+  time: string; // Date as string for simplicity
+  Yes: number;
+  No: number;
 }
 
 const ChartContainer: React.FC<Props> = ({ questionId }) => {
+  const chartRef = useRef<HTMLDivElement>(null);
   const { polymarket } = useData();
+  const [chartInstance, setChartInstance] = useState<echarts.ECharts | null>(
+    null
+  );
 
-  const fetchGraphData = async () => {
-    var data = await polymarket.methods.getGraphData(questionId).call();
-    var yesData: ChartData = {
-      time: [],
-      amount: [],
-    };
-    var noData: ChartData = {
-      time: [],
-      amount: [],
-    };
-    data["0"].forEach((item: any) => {
-      var sum = yesData.amount.reduce((a, b) => a + b, 0);
-      yesData.amount.push(
-        sum + parseFloat(Web3.utils.fromWei(item[1], "ether"))
-      );
-      yesData.time.push(new Date(parseInt(item[2] + "000")));
-    });
-    data["1"].forEach((item: any) => {
-      var sum = noData.amount.reduce((a, b) => a + b, 0);
-      noData.amount.push(
-        sum + parseFloat(Web3.utils.fromWei(item[1], "ether"))
-      );
-      noData.time.push(new Date(parseInt(item[2] + "000")));
-    });
+  const fetchAndUpdateChart = useCallback(async () => {
+    try {
+      const data = await polymarket.methods.getGraphData(questionId).call();
+      let yesSum = 0;
+      let noSum = 0;
+      const formattedData: ChartData[] = [...data["0"], ...data["1"]]
+        .map((item) => ({
+          ...item,
+          timestamp: parseInt(item.timestamp),
+          amount: parseFloat(Web3.utils.fromWei(item.amount, "ether")),
+          isYes: data["0"].includes(item),
+        }))
+        .sort((a, b) => a.timestamp - b.timestamp)
+        .map((item) => {
+          if (item.isYes) yesSum += item.amount;
+          else noSum += item.amount;
+          return {
+            time: new Date(item.timestamp * 1000).toLocaleDateString(),
+            Yes: yesSum,
+            No: noSum,
+          };
+        });
 
-    var yes = {
-      x: [...yesData.time],
-      y: [...yesData.amount],
-      mode: "lines+markers",
-      name: "Yes",
-    };
+      if (chartRef.current && !chartInstance) {
+        const initChart = echarts.init(chartRef.current);
+        setChartInstance(initChart);
+      }
 
-    var no = {
-      x: [...noData.time],
-      y: [...noData.amount],
-      mode: "lines+markers",
-      name: "No",
-    };
-    var chartData = [yes, no];
+      const option = {
+        tooltip: { trigger: "axis" },
+        legend: { data: ["Yes", "No"] },
+        xAxis: {
+          type: "category",
+          data: formattedData.map((data) => data.time),
+        },
+        yAxis: { type: "value" },
+        series: [
+          {
+            name: "Yes",
+            type: "line",
+            data: formattedData.map((data) => data.Yes),
+          },
+          {
+            name: "No",
+            type: "line",
+            data: formattedData.map((data) => data.No),
+          },
+        ],
+      };
 
-    var layout = {
-      title: "YES / NO Graph",
-    };
-
-    Plotly.newPlot("myDiv", chartData, layout, { displayModeBar: false });
-  };
+      chartInstance?.setOption(option, true);
+    } catch (error) {
+      console.error("Error fetching or processing graph data:", error);
+    }
+  }, [polymarket.methods, questionId, chartInstance]);
 
   useEffect(() => {
-    fetchGraphData();
-  });
+    if (chartRef.current && !chartInstance) {
+      const initChart = echarts.init(chartRef.current);
+      setChartInstance(initChart);
+    }
+  }, [chartRef, chartInstance]);
 
-  return (
-    <div className="">
-      <div id="myDiv"></div>
-    </div>
-  );
+  useEffect(() => {
+    fetchAndUpdateChart();
+
+    const intervalId = setInterval(() => {
+      fetchAndUpdateChart();
+    }, 10000);
+
+    return () => clearInterval(intervalId);
+  }, [fetchAndUpdateChart]);
+
+  return <div ref={chartRef} style={{ width: "100%", height: "400px" }} />;
 };
 
 export default ChartContainer;
