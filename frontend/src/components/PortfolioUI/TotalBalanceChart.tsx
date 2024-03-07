@@ -57,16 +57,16 @@ export default function TotalBalanceChart() {
             symbol: "none",
             lineStyle: {
               width: 3,
-              color: "#bdff00",
+              color: "#5155a6",
             },
             itemStyle: {
-              color: "#bdff00",
+              color: "#5155a6",
             },
             // areaStyle: {
             //   color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             //     {
             //       offset: 0,
-            //       color: "#bdff00",
+            //       color: "#5155a6",
             //     },
             //     {
             //       offset: 1,

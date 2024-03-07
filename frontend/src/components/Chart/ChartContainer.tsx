@@ -117,7 +117,7 @@ const ChartContainer: React.FC<Props> = ({ questionId }) => {
   return (
     <div
       ref={chartRef}
-      className="px-0 mx-4 border-b-[#bdff00] border rounded"
+      className="px-0 mx-4 border-b-[#5155a6] border rounded"
       style={{ width: "100%", height: "400px" }}
     />
   );

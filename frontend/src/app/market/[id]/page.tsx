@@ -204,7 +204,7 @@ const Details = () => {
                           key={option}
                           className={`text-center px-4 p-2 m-1 rounded cursor-pointer ${
                             selected === option
-                              ? "bg-[#bdff00] text-gray-700"
+                              ? "bg-[#5155a6] text-gray-700"
                               : "bg-white text-gray-800"
                           } hover:bg-opacity-70 transition duration-300`}
                           onClick={() => setSelected(option)}
@@ -223,7 +223,7 @@ const Details = () => {
                         className="flex-grow border-none p-1"
                       />
                       <Button
-                        // className="px-4 py-1  bg-[#bdff00] hover:bg-[#bdff00]"
+                        // className="px-4 py-1  bg-[#5155a6] hover:bg-[#5155a6]"
                         onClick={SetMaxValue}
                       >
                         Max
@@ -247,7 +247,7 @@ const Details = () => {
                 <div className="font-bold my-1">Resolution Source:</div>
                 <a
                   href={market?.resolverUrl}
-                  className="underline hover:text-[#bdff00] transition duration-300"
+                  className="underline hover:text-[#5155a6] transition duration-300"
                 >
                   {market?.resolverUrl}
                 </a>

@@ -29,8 +29,8 @@ function ConnectWalletButton() {
       <ConnectWallet
         theme={darkTheme({
           colors: {
-            accentText: "#bdff00",
-            accentButtonBg: "#bdff00",
+            accentText: "#5155a6",
+            accentButtonBg: "#5155a6",
           },
         })}
         switchToActiveChain={true}

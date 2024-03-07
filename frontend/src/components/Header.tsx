@@ -47,8 +47,8 @@ function Header() {
   // const handleCreateNavigation = () => {
   //   route
   return (
-    <div className="w-full bg-transparent shadow">
-      <div className="container px-4">
+    <div className="w-full bg-transparent shadow border-b-[#5155a6]  border-b border-t">
+      <div className=" px-4">
         <div className="flex justify-between items-center py-4">
           {/* Mobile Menu Button */}
           <div className="md:hidden">
@@ -94,35 +94,38 @@ function Header() {
             )}
           </div>
           {/* Logo */}
-          <Link href="/">
-            <div>
-              <img
-                src="https://xparametric.com/images/19bfaeaef18b7ffa151871e3709e43b5.svg"
-                alt="logo"
-                className="h-11"
-              />
-            </div>
-          </Link>
-          {/* Desktop Menu Items */}
-          <div className="hidden md:flex space-x-4">
-            <Link href={"/"}>
-              {/* <img
+          <div className="flex">
+            {" "}
+            <Link href="/">
+              <div>
+                <img
+                  src="https://xparametric.com/images/19bfaeaef18b7ffa151871e3709e43b5.svg"
+                  alt="logo"
+                  className="h-11"
+                />
+              </div>
+            </Link>
+            {/* Desktop Menu Items */}
+            <div className="hidden md:flex space-x-4 sm:ms-16">
+              <Link href={"/"}>
+                {/* <img
                 alt="logo"
                 src={
                   "https://xparametric.com/images/19bfaeaef18b7ffa151871e3709e43b5.svg"
                 }
               /> */}
-            </Link>
-            {pages.map((page) => (
-              <Link href={`/${page.name}`} key={page.name} passHref>
-                <button
-                  onClick={handleCloseNavMenu}
-                  className="text-base uppercase py-2 px-4 dark:hover:text-[#bdff00] rounded"
-                >
-                  {page.name}
-                </button>
               </Link>
-            ))}
+              {pages.map((page) => (
+                <Link href={`/${page.name}`} key={page.name} passHref>
+                  <button
+                    onClick={handleCloseNavMenu}
+                    className="text-base uppercase py-2 px-4 dark:hover:text-[#5155a6] rounded"
+                  >
+                    {page.name}
+                  </button>
+                </Link>
+              ))}
+            </div>
           </div>
           <div className="flex items-center">
             <Button

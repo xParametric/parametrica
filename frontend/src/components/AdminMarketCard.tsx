@@ -29,7 +29,7 @@ export const AdminMarketCard: React.FC<Props> = ({
 
   return (
     <div className="w-full mb-2">
-      <div className="flex flex-col cursor-pointer hover:shadow-md rounded-lg overflow-hidden">
+      <div className="flex bg-white bg-opacity-5  h-80 flex-col cursor-pointer hover:shadow-md rounded-lg overflow-hidden">
         <img
           src={imageUrl}
           alt="Market"
@@ -51,7 +51,7 @@ export const AdminMarketCard: React.FC<Props> = ({
         </div>
         <div className="flex justify-end p-4">
           <button
-            className="border border-[#bdff00] rounded px-4 py-2 hover:bg-[#bdff00] hover:bg-opacity-30 mr-2"
+            className="border border-[#5155a6] rounded px-4 py-2 hover:bg-[#5155a6] hover:bg-opacity-30 mr-2"
             onClick={onYes}
           >
             Resolve YES

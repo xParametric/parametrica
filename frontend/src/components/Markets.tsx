@@ -54,7 +54,7 @@ function Markets() {
       <div className="mb-8 flex items-center gap-8">
         {/* <SearchIcon className="text-gray-400" /> */}
         <input
-          className="w-full p-4 border rounded-lg focus:ring-2 focus:ring-[#bdff00] focus:outline-none transition duration-300 ease-in-out"
+          className="w-full p-4 border rounded-lg focus:ring-2 focus:ring-[#5155a6] focus:outline-none transition duration-300 ease-in-out"
           type="search"
           name="q"
           placeholder="Search markets..."
@@ -88,7 +88,7 @@ function Markets() {
           <div className="flex justify-center items-center col-span-2 w-full h-[50vh]">
             <svg
               aria-hidden="true"
-              className="w-32 h-32 text-gray-200 animate-spin dark:text-gray-600 fill-[#bdff00]"
+              className="w-32 h-32 text-gray-200 animate-spin dark:text-gray-600 fill-[#5155a6]"
               viewBox="0 0 100 101"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
