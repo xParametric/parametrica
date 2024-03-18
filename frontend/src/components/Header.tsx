@@ -3,7 +3,7 @@ import React, { useState, MouseEvent } from "react";
 import Link from "next/link";
 // Assuming ConnectWalletButton is already adapted for Tailwind CSS
 // import ConnectWalletButton from "@/app/Web3Provider";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 // Icons
 // import MenuIcon from "@mui/icons-material/Menu"; // Consider replacing with Tailwind CSS-friendly icons
@@ -44,12 +44,16 @@ function Header() {
 
   let router = useRouter();
 
+  const pathname = usePathname();
+  const _pathname = pathname.replace("/", "");
+  console.log(_pathname);
+
   // const handleCreateNavigation = () => {
   //   route
   return (
     <div className="w-full bg-transparent shadow border-b-[#5155a6]  border-b border-t">
       <div className=" px-4">
-        <div className="flex justify-between items-center py-4">
+        <div className="flex lg:mx-16 justify-between items-center py-4">
           {/* Mobile Menu Button */}
           <div className="md:hidden">
             <button onClick={handleOpenNavMenu}>{/* <MenuIcon /> */}</button>
@@ -94,7 +98,7 @@ function Header() {
             )}
           </div>
           {/* Logo */}
-          <div className="flex">
+          <div className="flex ">
             {" "}
             <Link href="/">
               <div>
@@ -106,7 +110,7 @@ function Header() {
               </div>
             </Link>
             {/* Desktop Menu Items */}
-            <div className="hidden md:flex space-x-4 sm:ms-16">
+            <div className="hidden md:flex space-x-4 ">
               <Link href={"/"}>
                 {/* <img
                 alt="logo"
@@ -119,7 +123,11 @@ function Header() {
                 <Link href={`/${page.name}`} key={page.name} passHref>
                   <button
                     onClick={handleCloseNavMenu}
-                    className="text-base uppercase py-2 px-4 dark:hover:text-[#5155a6] rounded"
+                    className={`${
+                      _pathname === page.name
+                        ? "font-bold text-black dark:text-white "
+                        : "font-semibold text-gray-800 dark:text-gray-300 "
+                    }  uppercase py-2 text-lg px-4 dark:hover:text-[#5155a6] rounded`}
                   >
                     {page.name}
                   </button>

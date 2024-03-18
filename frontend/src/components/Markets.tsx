@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 
 import { useCallback, useEffect, useState } from "react";
 import { MarketCard } from "../components/MarketCard";
@@ -10,36 +9,38 @@ import { MarketProps } from "../types/index";
 
 import { Filter } from "./Filter";
 import { useRouter } from "next/navigation";
-
-import Link from "next/link";
+import toast from "react-hot-toast";
 import { Button } from "@/components/ui/button";
 
 function Markets() {
-  // const router = useRouter();
-  // const path = router.prefetch("markets");
-  // console.log(path);
-
   const { polymarket, account, loadWeb3, loading } = useData();
   const [markets, setMarkets] = useState<MarketProps[]>([]);
 
   const getMarkets = useCallback(async () => {
-    var totalQuestions = await polymarket.methods
-      .totalQuestions()
-      .call({ from: account });
-    var dataArray: MarketProps[] = [];
-    for (var i = 0; i < totalQuestions; i++) {
-      var data = await polymarket.methods.questions(i).call({ from: account });
-      dataArray.push({
-        id: data.id,
-        title: data.question,
-        imageHash: data.creatorImageHash,
-        totalAmount: data.totalAmount,
-        totalYes: data.totalYesAmount,
-        totalNo: data.totalNoAmount,
-      });
+    try {
+      const totalQuestions = await polymarket.methods
+        .totalQuestions()
+        .call({ from: account });
+      const dataArray: MarketProps[] = [];
+      for (let i = 0; i < totalQuestions; i++) {
+        const data = await polymarket.methods
+          .questions(i)
+          .call({ from: account });
+        dataArray.push({
+          id: data.id,
+          title: data.question,
+          imageHash: data.creatorImageHash,
+          totalAmount: data.totalAmount,
+          totalYes: data.totalYesAmount,
+          totalNo: data.totalNoAmount,
+        });
+      }
+      setMarkets(dataArray);
+      console.log(dataArray, "dataArray");
+    } catch (error) {
+      console.error("Error fetching markets:", error);
+      toast.error("Failed to fetch market data. Please try again later.");
     }
-    setMarkets(dataArray);
-    console.log(dataArray, "dataArray");
   }, [account, polymarket]);
 
   useEffect(() => {
