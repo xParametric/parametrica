@@ -20,6 +20,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import Loader from "@/components/ui/loader";
+import Link from "next/link";
 
 function Admin() {
   const router = useRouter();
@@ -155,18 +156,20 @@ function Admin() {
   return (
     <>
       <Head>
-        <title>xParametric - Admin</title>
+        <title>xParametric - Create</title>
         <meta name="description" content="Create a new market as an admin." />
       </Head>
       <div className="container  py-16">
         <div className="text-center mb-4">
-          <Button
-            className=" font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mb-2"
-            onClick={() => router.push("/create/markets")}
-            type="button"
-          >
-            See All Markets
-          </Button>
+          <Link href={"/create/markets"}>
+            <Button
+              className=" font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mb-2"
+              // onClick={() => router.push("/create/markets")}
+              type="button"
+            >
+              See All Markets
+            </Button>
+          </Link>
         </div>
         <div className=" card border-opacity-50 raised p-4 md:p-8 border dark:border-[#5155a6] bg-white bg-opacity-5  rounded-xl">
           <h2 className="text-xl font-bold mb-3">Add New Market</h2>

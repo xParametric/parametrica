@@ -155,17 +155,21 @@ const Details = () => {
           </div>
         ) : (
           <div className="w-full">
-            <>
-              {" "}
-              <div className="p-3 flex flex-col sm:flex-row items-center border my-5 rounded bg-white bg-opacity-5 gap-2">
-                <img
-                  className="w-14 h-14 rounded-full"
-                  src={imageUrl}
-                  alt="Market"
-                />
-                <div className="flex-1">
-                  <div className="text-xs text-gray-600 mt-2 sm:mt-0">Type</div>
-                  <div className="text-lg my-1">{market?.title}</div>
+            <div className="p-3 flex flex-col sm:flex-row items-center border my-5 rounded bg-white bg-opacity-5 gap-2">
+              <img
+                className="w-16 h-16 sm:w-20 sm:h-20 md:w-28 md:h-28 lg:w-36 lg:h-36 xl:w-40 xl:h-40 rounded-full"
+                src={imageUrl}
+                alt="Market"
+              />
+              <div className="flex flex-col">
+                {" "}
+                <div className="flex flex-col  text-center sm:text-left">
+                  <div className="text-xs sm:text-sm md:text-base text-gray-600 mt-2 sm:mt-0">
+                    Question
+                  </div>
+                  <div className="text-lg sm:text-xl md:text-2xl my-1">
+                    {market?.title}
+                  </div>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 w-full">
                   <div className="p-2">
@@ -182,104 +186,98 @@ const Details = () => {
                       {market?.totalAmount
                         ? `${new BigNumber(market.totalAmount)
                             .dividedBy(new BigNumber(10).pow(18))
-                            .toFixed()} POLY`
-                        : "0 POLY"}
+                            .toFixed()} PARA`
+                        : "0 PARA"}
                     </div>
                   </div>
                 </div>
               </div>
-            </>
+            </div>
 
             <div className="md:flex space-x-4">
-              <>
-                <ChartContainer questionId={market?.id ?? "0"} />
-              </>
-              <>
-                <div className="w-full  max-w-sm mx-auto px-4 py-6  border bg-white bg-opacity-5 rounded space-y-4">
-                  <div className="text-center text-xl font-medium border-b-[#5155a6] border-b ">
-                    Buy
-                  </div>
-                  <div className="flex justify-around">
-                    {["YES", "NO"].map((option) => (
-                      <div
-                        key={option}
-                        className={`text-center px-5 py-3 border  m-1 rounded cursor-pointer ${
-                          selected === option
-                            ? "bg-[#5155a6] text-gray-200"
-                            : "bg-white text-gray-800"
-                        } hover:bg-opacity-70 transition duration-300`}
-                        onClick={() => setSelected(option)}
-                      >
-                        {option} {calculatePercentage(option as "YES" | "NO")}
-                      </div>
-                    ))}
-                  </div>
-                  <div className="text-center font-medium">How much?</div>
-                  <div className="flex justify-end">
-                    <button
-                      className="px-2 py-1 text-xs text-gray-50 uppercase rounded bg-[#5155a6] dark:hover:text-[#e6e0e0] transition duration-300"
-                      onClick={SetMaxValue}
-                    >
-                      max
-                    </button>
-                  </div>
-                  <div className="space-x-4 flex items-center p-2 rounded border  ">
-                    <Button
-                      className="px-4 py-2 hover:bg-opacity-90 hover:bg-transparent text-[#5155a6] bg-transparent border  dark:hover:text-[#393b70] transition duration-300"
-                      onClick={() =>
-                        setInput((prev) =>
-                          Math.max(0, Number(prev) - 10).toString()
-                        )
-                      }
-                    >
-                      -
-                    </Button>
-                    <Input
-                      type="number"
-                      value={input}
-                      onChange={(e) => setInput(e.target.value)}
-                      placeholder="0"
-                      className="flex-grow rounded border-none  text-center"
-                    />
-                    <Button
-                      className="px-4  py-2 hover:bg-opacity-90 hover:bg-transparent text-[#5155a6] bg-transparent border  dark:hover:text-[#393b70] transition duration-300"
-                      onClick={() =>
-                        setInput((prev) => (Number(prev) + 10).toString())
-                      }
-                    >
-                      +
-                    </Button>
-                  </div>
-
-                  <div>
-                    <Button
-                      className={`w-full py-2 rounded ${
-                        !input
-                          ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                          : "bg-[#5155a6] text-white hover:bg-[#393b70] transition duration-300"
-                      }`}
-                      onClick={handleTrade}
-                      disabled={!input}
-                    >
-                      {selected === "YES" ? "Buy YES" : "Buy NO"}
-                    </Button>
-                  </div>
+              <ChartContainer questionId={market?.id ?? "0"} />
+              <div className="w-full max-w-md mx-auto px-4 py-6 border bg-white bg-opacity-5 rounded space-y-4">
+                <div className="text-center text-xl font-medium border-b-[#5155a6] border-b ">
+                  Buy
                 </div>
-              </>
-            </div>
-            <>
-              <div className="my-5 p-4 border rounded bg-white bg-opacity-5">
-                <div className="font-bold my-1">Description</div>
-                <div className="mb-2 capitalize">{market?.description}</div>
-                <div className="font-bold my-1">Resolution Source:</div>
-                <a
-                  href={market?.resolverUrl}
-                  className="underline hover:text-[#5155a6] transition duration-300"
-                >
-                  {market?.resolverUrl}
-                </a>
+                <div className="flex justify-between">
+                  {["YES", "NO"].map((option) => (
+                    <div
+                      key={option}
+                      className={`text-center px-14 py-3 border  m-1 rounded cursor-pointer ${
+                        selected === option
+                          ? "bg-[#5155a6] text-gray-200"
+                          : "bg-white text-gray-800"
+                      } hover:bg-opacity-70 transition duration-300`}
+                      onClick={() => setSelected(option)}
+                    >
+                      {option} {calculatePercentage(option as "YES" | "NO")}
+                    </div>
+                  ))}
+                </div>
+                <div className="text-center font-medium">How much?</div>
+                <div className="flex justify-end">
+                  <button
+                    className="px-2 py-1 text-xs text-gray-50 uppercase rounded bg-[#5155a6] dark:hover:text-[#e6e0e0] transition duration-300"
+                    onClick={SetMaxValue}
+                  >
+                    max
+                  </button>
+                </div>{" "}
+                <div className="space-x-4 flex items-center p-2 rounded border  ">
+                  <Button
+                    className="px-4 py-2 hover:bg-opacity-90 hover:bg-transparent text-[#5155a6] bg-transparent border  dark:hover:text-[#393b70] transition duration-300"
+                    onClick={() =>
+                      setInput((prev) =>
+                        Math.max(0, Number(prev) - 10).toString()
+                      )
+                    }
+                  >
+                    -
+                  </Button>
+                  <Input
+                    type="number"
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    placeholder="0"
+                    className="flex-grow rounded border-none  text-center"
+                  />
+                  <Button
+                    className="px-4  py-2 hover:bg-opacity-90 hover:bg-transparent text-[#5155a6] bg-transparent border  dark:hover:text-[#393b70] transition duration-300"
+                    onClick={() =>
+                      setInput((prev) => (Number(prev) + 10).toString())
+                    }
+                  >
+                    +
+                  </Button>
+                </div>
+                <div>
+                  <Button
+                    className={`w-full py-2 rounded ${
+                      !input
+                        ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                        : "bg-[#5155a6] text-white hover:bg-[#393b70] transition duration-300"
+                    }`}
+                    onClick={handleTrade}
+                    disabled={!input}
+                  >
+                    {selected === "YES" ? "Buy YES" : "Buy NO"}
+                  </Button>
+                </div>
               </div>
-            </>
+            </div>
+
+            <div className="my-5 p-4 border rounded bg-white bg-opacity-5">
+              <div className="font-bold my-1">Description</div>
+              <div className="mb-2 capitalize">{market?.description}</div>
+              <div className="font-bold my-1">Resolution Source:</div>
+              <a
+                href={market?.resolverUrl}
+                className="underline hover:text-[#5155a6] transition duration-300"
+              >
+                {market?.resolverUrl}
+              </a>
+            </div>
           </div>
         )}
       </div>

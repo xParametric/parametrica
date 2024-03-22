@@ -11,6 +11,7 @@ import { Filter } from "./Filter";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 function Markets() {
   const { polymarket, account, loadWeb3, loading } = useData();
@@ -127,7 +128,9 @@ function Markets() {
         )}
       </div>
       <div className="flex justify-center w-full">
-        <Button onClick={() => router.push("/markets")}>View All</Button>
+        <Link href={"/markets"}>
+          <Button>View All</Button>
+        </Link>
       </div>
     </div>
   );

@@ -8,6 +8,7 @@ import { DataProvider } from "../context/DataContext";
 import ThirdwebProviderWrapper from "../components/ThirdwebProvider";
 import { Toaster } from "react-hot-toast";
 import { ThemeProvider } from "../components/theme-provider";
+import NPProgress from "@/components/ui/Npprogess";
 
 export const metadata: Metadata = {
   title: "Parametrica",
@@ -28,11 +29,13 @@ export default function RootLayout({
 
           // signer={new ethers.providers.Web3Provider(window.ethereum).getSigner()}
           >
-            <DataProvider>
-              <Header /> <Toaster />
-              {children}
-              <Footer />
-            </DataProvider>
+            <NPProgress>
+              <DataProvider>
+                <Header /> <Toaster />
+                {children}
+                <Footer />
+              </DataProvider>
+            </NPProgress>
           </ThirdwebProviderWrapper>
         </ThemeProvider>
       </body>
