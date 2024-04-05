@@ -1,23 +1,25 @@
 "use client";
 import React, { useState, MouseEvent } from "react";
-import MenuIcon from "@mui/icons-material/Menu";
 import Link from "next/link";
-import { ConnectKitButton } from "connectkit";
-import {
-  AppBar,
-  Avatar,
-  Container,
-  Toolbar,
-  Typography,
-  Box,
-  IconButton,
-  Menu,
-  MenuItem,
-  Button,
-  Tooltip,
-} from "@mui/material";
+// Assuming ConnectWalletButton is already adapted for Tailwind CSS
+// import ConnectWalletButton from "@/app/Web3Provider";
+import { useRouter, usePathname } from "next/navigation";
 
-const pages = ["markets", "portfolio", "leaderboard"];
+// Icons
+// import MenuIcon from "@mui/icons-material/Menu"; // Consider replacing with Tailwind CSS-friendly icons
+// import LeaderboardIcon from "@mui/icons-material/Leaderboard";
+// import LocalGroceryStoreIcon from "@mui/icons-material/LocalGroceryStore";
+// import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
+import ConnectWalletButton from "../app/Web3Provider";
+import { Button } from "@/components/ui/button";
+import { ModeToggle } from "./theme-toggler";
+
+const pages = [
+  { name: "markets", icon: "" },
+  { name: "portfolio", icon: "" },
+  { name: "leaderboard", icon: "" },
+];
+
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function Header() {
@@ -40,127 +42,140 @@ function Header() {
     setAnchorElUser(null);
   };
 
-  return (
-    <AppBar
-      position="static"
-      sx={{ backgroundColor: "transparent", boxShadow: 1 }}
-    >
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          {/* Mobile Menu */}
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: "block", md: "none" },
-              }}
-            >
-              {pages.map((page) => (
-                <MenuItem
-                  key={page}
-                  onClick={handleCloseNavMenu}
-                  sx={{ textTransform: "capitalize" }}
-                >
-                  <Link href={`/${page}`} key={page}>
-                    <Typography textAlign="center">{page}</Typography>
-                  </Link>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-          <Link href={"/"}>
-            <Box
-              component="img"
-              sx={{ height: 44, display: { xs: "none", md: "flex" }, mr: 1 }}
-              alt="logo"
-              src={
-                "https://xparametric.com/images/19bfaeaef18b7ffa151871e3709e43b5.svg"
-              }
-            />
-          </Link>
-          <Link href={"/"}>
-            <Box
-              component="img"
-              sx={{
-                height: 44,
-                display: { xs: "flex", md: "none" },
-                mr: 6,
-              }}
-              alt="logo"
-              src={
-                "https://xparametric.com/images/19bfaeaef18b7ffa151871e3709e43b5.svg"
-              }
-            />
-          </Link>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Link href={`/${page}`} key={page}>
-                <Button
-                  key={page}
-                  onClick={handleCloseNavMenu}
-                  sx={{ my: 2, display: "block" }}
-                >
-                  {page}
-                </Button>
-              </Link>
-            ))}
-          </Box>
+  let router = useRouter();
 
-          <ConnectKitButton />
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                {/* <Avatar alt="Sharp" src="/static/images/avatar/2.jpg" /> */}
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
+  const pathname = usePathname();
+  const _pathname = pathname.replace("/", "");
+  console.log(_pathname);
+
+  // const handleCreateNavigation = () => {
+  //   route
+  return (
+    <div className="w-full bg-transparent shadow border-b-[#5155a6]  border-b border-t">
+      <div className=" px-4">
+        <div className="flex lg:mx-16 justify-between items-center py-4">
+          {/* Mobile Menu Button */}
+          <div className="md:hidden">
+            <button onClick={handleOpenNavMenu}>{/* <MenuIcon /> */}</button>
+            {/* Conditional rendering for mobile menu */}
+            {anchorElNav && (
+              <div className="absolute top-0 left-0 w-full">
+                <div
+                  id="menu-appbar"
+                  // anchorEl={anchorElNav}
+                  // anchorOrigin={{
+                  //   vertical: "bottom",
+                  //   horizontal: "left",
+                  // }}
+                  // keepMounted
+                  // transformOrigin={{
+                  //   vertical: "top",
+                  //   horizontal: "left",
+                  // }}
+                  // open={Boolean(anchorElNav)}
+                  // onClose={handleCloseNavMenu}
+                  // sx={{
+                  //   display: { xs: "block", md: "none" },
+                  // }}
+                >
+                  {pages.map((page) => (
+                    <div
+                      key={page.name}
+                      onClick={handleCloseNavMenu}
+                      // sx={{ textTransform: "capitalize" }}
+                    >
+                      <Link href={`/${page.name}`} key={page.name}>
+                        <div>
+                          <div> {page.icon}</div>
+
+                          <p>{page.name}</p>
+                        </div>
+                      </Link>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+          {/* Logo */}
+          <div className="flex ">
+            <Link href="/">
+              <div>
+                <img
+                  src="https://xparametric.com/images/19bfaeaef18b7ffa151871e3709e43b5.svg"
+                  alt="logo"
+                  className="h-11"
+                />
+              </div>
+            </Link>
+            {/* Desktop Menu Items */}
+            <div className="hidden md:flex space-x-4 ">
+              <Link href={"/"}>
+                {/* <img
+                alt="logo"
+                src={
+                  "https://xparametric.com/images/19bfaeaef18b7ffa151871e3709e43b5.svg"
+                }
+              /> */}
+              </Link>
+              {pages.map((page) => (
+                <Link href={`/${page.name}`} key={page.name} passHref>
+                  <button
+                    onClick={handleCloseNavMenu}
+                    className={`${
+                      _pathname === page.name
+                        ? "font-bold text-black dark:text-white "
+                        : "font-semibold text-gray-800 dark:text-gray-300 "
+                    }  uppercase py-2 text-lg px-4 dark:hover:text-[#5155a6] rounded`}
+                  >
+                    {page.name}
+                  </button>
+                </Link>
               ))}
-            </Menu>
-          </Box>
-        </Toolbar>
-      </Container>
-    </AppBar>
+            </div>
+          </div>
+          <div className="flex items-center">
+            <Link href={"/create"}>
+              <Button
+                className="flex items-center mx-2 "
+                // onClick={() => {
+                //   router.push("/create");
+                // }}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="26"
+                  height="26"
+                  fill="currentColor"
+                  className=" bi bi-plus"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                </svg>
+                Create
+              </Button>
+            </Link>
+            <div className="mr-2">
+              <ModeToggle />
+            </div>
+            <ConnectWalletButton />
+            {/* User Avatar and Dropdown Menu */}
+            <button onClick={handleOpenUserMenu} className="ml-4">
+              {/* <Avatar alt="Sharp" src="/static/images/avatar/2.jpg" /> */}
+            </button>
+            {anchorElUser && (
+              <div className="absolute top-0 right-0 mt-12 mr-4 w-48 bg-white shadow-md rounded-md">
+                {settings.map((setting) => (
+                  <div key={setting} onClick={handleCloseUserMenu}>
+                    <p>{setting}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 

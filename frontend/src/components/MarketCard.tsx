@@ -1,187 +1,86 @@
 "use client";
-import * as React from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
+import Link from "next/link";
+import React from "react";
+import Web3 from "web3";
+import { MarketProps } from "../types/index";
 
+import BigNumber from "bignumber.js";
 import {
-  Container,
-  Box,
   Card,
   CardContent,
-  CardMedia,
-  Grid,
-  Typography,
-} from "@mui/material";
-import CardThumbnailChartYes from "./CardThumbnailChartYes";
-import CardThumbnailChartNo from "./CardThumbnailChartNo";
-import Liquidity from "./Liquidity";
-import MarketValue from "./MarketValue";
-import MarketTradingFee from "./MarketTradingFee";
-import MarketQuestionDate from "./MarketQuestionDate";
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { useRouter } from "next/navigation";
 
-import ShareMarket from "./ShareMarket";
-import BookmarkMarket from "./BookmarkMarket";
-import MarketVote from "./MarketVote";
-import MarketQuestionBreadCrumbs from "./MarketQuestionBreadCrumbs";
+export const MarketCard: React.FC<MarketProps> = ({
+  id,
+  title,
+  totalAmount,
+  totalYes,
+  totalNo,
+  imageHash,
+}) => {
+  const ipfsBaseUrl = "https://ipfs.io/ipfs/";
+  const formattedImageHash = imageHash?.replace("ipfs://", "");
+  const imageUrl = imageHash
+    ? `${ipfsBaseUrl}${formattedImageHash}`
+    : "https://source.unsplash.com/random";
 
-interface MarketCardListProps {
-  questionId: number; // Add the questionId prop to the MarketCard component
-  // Rest of the props...
-}
+  const formatAmount = (amount?: BigNumber | string) => {
+    if (amount === undefined) {
+      return "0 PARA";
+    }
 
-const MarketCard: React.FC<MarketCardListProps> = ({ questionId }) => {
-  const questions = useSelector(
-    (state: RootState) => state.questions.questionsData
-  );
+    let num = BigNumber.isBigNumber(amount) ? amount : new BigNumber(amount);
 
-  // Find the question corresponding to the given questionId
-  const question = questions.find((q) => q.id === questionId);
+    return num.isZero()
+      ? "0 PARA"
+      : `${num.dividedBy(new BigNumber(10).pow(18)).toFixed(2)} PARA`;
+  };
 
-  if (!question) {
-    // Handle the case when the question is not found
-    return null;
-  }
-
+  const router = useRouter();
   return (
-    <Container maxWidth={"xl"}>
-      {/* Removed unnecessary opening and closing div tags */}
-      <Box
-        key={question.id}
-        sx={{
-          borderRadius: 3,
-          boxShadow: 1,
-          borderColor: "#8C8881",
-          my: 2,
-        }}
+    <Link href={`market/${id}`} className="cursor-pointer">
+      <Card
+        className="mb-8 w-full border border-gray-600 bg-white
+     bg-opacity-5 border-opacity-50 rounded-md transition-shadow duration-300 ease-in-out hover:shadow-[0px_4px_20px_rgba(0,0,0,0.2)] dark:hover:shadow-[0px_4px_20px_rgba(255,255,255,0.2)]  hover:border-primary-500"
       >
-        <Card sx={{ display: "flex", width: "100%" }}>
-          <Box sx={{ width: 100, height: 100, my: "auto", mx: 2 }}>
-            <CardMedia
-              component="img"
-              sx={{
-                width: "100px",
-                height: "100px",
-                borderRadius: "100%",
-              }}
-              image={question.imageUrl}
-              alt="Live from space album cover"
+        <CardHeader>
+          <div className="">
+            <img
+              className="w-full h-36 object-cover rounded-t-md"
+              src={imageUrl}
+              alt="Market Banner"
             />
-          </Box>
-          <Grid container>
-            <Grid item xs={12} xl={7}>
-              <CardContent>
-                <Box>
-                  <MarketQuestionBreadCrumbs questionId={questionId} />
-                </Box>
-                <Typography
-                  component="div"
-                  variant="h5"
-                  id="question"
-                  sx={{ py: 1 }}
-                >
-                  {question.question}
-                </Typography>
-              </CardContent>
-            </Grid>
-            <Grid item xs={12} xl={5}>
-              <Box display="flex" flexDirection={{ xs: "column", xl: "row" }}>
-                <Box
-                  display="flex"
-                  sx={{
-                    border: 1,
-                    m: 2,
-                    p: 2,
-                    borderRadius: 1,
-                    borderBottomColor: "#284E45",
-                  }}
-                >
-                  <Box width="100%" sx={{ mx: 1 }}>
-                    <Box>
-                      <Typography variant="subtitle1" fontWeight={500}>
-                        Yes
-                      </Typography>
-                    </Box>
-                    <Box display="flex">
-                      <Typography variant="subtitle2">
-                        {question.betValueYes}{" "}
-                        <Typography variant="overline"> USDT</Typography>
-                      </Typography>
-                    </Box>
-                  </Box>
-                  <Box sx={{ mx: 1 }}>
-                    <CardThumbnailChartYes />
-                  </Box>
-                </Box>
-                <Box
-                  display="flex"
-                  sx={{
-                    border: 1,
-                    m: 2,
-                    p: 2,
-                    borderRadius: 1,
-                    borderBottomColor: "#9F3638",
-                  }}
-                >
-                  <Box width="100%" mx={1}>
-                    <Box>
-                      <Typography variant="subtitle1" fontWeight={500}>
-                        No
-                      </Typography>
-                    </Box>
-                    <Box display="flex">
-                      <Typography variant="subtitle2">
-                        {question.betValueNo}
-                        <Typography variant="overline"> USDT</Typography>
-                      </Typography>
-                    </Box>
-                  </Box>
-                  <Box mx={1}>
-                    <CardThumbnailChartNo />
-                  </Box>
-                </Box>
-              </Box>
-            </Grid>
-          </Grid>
-        </Card>
-        <Grid
-          container
-          sx={{
-            backgroundColor: "secondary.main",
-            color: "primary.light",
-          }}
-        >
-          <Grid item xs={12} xl={5}>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: { xs: "space-between", xl: "space-around" },
-                p: 1,
-                borderRadius: 3,
-              }}
-            >
-              <MarketValue questionId={questionId} />
-              <Liquidity questionId={questionId} />
-              <MarketTradingFee questionId={questionId} />
-              <MarketQuestionDate questionId={questionId} />
-            </Box>
-          </Grid>
-          <Grid item xs={12} xl={4}></Grid>
-          <Grid item xs={12} xl={3}>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: { xs: "space-between", xl: "space-around" },
-              }}
-            >
-              <ShareMarket />
-              <BookmarkMarket />
-              <MarketVote />
-            </Box>
-          </Grid>
-        </Grid>
-      </Box>
-    </Container>
+          </div>
+        </CardHeader>
+        <CardContent className="p-4">
+          <CardTitle className="font-bold pb-2 capitalize">{title}</CardTitle>
+          <div className="flex justify-between items-center">
+            <div className="flex items-center space-x-2">
+              <span className="font-medium">Volume:</span>
+              {formatAmount(totalAmount)}
+            </div>
+            <div className="flex space-x-8 ">
+              <div className="flex flex-col items-center  space-y-2">
+                <span className="text-xs text-gray-500">Yes</span>
+                <span className="text-sm text-primary-500">
+                  {formatAmount(totalYes)}
+                </span>
+              </div>
+              <div className="flex flex-col items-center  space-y-2">
+                <span className="text-xs text-gray-500">No</span>
+                <span className="text-sm text-primary-500">
+                  {formatAmount(totalNo)}
+                </span>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>{" "}
+    </Link>
   );
 };
-
-export default MarketCard;

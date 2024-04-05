@@ -1,53 +1,19 @@
 "use client";
-import { useEffect, useMemo } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
-import { loadQuestions, initialQuestionsState } from "@/redux/questionSlice";
-
-// import Swiper core and required modules
 import { Autoplay } from "swiper/modules";
-
 import { Swiper, SwiperSlide } from "swiper/react";
-
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
+import { MarketProps } from "../types/index";
 
-import { Container } from "@mui/material";
 import CarousalCard from "./CarousalCard";
 
-const LandingPageCarousal: React.FC = () => {
-  const dispatch = useDispatch();
-
-  // Fetch questions data from the Redux store when the component mounts
-  useEffect(() => {
-    // Simulate fetching data from an API or backend
-    const fetchData = async () => {
-      try {
-        // Simulate API call delay
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-
-        // Dispatch the action to load the questions data into the store
-        dispatch(loadQuestions(initialQuestionsState.questionsData));
-      } catch (error) {
-        // Handle error if necessary
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, [dispatch]);
-
-  const questionsData = useSelector(
-    (state: RootState) => state.questions.questionsData
-  );
-
-  // Memoize questionsData to prevent unnecessary recalculations
-  const memoizedQuestionsData = useMemo(() => questionsData, [questionsData]);
-
+const LandingPageCarousal: React.FC<{ markets: MarketProps[] }> = ({
+  markets,
+}) => {
   return (
-    <Container maxWidth="xl" sx={{ mt: 4 }}>
+    <div>
       <Swiper
         spaceBetween={50}
         slidesPerView={1}
@@ -70,21 +36,35 @@ const LandingPageCarousal: React.FC = () => {
             spaceBetween: 40,
           },
           1024: {
-            slidesPerView: 3,
+            slidesPerView: 4,
             spaceBetween: 50,
           },
         }}
       >
-        {memoizedQuestionsData.map((questionItem) => (
-          <SwiperSlide
-            key={questionItem.id}
-            style={{ justifyContent: "center", display: "flex" }}
-          >
-            <CarousalCard questionId={questionItem.id} />
-          </SwiperSlide>
-        ))}
+        {markets &&
+          markets.length > 0 &&
+          markets.map((market: MarketProps, id: number) => (
+            <SwiperSlide
+              key={id}
+              style={{ justifyContent: "center", display: "flex" }}
+            >
+              <CarousalCard
+                id={market?.id}
+                title={market?.title}
+                userYes={market?.userYes}
+                userNo={market?.userNo}
+                imageHash={market?.imageHash}
+                totalYes={market?.totalYes}
+                totalNo={market?.totalNo}
+                totalAmount={market?.totalAmount}
+                hasResolved={market?.hasResolved}
+                timestamp={market?.timestamp}
+                endTimestamp={market?.endTimestamp}
+              />
+            </SwiperSlide>
+          ))}
       </Swiper>
-    </Container>
+    </div>
   );
 };
 

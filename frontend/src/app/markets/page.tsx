@@ -1,21 +1,7 @@
-import FilterMarkets from "@/components/FilterMarkets";
-import MarketCardList from "@/components/MarketCardList";
-import MarketSearch from "@/components/MarketSearch";
-import { Container, Box } from "@mui/material";
-import React from "react";
+import Markets from "../../components/Markets";
 
-const markets = () => {
-  return (
-    <Container maxWidth="xl">
-      {/* markets */}
-      <Box display={"flex"}>
-        {" "}
-        <FilterMarkets />
-        <MarketSearch />
-      </Box>{" "}
-      <MarketCardList />
-    </Container>
-  );
-};
+function page() {
+  return <Markets />;
+}
 
-export default markets;
+export default page;
