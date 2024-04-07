@@ -1,0 +1,9 @@
+{
+  "name": "paramarket",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.3.2",
+    "@truffle/hdwallet-provider": "^1.6.0"
+  }
+}
