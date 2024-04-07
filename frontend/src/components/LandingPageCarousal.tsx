@@ -36,7 +36,7 @@ const LandingPageCarousal: React.FC<{ markets: MarketProps[] }> = ({
             spaceBetween: 40,
           },
           1024: {
-            slidesPerView: 4,
+            slidesPerView: 3,
             spaceBetween: 50,
           },
         }}

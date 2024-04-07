@@ -57,9 +57,11 @@ export const MarketCard: React.FC<MarketProps> = ({
             />
           </div>
         </CardHeader>
-        <CardContent className="p-4">
-          <CardTitle className="font-bold pb-2 capitalize">{title}</CardTitle>
-          <div className="flex justify-between items-center">
+        <CardTitle className="font-bold pb-2 capitalize p-4 ">
+          {title}
+        </CardTitle>
+        <CardContent className="pt-2 px-4 border dark:bg-black  bg-gray-50 rounded-none dark:bg-opacity-25">
+          <div className="flex justify-between items-center ">
             <div className="flex items-center space-x-2">
               <span className="font-medium">Volume:</span>
               {formatAmount(totalAmount)}

@@ -1,3 +1,4 @@
+"use client";
 import { BigNumber } from "bignumber.js";
 import React, { useCallback, useEffect, useState } from "react";
 import Web3 from "web3";
@@ -11,7 +12,17 @@ const Portfolio = () => {
   const [portfolioValue, setPortfolioValue] = useState<number>(0);
   const [allQuestions, setAllQuestions] = useState<QuestionsProps[]>([]);
   const [openPositions, setOpenPositions] = useState<number>(0);
+  function toDecimalString(num: any) {
+    const numStr = String(num);
+    if (numStr.indexOf("e") === -1) return numStr;
 
+    let [base, exponent] = numStr.split("e").map((item) => parseInt(item, 10));
+    let result =
+      Math.abs(exponent) > 20 ? num.toFixed(20) : base * Math.pow(10, exponent);
+    return result.toString();
+  }
+
+  const safePortfolioValue = toDecimalString(portfolioValue);
   const getMarkets = useCallback(async () => {
     var totalQuestions = await polymarket.methods
       .totalQuestions()
@@ -99,9 +110,7 @@ const Portfolio = () => {
             <div className="p-4 bg-blue-700 rounded-lg flex justify-evenly">
               <div className="text-center">
                 <div className=" opacity-50">Portfolio Value</div>
-                <div className="text-3xl  font-bold">
-                  {Web3.utils.fromWei(portfolioValue.toString(), "ether")} Para
-                </div>
+                <div className="text-3xl  font-bold">{safePortfolioValue} </div>
               </div>
             </div>
             <div className="text-xl my-3 font-bold">Your Market Positions</div>

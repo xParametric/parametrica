@@ -16,6 +16,7 @@ import Link from "next/link";
 function Markets() {
   const { polymarket, account, loadWeb3, loading } = useData();
   const [markets, setMarkets] = useState<MarketProps[]>([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const getMarkets = useCallback(async () => {
     try {
@@ -51,6 +52,10 @@ function Markets() {
   }, [loading]);
 
   const router = useRouter();
+  const filteredMarkets = markets.filter((market) =>
+    market.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div className="max-w-screen-xl mx-auto p-8">
       <div className="mb-8 flex items-center gap-8">
@@ -60,13 +65,15 @@ function Markets() {
           type="search"
           name="q"
           placeholder="Search markets..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
         />
       </div>
 
       <div className="flex justify-between mb-12">
         {/* Replace <Filter /> with your component or implementation */}
         <Filter
-          list={["All", "Crypto", "Football", "Covid 19", "Politics"]}
+          list={["All", "Climate", "Catastrophe"]}
           activeItem="All"
           category="Category"
           onChange={() => {}}
@@ -86,7 +93,7 @@ function Markets() {
     */}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-8">
-        {markets.length === 0 ? (
+        {filteredMarkets.length === 0 ? (
           <div className="flex justify-center items-center col-span-2 w-full h-[50vh]">
             <svg
               aria-hidden="true"
@@ -107,9 +114,8 @@ function Markets() {
             <span className="sr-only">Loading...</span>
           </div>
         ) : (
-          markets.map((market) => (
+          filteredMarkets.map((market) => (
             <div key={market.id} className="col-span-1">
-              {/* Replace <MarketCard /> with your component */}
               <MarketCard
                 id={market.id}
                 key={market.id}

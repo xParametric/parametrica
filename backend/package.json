@@ -1,20 +1,9 @@
 {
-  "name": "smartcontractapi",
-  "version": "1.0.0",
-  "description": "Using smart contract as storage and using it as API ",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Harsh Mittal",
-  "license": "ISC",
+  "name": "paramarket",
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
-    "@nomicfoundation/hardhat-toolbox": "^2.0.1",
-    "dotenv": "^16.0.3",
-    "ethers": "^5.7.1",
-    "express": "^4.18.2",
-    "express-fileupload": "^1.4.0",
-    "hardhat": "^2.12.7",
-    "path": "^0.12.7"
+    "@openzeppelin/contracts": "^4.3.2",
+    "@truffle/hdwallet-provider": "^1.6.0"
   }
 }
