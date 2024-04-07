@@ -18,6 +18,7 @@ const CarousalCard: React.FC<MarketProps> = ({
   imageHash,
   totalYes,
   totalNo,
+  // hasResolved,
 }) => {
   const ipfsBaseUrl = "https://ipfs.io/ipfs/";
   const formattedImageHash = imageHash.replace("ipfs://", "");
@@ -30,6 +31,8 @@ const CarousalCard: React.FC<MarketProps> = ({
   //     .dividedBy(10 ** 18)
   //     .toString();
 
+  // console.log(hasResolved, "hasResolved");
+
   const router = useRouter();
 
   return (
@@ -39,10 +42,10 @@ const CarousalCard: React.FC<MarketProps> = ({
         className="cursor-pointer  hover:scale-105 bg-white bg-opacity-5  border-opacity-50 rounded-md transition-shadow duration-300 ease-in-out hover:shadow-[2px_2px_5px_#5155a6]   "
       >
         <CardHeader>
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-center gap-4 ">
             <div>
               <img
-                className="w-14 h-14 rounded-xl"
+                className="w-14 h-14 min-w-14 rounded-xl"
                 src={imageUrl}
                 alt={title}
               />

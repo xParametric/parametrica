@@ -21,6 +21,13 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import Loader from "@/components/ui/loader";
 import Link from "next/link";
+// import {
+//   Select,
+//   SelectTrigger,
+//   SelectValue,
+//   SelectContent,
+//   SelectItem,
+// } from "@/components/ui/select";
 
 function Admin() {
   const router = useRouter();
@@ -36,6 +43,7 @@ function Admin() {
   const { mutateAsync: upload } = useStorageUpload();
   const [progress, setProgress] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  // const [marketCategory, setMarketCategory] = useState("");
 
   async function handleFileChange(event: any) {
     const files = event.target.files;
@@ -131,6 +139,7 @@ function Admin() {
           imageHash,
           description,
           resolverUrl,
+          // marketCategory,
           new Date(timestamp).getTime()
         )
         .send({ from: account });
@@ -224,32 +233,47 @@ function Admin() {
               onChange={(newDate: any) => setTimestamp(newDate)}
             /> */}
 
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  variant={"outline"}
-                  className={cn(
-                    "w-[280px] justify-start text-left font-normal",
-                    !timestamp && "text-muted-foreground"
-                  )}
-                >
-                  <CalendarIcon className="mr-2 h-4 w-4" />
-                  {timestamp ? (
-                    format(timestamp, "PPP")
-                  ) : (
-                    <span>Pick a date</span>
-                  )}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0">
-                <Calendar
-                  mode="single"
-                  selected={timestamp}
-                  onSelect={setTimestamp}
-                  initialFocus
-                />
-              </PopoverContent>
-            </Popover>
+            <div className="gap-4 sm:flex">
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant={"outline"}
+                    className={cn(
+                      "w-[280px] justify-start text-left font-normal",
+                      !timestamp && "text-muted-foreground"
+                    )}
+                  >
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {timestamp ? (
+                      format(timestamp, "PPP")
+                    ) : (
+                      <span>Pick a date</span>
+                    )}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0">
+                  <Calendar
+                    mode="single"
+                    selected={timestamp}
+                    onSelect={setTimestamp}
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
+              {/* <Select
+                onValueChange={setMarketCategory}
+                value={marketCategory}
+                required
+              >
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="Market Category" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="climate">Climate</SelectItem>
+                  <SelectItem value="catastrophe">Catastrophe</SelectItem>
+                </SelectContent>
+              </Select> */}
+            </div>
 
             <Button
               className=" mt-2"

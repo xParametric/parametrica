@@ -14,10 +14,19 @@ export const PortfolioMarketCard: React.FC<MarketProps> = ({
   imageHash,
   timestamp,
   endTimestamp,
+  // hasResolved,
 }) => {
   var endingOn = endTimestamp && moment(parseInt(endTimestamp));
   var now = currentDateTime;
   console.log("endingOn", now);
+
+  // console.log(hasResolved, "hasResolved");
+  // console.log(title, "title");
+  // console.log(userYes, "userYes");
+  // console.log(userNo, "userNo");
+  // console.log(imageHash, "imageHash");
+  // console.log(timestamp, "timestamp");
+  // console.log(endTimestamp, "endTimestamp");
 
   var daysLeft =
     endingOn && moment.duration(endingOn.diff(now)).asDays().toFixed(0);
@@ -47,7 +56,7 @@ export const PortfolioMarketCard: React.FC<MarketProps> = ({
               Amount Added
             </span>
             <span className="text-base">
-              {userYes && Web3.utils.fromWei(userYes ?? userNo, "ether")} POLY
+              {userYes && Web3.utils.fromWei(userYes ?? userNo, "ether")} PARA
             </span>
           </div>
           <div className="flex flex-col space-y-1">

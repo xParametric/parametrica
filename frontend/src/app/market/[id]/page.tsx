@@ -59,47 +59,68 @@ const Details = () => {
     }
   }, [account, id, polymarket]);
   const handleTrade = async () => {
+    let loadingToastId;
+
     try {
-      var bal = await polyToken.methods.balanceOf(account).call();
+      const balInWei = await polyToken.methods.balanceOf(account).call();
+      const inputInWei = Web3.utils.toWei(input, "ether");
+
       setButton("Please wait");
-      toast.loading("Processing trade...");
+
+      loadingToastId = toast.loading("Processing trade...");
 
       if (input && selected === "YES") {
-        if (parseInt(input) < parseInt(Web3.utils.fromWei(bal, "ether"))) {
+        if (BigInt(inputInWei) <= BigInt(balInWei)) {
           await polyToken.methods
-            .approve(polymarket._address, Web3.utils.toWei(input, "ether"))
+            .approve(polymarket._address, inputInWei)
             .send({ from: account });
+
           await polymarket.methods
-            .addYesBet(id, Web3.utils.toWei(input, "ether"))
+            .addYesBet(id, inputInWei)
             .send({ from: account });
-          toast.success("Trade successful!");
+
+          toast.dismiss(loadingToastId);
+          toast.success("Trade successful!", { duration: 5000 });
         } else {
-          toast.error("Insufficient balance for this trade.");
+          toast.dismiss(loadingToastId);
+          toast.error("Insufficient balance for this trade.", {
+            duration: 5000,
+          });
         }
       } else if (input && selected === "NO") {
-        if (parseInt(input) < parseInt(Web3.utils.fromWei(bal, "ether"))) {
+        if (BigInt(inputInWei) <= BigInt(balInWei)) {
           await polyToken.methods
-            .approve(polymarket._address, Web3.utils.toWei(input, "ether"))
+            .approve(polymarket._address, inputInWei)
             .send({ from: account });
+
           await polymarket.methods
-            .addNoBet(id, Web3.utils.toWei(input, "ether"))
+            .addNoBet(id, inputInWei)
             .send({ from: account });
-          toast.success("Trade successful!");
+
+          toast.dismiss(loadingToastId);
+          toast.success("Trade successful!", { duration: 5000 });
         } else {
-          toast.error("Insufficient balance for this trade.");
+          toast.dismiss(loadingToastId);
+          toast.error("Insufficient balance for this trade.", {
+            duration: 5000,
+          });
         }
       } else {
-        toast.error("Please enter a valid amount and select an option.");
+        toast.dismiss(loadingToastId);
+        toast.error("Please enter a valid amount and select an option.", {
+          duration: 5000,
+        });
       }
     } catch (error) {
       console.error("Trade error:", error);
-      toast.error("Trade failed. Please try again.");
+      toast.dismiss(loadingToastId);
+      toast.error("Trade failed. Please try again.", { duration: 5000 });
     } finally {
       await getMarketData();
       setButton("Trade");
-      toast.dismiss();
     }
   };
+
   useEffect(() => {
     loadWeb3().then(() => {
       if (!loading) getMarketData();
@@ -119,9 +140,8 @@ const Details = () => {
   const SetMaxValue = () => {
     if (ParaToken && ParaToken.displayValue) {
       const totalBalance = Number(ParaToken.displayValue);
-      const bufferForFees = 0.0001;
 
-      const maxUsableAmount = totalBalance - bufferForFees;
+      const maxUsableAmount = totalBalance;
       setInput(maxUsableAmount.toFixed(4));
     }
   };
@@ -157,17 +177,16 @@ const Details = () => {
           <div className="w-full">
             <div className="p-3 flex flex-col sm:flex-row items-center border my-5 rounded bg-white bg-opacity-5 gap-2">
               <img
-                className="w-16 h-16 sm:w-20 sm:h-20 md:w-28 md:h-28 lg:w-36 lg:h-36 xl:w-40 xl:h-40 rounded-full"
+                className="w-16 h-16 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 xl:w-24 xl:h-24 rounded-full"
                 src={imageUrl}
                 alt="Market"
               />
               <div className="flex flex-col">
-                {" "}
                 <div className="flex flex-col  text-center sm:text-left">
                   <div className="text-xs sm:text-sm md:text-base text-gray-600 mt-2 sm:mt-0">
                     Question
                   </div>
-                  <div className="text-lg sm:text-xl md:text-2xl my-1">
+                  <div className="text-lg sm:text-xl md:text-2xl px-1 my-1 capitalize">
                     {market?.title}
                   </div>
                 </div>
@@ -197,10 +216,11 @@ const Details = () => {
             <div className="md:flex space-x-4">
               <ChartContainer questionId={market?.id ?? "0"} />
               <div className="w-full max-w-md mx-auto px-4 py-6 border bg-white bg-opacity-5 rounded space-y-4">
-                <div className="text-center text-xl font-medium border-b-[#5155a6] border-b ">
-                  Buy
+                <div className="text-center text-xl font-medium ">
+                  Select Outcome
                 </div>
-                <div className="flex justify-between">
+                <Separator orientation="horizontal" />
+                <div className="flex justify-between ">
                   {["YES", "NO"].map((option) => (
                     <div
                       key={option}
@@ -215,16 +235,9 @@ const Details = () => {
                     </div>
                   ))}
                 </div>
-                <div className="text-center font-medium">How much?</div>
-                <div className="flex justify-end">
-                  <button
-                    className="px-2 py-1 text-xs text-gray-50 uppercase rounded bg-[#5155a6] dark:hover:text-[#e6e0e0] transition duration-300"
-                    onClick={SetMaxValue}
-                  >
-                    max
-                  </button>
-                </div>{" "}
-                <div className="space-x-4 flex items-center p-2 rounded border  ">
+                <div className="text-center font-medium">Amount</div>
+
+                <div className="space-x-4 flex items-center  p-3 rounded border   ">
                   <Button
                     className="px-4 py-2 hover:bg-opacity-90 hover:bg-transparent text-[#5155a6] bg-transparent border  dark:hover:text-[#393b70] transition duration-300"
                     onClick={() =>
@@ -235,13 +248,23 @@ const Details = () => {
                   >
                     -
                   </Button>
-                  <Input
-                    type="number"
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    placeholder="0"
-                    className="flex-grow rounded border-none  text-center"
-                  />
+                  <div className=" rounded p-1 flex w-full dark:bg-[#09090B] gap-1">
+                    <Input
+                      type="number"
+                      value={input}
+                      onChange={(e) => setInput(e.target.value)}
+                      placeholder="0"
+                      className="flex-grow rounded border-none  text-center"
+                    />
+                    <div className="flex justify-end">
+                      <button
+                        className="px-2 py-1 text-xs text-gray-50 uppercase rounded bg-[#5155a6] dark:hover:text-[#e6e0e0] transition duration-300"
+                        onClick={SetMaxValue}
+                      >
+                        max
+                      </button>
+                    </div>
+                  </div>
                   <Button
                     className="px-4  py-2 hover:bg-opacity-90 hover:bg-transparent text-[#5155a6] bg-transparent border  dark:hover:text-[#393b70] transition duration-300"
                     onClick={() =>
@@ -251,15 +274,15 @@ const Details = () => {
                     +
                   </Button>
                 </div>
-                <div>
+                <div className="">
                   <Button
-                    className={`w-full py-2 rounded ${
+                    className={`w-full py-2 rounded p-6 ${
                       !input
                         ? "bg-gray-300 text-gray-500 cursor-not-allowed"
                         : "bg-[#5155a6] text-white hover:bg-[#393b70] transition duration-300"
                     }`}
                     onClick={handleTrade}
-                    disabled={!input}
+                    disabled={!input || input <= "0"}
                   >
                     {selected === "YES" ? "Buy YES" : "Buy NO"}
                   </Button>
