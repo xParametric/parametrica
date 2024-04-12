@@ -115,7 +115,7 @@ function Markets() {
           </div>
         ) : (
           filteredMarkets.map((market) => (
-            <div key={market.id} className="col-span-1">
+            <div key={market.id} className="col-span-1 ">
               <MarketCard
                 id={market.id}
                 key={market.id}
@@ -133,6 +133,7 @@ function Markets() {
           ))
         )}
       </div>
+
       <div className="flex justify-center w-full">
         <Link href={"/markets"}>
           <Button>View All</Button>

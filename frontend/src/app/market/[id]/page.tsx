@@ -1,15 +1,11 @@
 "use client";
-
 import BigNumber from "bignumber.js";
 import Head from "next/head";
 import { useParams } from "next/navigation";
 import React, { useCallback, useEffect, useState } from "react";
 import Web3 from "web3";
 import ChartContainer from "../../../components/Chart/ChartContainer";
-
 import { useData } from "../../../context/DataContext";
-
-import { MarketProps } from "../../../types/index";
 import { convertToLocalTime } from "../../../lib/DateTimeFormatter";
 import { useTokenBalance } from "../../hooks/getBalance";
 import toast from "react-hot-toast";
@@ -19,13 +15,19 @@ import { Separator } from "@/components/ui/separator";
 
 const Details = () => {
   const { id } = useParams();
-  const tokenAddress = "0x71728cD356A0C7a52eF4b0Fc1bcDC540546D84CD";
+  const tokenAddress = "0xb2200E06c83F3872e89AaA98A7d5cd439c7ebd94"; // ParaToken Address
   const { data: ParaToken, isLoading, error } = useTokenBalance(tokenAddress);
-
-  console.log("ParaTokenObject", ParaToken);
-
-  const { polymarket, account, loadWeb3, loading, polyToken } = useData();
-  const [market, setMarket] = useState<MarketProps>();
+  const {
+    polymarket,
+    account,
+    loadWeb3,
+    loading,
+    polyToken,
+    calculatePercentage,
+    market,
+    setMarket,
+  } = useData();
+  // const [market, setMarket] = useState<MarketProps>();
   const [selected, setSelected] = useState<string>("YES");
   const [dataLoading, setDataLoading] = useState(true);
   const [button, setButton] = useState<string>("Trade");
@@ -128,6 +130,19 @@ const Details = () => {
   }, [loading]);
   console.log(polyToken, "polyToken");
 
+  // const calculatePercentage = (option: "YES" | "NO") => {
+  //   if (!market) return "0%";
+
+  //   const totalAmount = new BigNumber(market.totalAmount || 0);
+  //   const optionAmount = new BigNumber(
+  //     option === "YES" ? market.totalYes || 0 : market.totalNo || 0
+  //   );
+
+  //   return totalAmount.isZero()
+  //     ? "0%"
+  //     : `${optionAmount.dividedBy(totalAmount).times(100).toFixed(2)}%`;
+  // };
+
   const imageHash = market?.imageHash;
   const ipfsBaseUrl = "https://ipfs.io/ipfs/";
 
@@ -144,19 +159,6 @@ const Details = () => {
       const maxUsableAmount = totalBalance;
       setInput(maxUsableAmount.toFixed(4));
     }
-  };
-
-  const calculatePercentage = (option: "YES" | "NO") => {
-    if (!market) return "0%";
-
-    const totalAmount = new BigNumber(market.totalAmount || 0);
-    const optionAmount = new BigNumber(
-      option === "YES" ? market.totalYes || 0 : market.totalNo || 0
-    );
-
-    return totalAmount.isZero()
-      ? "0%"
-      : `${optionAmount.dividedBy(totalAmount).times(100).toFixed(2)}%`;
   };
 
   return (
@@ -182,14 +184,15 @@ const Details = () => {
                 alt="Market"
               />
               <div className="flex flex-col">
-                <div className="flex flex-col  text-center sm:text-left">
-                  <div className="text-xs sm:text-sm md:text-base text-gray-600 mt-2 sm:mt-0">
+                <div className="flex px-2 flex-col text-center sm:text-left">
+                  <div className="text-xs sm:text-sm md:text-base text-gray-600 mt-2 sm:mt-0 ">
                     Question
                   </div>
-                  <div className="text-lg sm:text-xl md:text-2xl px-1 my-1 capitalize">
+                  <div className="text-lg sm:text-xl md:text-2xl  my-1 capitalize">
                     {market?.title}
                   </div>
                 </div>
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 w-full">
                   <div className="p-2">
                     <div className="text-xs text-gray-600">Market End on</div>
@@ -203,10 +206,10 @@ const Details = () => {
                     <div className="text-xs text-gray-600">Total Volume</div>
                     <div>
                       {market?.totalAmount
-                        ? `${new BigNumber(market.totalAmount)
+                        ? `$${new BigNumber(market.totalAmount)
                             .dividedBy(new BigNumber(10).pow(18))
-                            .toFixed()} PARA`
-                        : "0 PARA"}
+                            .toFixed()} `
+                        : "$0"}
                     </div>
                   </div>
                 </div>
@@ -220,21 +223,27 @@ const Details = () => {
                   Select Outcome
                 </div>
                 <Separator orientation="horizontal" />
-                <div className="flex justify-between ">
+                <div className="flex justify-between">
                   {["YES", "NO"].map((option) => (
                     <div
                       key={option}
-                      className={`text-center px-14 py-3 border  m-1 rounded cursor-pointer ${
+                      className={`text-center px-14 py-3 border m-1 rounded cursor-pointer ${
                         selected === option
                           ? "bg-[#5155a6] text-gray-200"
                           : "bg-white text-gray-800"
                       } hover:bg-opacity-70 transition duration-300`}
                       onClick={() => setSelected(option)}
                     >
-                      {option} {calculatePercentage(option as "YES" | "NO")}
+                      {option}{" "}
+                      {market &&
+                        calculatePercentage(
+                          market.totalAmount,
+                          option === "YES" ? market.totalYes : market.totalNo
+                        )}
                     </div>
                   ))}
                 </div>
+
                 <div className="text-center font-medium">Amount</div>
 
                 <div className="space-x-4 flex items-center  p-3 rounded border   ">
