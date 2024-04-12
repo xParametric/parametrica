@@ -36,27 +36,27 @@ const CarousalCard: React.FC<MarketProps> = ({
   const router = useRouter();
 
   return (
-    <div className="my-4">
+    <div className="my-4 flex flex-wrap justify-center">
       <Card
         onClick={() => router.push(`/market/${id}`)}
-        className="cursor-pointer  hover:scale-105 bg-white bg-opacity-5  border-opacity-50 rounded-md transition-shadow duration-300 ease-in-out hover:shadow-[2px_2px_5px_#5155a6]   "
+        className="w-96 cursor-pointer hover:scale-105 bg-white bg-opacity-5 border-opacity-50 rounded-md transition-shadow duration-300 ease-in-out hover:shadow-[2px_2px_5px_#5155a6] m-4"
       >
-        <CardHeader>
-          <div className="flex justify-between items-center gap-4 ">
+        <CardHeader className=" mb-2 w-full h-[100px]">
+          <div className="flex justify-between items-center">
             <div>
               <img
-                className="w-14 h-14 min-w-14 rounded-xl"
+                className="w-14 h-14 rounded-xl"
                 src={imageUrl}
                 alt={title}
               />
             </div>
-            <div>
-              <p className="mb-2 text-xl capitalize">{title}</p>
+            <div className="flex-1 min-w-0 w-full ml-4">
+              <p className=" text-xl capitalize ">{title}</p>
             </div>
           </div>
         </CardHeader>
-        <CardContent className="py-4">
-          <div className="flex   px-0 ">
+        <CardContent className="p-4">
+          <div className="flex justify-center">
             <Button className="text-base w-32 border  bg-white dark:bg-opacity-100    dark:hover:bg-[#5155a5]  dark:hover:bg-opacity-25 bg-opacity-50 border-[#5155a6] hover:bg-[#5155a5] hover:bg-opacity-15 text-[#5155a6] rounded px-2 py-1 mr-2">
               {/* {"Yes " + BigNumber(totalYes ?? 0)?.dividedBy(10 ** 18)} */}
               Bet Yes
@@ -101,10 +101,8 @@ const CarousalCard: React.FC<MarketProps> = ({
             </Button>
           </div>
         </CardContent>
-        {/* CardFooter can be used for additional information or actions related to the card */}
         <CardFooter>
           <div className="text-sm text-gray-500">
-            {" "}
             {"$" +
               (parseFloat(
                 String(BigNumber(totalYes ?? 0)?.dividedBy(10 ** 18))
