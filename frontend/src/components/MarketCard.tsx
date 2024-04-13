@@ -34,14 +34,14 @@ export const MarketCard: React.FC<MarketProps> = ({
 
   const formatAmount = (amount?: BigNumber | string) => {
     if (amount === undefined) {
-      return "0 PARA";
+      return "0";
     }
 
     let num = BigNumber.isBigNumber(amount) ? amount : new BigNumber(amount);
 
     return num.isZero()
-      ? "0 PARA"
-      : `${num.dividedBy(new BigNumber(10).pow(18)).toFixed(2)} PARA`;
+      ? "0"
+      : `$${num.dividedBy(new BigNumber(10).pow(18)).toFixed(2)}`;
   };
 
   const percentageYes = calculatePercentage(totalAmount, totalYes);
@@ -66,7 +66,7 @@ export const MarketCard: React.FC<MarketProps> = ({
         <CardContent className=" pt-2 px-4 border dark:bg-black bg-gray-50 rounded-none dark:bg-opacity-25 overflow-hidden">
           <div className="flex justify-between items-center ">
             <div className="flex items-center space-x-2">
-              <span className="font-medium">Volume:</span>
+              <span className="font-medium me-1">Total Volume: </span>
               {formatAmount(totalAmount)}
             </div>
             <div className="flex space-x-8 ">

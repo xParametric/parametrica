@@ -195,7 +195,7 @@ const Details = () => {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 w-full">
                   <div className="p-2">
-                    <div className="text-xs text-gray-600">Market End on</div>
+                    <div className="text-xs text-gray-600">Market Ends on</div>
                     <div>
                       {market?.endTimestamp
                         ? convertToLocalTime(market.endTimestamp)
