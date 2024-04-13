@@ -8,10 +8,10 @@ import { useData } from "../context/DataContext";
 import { MarketProps } from "../types/index";
 
 import { Filter } from "./Filter";
-import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 function Markets() {
   const { polymarket, account, loadWeb3, loading } = useData();
@@ -51,7 +51,8 @@ function Markets() {
     });
   }, [loading]);
 
-  const router = useRouter();
+  const pathname = usePathname();
+
   const filteredMarkets = markets.filter((market) =>
     market.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -134,7 +135,13 @@ function Markets() {
         )}
       </div>
 
-      <div className="flex justify-center w-full">
+      <div
+        className={` ${
+          filteredMarkets.length < 10 || pathname === "markets"
+            ? "hidden"
+            : "flex justify-center w-full"
+        }`}
+      >
         <Link href={"/markets"}>
           <Button>View All</Button>
         </Link>
