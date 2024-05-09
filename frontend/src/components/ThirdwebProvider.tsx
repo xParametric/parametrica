@@ -5,7 +5,7 @@ import {
   metamaskWallet,
   walletConnect,
 } from "@thirdweb-dev/react";
-import { Sepolia } from "@thirdweb-dev/chains";
+import { Sepolia, CeloAlfajoresTestnet } from "@thirdweb-dev/chains";
 import React from "react";
 
 function ThirdwebProviderWrapper({ children }: { children: React.ReactNode }) {
@@ -19,8 +19,8 @@ function ThirdwebProviderWrapper({ children }: { children: React.ReactNode }) {
         walletConnect(),
       ]}
       clientId="531dd9267d5705c5ca733d0ea910d335"
-      activeChain={Sepolia}
-      supportedChains={[Sepolia]}
+      activeChain={CeloAlfajoresTestnet}
+      supportedChains={[CeloAlfajoresTestnet]}
     >
       {children}
     </ThirdwebProvider>
