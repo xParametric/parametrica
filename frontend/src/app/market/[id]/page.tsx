@@ -15,7 +15,7 @@ import { Separator } from "@/components/ui/separator";
 
 const Details = () => {
   const { id } = useParams();
-  const tokenAddress = "0xb2200E06c83F3872e89AaA98A7d5cd439c7ebd94"; // ParaToken Address
+  const tokenAddress = "0xbba6deed7bdadae380df05ae94abb227be926a6b"; // Celo testnet ParaToken Address
   const { data: ParaToken, isLoading, error } = useTokenBalance(tokenAddress);
   const {
     polymarket,

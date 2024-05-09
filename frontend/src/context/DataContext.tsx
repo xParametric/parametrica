@@ -60,7 +60,7 @@ export const useProviderData = () => {
     } else if (window.web3) {
       window.web3 = new Web3(window.web3.currentProvider);
     } else {
-      window.alert("Non-Eth browser detected. Please consider using MetaMask.");
+      console.log("Non-Eth browser detected. Please consider using MetaMask.");
       return;
     }
     var allAccounts = await window.web3.eth.getAccounts();
@@ -71,8 +71,8 @@ export const useProviderData = () => {
   const loadBlockchainData = async () => {
     const web3 = window.web3;
 
-    const polymarketData = Polymarket.networks["11155111"];
-    const polyTokenData = PolyToken.networks["11155111"];
+    const polymarketData = Polymarket.networks["44787"];
+    const polyTokenData = PolyToken.networks["44787"];
 
     if (polymarketData && polyTokenData) {
       var tempContract = await new web3.eth.Contract(
