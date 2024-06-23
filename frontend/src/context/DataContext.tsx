@@ -1,12 +1,19 @@
 "use client";
 import BigNumber from "bignumber.js";
-
 declare let window: any;
-import { createContext, useContext, useState, ReactNode } from "react";
-import Web3 from "web3";
+
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
+import Web3, { HttpProvider } from "web3";
 import Polymarket from "../../src/abis/Polymarket.json";
 import PolyToken from "../../src/abis/PolyToken.json";
 import { MarketProps } from "../types";
+
 interface DataContextProps {
   account: string;
   loading: boolean;
@@ -31,17 +38,22 @@ const DataContext = createContext<DataContextProps>({
 
 export const DataProvider: any = ({ children }: { children: ReactNode }) => {
   const data = useProviderData();
-
   return <DataContext.Provider value={data}>{children}</DataContext.Provider>;
 };
 
 export const useData = () => useContext<DataContextProps>(DataContext);
+
 export const useProviderData = () => {
   const [loading, setLoading] = useState(true);
   const [account, setAccount] = useState("");
-  const [polymarket, setPolymarket] = useState<any>();
-  const [polyToken, setPolyToken] = useState<any>();
+  const [polymarket, setPolymarket] = useState<any>(null);
+  const [polyToken, setPolyToken] = useState<any>(null);
   const [market, setMarket] = useState<MarketProps | null>(null);
+
+  useEffect(() => {
+    loadWeb3();
+  }, []);
+
   const calculatePercentage = (
     totalAmount: BigNumber | string,
     optionAmount: BigNumber | string
@@ -53,45 +65,53 @@ export const useProviderData = () => {
       ? "0%"
       : `${option.dividedBy(total).times(100).toFixed(2)}%`;
   };
+
   const loadWeb3 = async () => {
-    if (window.ethereum) {
-      window.web3 = new Web3(window.ethereum);
-      await window.ethereum.enable();
-    } else if (window.web3) {
-      window.web3 = new Web3(window.web3.currentProvider);
-    } else {
-      console.log("Non-Eth browser detected. Please consider using MetaMask.");
-      return;
+    try {
+      if (window.ethereum) {
+        window.web3 = new Web3(window.ethereum);
+        await window.ethereum.enable();
+      } else {
+        window.web3 = new Web3(
+          new HttpProvider(process.env.NEXT_PUBLIC_INFURA_RPC as string)
+        );
+      }
+      const allAccounts = await window.web3.eth.getAccounts();
+      setAccount(allAccounts[0]);
+      await loadBlockchainData();
+    } catch (error) {
+      console.error("Failed to load web3 or accounts.", error);
+      setLoading(false);
     }
-    var allAccounts = await window.web3.eth.getAccounts();
-    setAccount(allAccounts[0]);
-    await loadBlockchainData();
   };
 
   const loadBlockchainData = async () => {
-    const web3 = window.web3;
+    try {
+      const web3 = window.web3;
 
-    const polymarketData = Polymarket.networks["44787"];
-    const polyTokenData = PolyToken.networks["44787"];
+      const polymarketData = Polymarket.networks["44787"];
+      const polyTokenData = PolyToken.networks["44787"];
 
-    if (polymarketData && polyTokenData) {
-      var tempContract = await new web3.eth.Contract(
-        Polymarket.abi,
-        polymarketData.address
-      );
-      setPolymarket(tempContract);
-      var tempTokenContract = await new web3.eth.Contract(
-        PolyToken.abi,
-        polyTokenData.address
-      );
+      if (polymarketData && polyTokenData) {
+        const tempContract = await new web3.eth.Contract(
+          Polymarket.abi,
+          polymarketData.address
+        );
+        setPolymarket(tempContract);
 
-      setPolyToken(tempTokenContract);
-    } else {
-      window.alert("TestNet not found");
-    }
-    setTimeout(() => {
+        const tempTokenContract = await new web3.eth.Contract(
+          PolyToken.abi,
+          polyTokenData.address
+        );
+        setPolyToken(tempTokenContract);
+      } else {
+        window.alert("TestNet not found");
+      }
+    } catch (error) {
+      console.error("Failed to load blockchain data.", error);
+    } finally {
       setLoading(false);
-    }, 500);
+    }
   };
 
   return {
